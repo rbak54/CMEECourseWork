@@ -2,7 +2,7 @@
 #Author: Ruth Keane ruth.keane19@imperial.ac.uk
 #Script: variables.sh
 #Desc: assigning variables in shell scripts
-#Arguments: none
+#Arguments: MyVar , a , b
 #Date: Oct 2019
 #use of variables
 MyVar='some string'
