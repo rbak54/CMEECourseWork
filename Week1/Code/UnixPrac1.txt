@@ -1,0 +1,2 @@
+#1 
+wc -l < E.coli.fasta
