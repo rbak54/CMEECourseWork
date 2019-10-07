@@ -13,7 +13,11 @@ tail -n +2 ../Data/fasta/E.coli.fasta
  tail -n +2 ../Data/fasta/E.coli.fasta |tr -d '[:space:] '  | wc -m 
 #4
 #Count the matches of a particular sequence, "ATGC" in the genome of E. coli (hint: Start by removing the first line and removing newline characters)
- tail -n +2 ../Data/fasta/E.coli.fasta |tr -d '[:space:] | grep "ATGC" -c
-doesnt seem to get good number- other people getting around 18.... blank???
+tail -n +2 ../Data/fasta/E.coli.fasta |tr -d '[:space:]' | grep "ATGC" -o | wc -l
+
 5 #Compute the AT/GC ratio. That is, the (A+T)/(G+C) ratio. This is a summary measure of base composition of double-stranded DNA. DNA from different organisms and lineages has different ratios of the A-to-T and G-to-C base pairs. For example DNA from organisms that live in hot springs have a higher GC content, which takes advantage of the increased thermal stability of the GC base pair (google "Chargaff's rule").
+
+
+AT=$(tail -n +2 ../Data/fasta/E.coli.fasta |tr -d '[:space:]'| grep -o "A\|T" | wc -l) && CG=$(tail -n +2 ../Data/fasta/E.coli.fasta |tr -d '[:space:]'| grep -o "G\|C" | wc -l) && echo "scale=3; $AT/ $CG" | bc
+
 
