@@ -8,7 +8,7 @@ birds = ( ('Passerculus sandwichensis','Savannah sparrow',18.7),
 #(1) Write three separate list comprehensions that create three different
 # lists containing the latin names, common names and mean body masses for
 # each species in birds, respectively. 
-latinnames=[]
+
 # (2) Now do the same using conventional loops (you can choose to do this 
 # before 1 !). 
 #s is list of species names
