@@ -2,7 +2,7 @@
 #Author: Ruth Keane ruth.keane19@imperial.ac.uk
 #Script: MyExampleScript.sh
 #Desc: variables practice
-#Arguments: USER
+#Arguments: $USER
 #Date: Oct 2019
 msg1="Hello"
 msg2=$USER

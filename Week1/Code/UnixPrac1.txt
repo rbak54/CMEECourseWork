@@ -1,4 +1,7 @@
-
+#Author: Ruth Keane ruth.keane19@imperial.ac.uk
+#Desc: text file, linux code for exploring sequences
+#Arguments: none
+#Date: Oct 2019
 #1
 #Count how many lines are in each file
  wc -l < ../Data/fasta/407228326.fasta
