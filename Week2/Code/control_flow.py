@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """Some functions exemplifying the use of control statements"""
-__author__='Samraat Pawar (s.pawar@imperial.ac.uk)'
+__author__='Ruth Keane (ruth.keane19s@imperial.ac.uk)'
 __version__='0.0.1'
 
 ## imports##

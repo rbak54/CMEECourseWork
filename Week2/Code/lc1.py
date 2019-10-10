@@ -1,3 +1,8 @@
+#Author: Ruth Keane ruth.keane19@imperial.ac.uk
+#Script: lc1.py
+#Desc: file to separate latin names, common names and masses from data using both loops and comprehensions
+#Arguments: none
+#Date: Oct 2019
 birds = ( ('Passerculus sandwichensis','Savannah sparrow',18.7),
           ('Delichon urbica','House martin',19),
           ('Junco phaeonotus','Yellow-eyed junco',19.5),
@@ -5,13 +10,15 @@ birds = ( ('Passerculus sandwichensis','Savannah sparrow',18.7),
           ('Tachycineata bicolor','Tree swallow',20.2),
          )
 
-#(1) Write three separate list comprehensions that create three different
-# lists containing the latin names, common names and mean body masses for
-# each species in birds, respectively. 
-
+#sc is a list of latin names
+sc=[b[0] for b in birds]
+#cc is a list of common names
+cc=[b[1] for b in birds]
+#mc i a list of masses
+mc=[b[0] for b in birds]
 # (2) Now do the same using conventional loops (you can choose to do this 
 # before 1 !). 
-#s is list of species names
+#s is list of latin names
 s=[]
 for b in birds:
     s.append(b[0])

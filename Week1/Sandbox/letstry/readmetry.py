@@ -6,7 +6,6 @@ g.write("Directory content for this week")
 for filename in os.listdir(directory):
     g.write(filename) 
     g.write("\n")
-    description = re.findall(r 'Desc:')
-    g.write(description)
+    g.write(re.findall(r"Desc:",line))
   #next somehow want to add description  
 g.close()
