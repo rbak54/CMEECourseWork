@@ -20,7 +20,7 @@ for row in taxa:
     taxa_dic[row[1]]=0
 #add every species to order by going through each order in the dictionary
 for order in taxa_dic:
-#create empty set
+#create empty list
     yes=set()
 #for each row in taxa, is the order is the same as the current order , if so, add the species to the dictionary
     for row in taxa:

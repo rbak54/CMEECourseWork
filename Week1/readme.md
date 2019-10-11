@@ -20,8 +20,7 @@ Output: file containing the two files will be in the same location as empty file
 csvtospace.sh
 make a a new file with spaces instead of commas
 Arguments: $1 -file to be converted 
-Output-a text file in same location as csv file (name.csv.txt)
-
+Output-a text file in the results folder (name.txt)
 
 boilerplate.sh
 a boilerplate for shell scripts
@@ -33,7 +32,7 @@ Arguments: MyVar , a , b
 tiff2png.sh
 converting a tiff file to a png file
 Arguments: $1- tiff file in Data folder
-Output: png file-outputs to Data folder
+Output: png file-outputs to Results folder
 
 CountLines.sh
 Counting lines in a file
@@ -42,7 +41,7 @@ Arguments: $1-file to count lines in
 CompileLaTeX.sh
 Making a latex file with references 
 Input: First Example (referring to FirstExample.tex)
-Output: FirstExample.blg, FirstExample.bbl, FirstBiblio.bib in same directory as original file
+Output: FirstBiblio.pdf in Results
 
 FirstExample.tex
 for writing LaTeX file 

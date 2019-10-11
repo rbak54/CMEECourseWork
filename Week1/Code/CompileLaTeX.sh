@@ -9,10 +9,10 @@ pdflatex $1.tex
 bibtex $1
 pdflatex $1.tex
 pdflatex $1.tex
-evince $1.pdf &
-#mv ./FirstExample.pdf ../Results/FirstExample.pdf
-#mv ./FirstExample.blg ../Results/FirstExample.blg
-#mv ./FirstExample.bbl ../Results/FirstExample.bbl
+
+mv ./FirstExample.pdf ../Results/
+evince ../Results/$1.pdf &
+
 ##Cleanup
 rm *~
 rm *.aux
@@ -22,3 +22,5 @@ rm *.nav
 rm *.out
 rm *.snm
 rm *.toc
+rm *.bbl
+rm *.blg
