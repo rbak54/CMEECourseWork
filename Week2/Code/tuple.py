@@ -1,3 +1,9 @@
+#Author: Ruth Keane ruth.keane19@imperial.ac.uk
+#Script: tuple.py
+#Desc: script to seperate tuples and print in sections
+#Arguments: none
+#Output: none
+#Date: Oct 2019
 birds = ( ('Passerculus sandwichensis','Savannah sparrow',18.7),
           ('Delichon urbica','House martin',19),
           ('Junco phaeonotus','Yellow-eyed junco',19.5),
@@ -5,6 +11,9 @@ birds = ( ('Passerculus sandwichensis','Savannah sparrow',18.7),
           ('Tachycineata bicolor','Tree swallow',20.2),
         )
 
-# Birds is a tuple of tuples of length three: latin name, common name, mass.
-# write a (short) script to print these on a separate line or output block by species 
-# Hints: use the "print" command! You can use list comprehensions!
+for a in birds:
+    print("Latin name:",a[0])
+    print("Common name:",a[1])
+    print("Mass:",a[2])
+    print("\n")
+#for each tuple ("a"), print description then the value of that variable
