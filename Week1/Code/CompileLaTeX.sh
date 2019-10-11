@@ -4,14 +4,15 @@
 #Desc: script compiling LaTex and bibtex
 #Arguments: $1-file to be compiled
 #Date: Oct 2019
-pdflatex $1.tex
-pdflatex $1.tex
-bibtex $1
-pdflatex $1.tex
-pdflatex $1.tex
+f=`basename $1 |cut -f 1 -d "."`
+pdflatex $f
+pdflatex $f
+bibtex $f
+pdflatex $f
+pdflatex $f
 
 mv ./FirstExample.pdf ../Results/
-evince ../Results/$1.pdf &
+evince ../Results/$f.pdf &
 
 ##Cleanup
 rm *~

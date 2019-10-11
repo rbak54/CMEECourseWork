@@ -3,7 +3,7 @@ import sys
 with open(str(sys.argv[1]),'r') as g: 
     a = []
     for lines in g:
-        a.append(lines.)
+        a.append(lines) #. 
         seq1 = a[]
 
         
