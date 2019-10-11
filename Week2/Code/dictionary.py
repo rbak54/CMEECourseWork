@@ -13,24 +13,24 @@ taxa = [ ('Myotis lucifugus','Chiroptera'),
 # derived from  taxa so that it maps order names to sets of taxa. 
 # E.g. 'Chiroptera' : set(['Myotis lucifugus']) etc. 
 #dictionary={'Chiroptera','Rodentia','Afrosoricida','Carnivora'}
-
+#create empty dictionary
 taxa_dic={}
+#add every order to the dictionary by adding the second component of every row of taxa
 for row in taxa:
     taxa_dic[row[1]]=0
-
+#add every species to order by going through each order in the dictionary
 for order in taxa_dic:
+#create empty list
     yes=[]
+#for each row in taxa, is the order is the same as the current order , if so, add the species to the dictionary
     for row in taxa:
         if row[1] is order:
             yes.append(row[0])
     #print(yes)
+    #convert to set
     set(yes)
+    #still in for loop, so for each order add the set yes to the dictionary
     taxa_dic[order]=yes
-   # 
-  
-#TURN INTO SET
-# add SET TO DICT
-#deraj said to do for and do it by species or order
 
 print(taxa_dic)
 
