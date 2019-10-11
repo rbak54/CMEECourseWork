@@ -10,6 +10,9 @@ bibtex $1
 pdflatex $1.tex
 pdflatex $1.tex
 evince $1.pdf &
+#mv ./FirstExample.pdf ../Results/FirstExample.pdf
+#mv ./FirstExample.blg ../Results/FirstExample.blg
+#mv ./FirstExample.bbl ../Results/FirstExample.bbl
 ##Cleanup
 rm *~
 rm *.aux

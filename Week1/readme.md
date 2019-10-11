@@ -39,14 +39,15 @@ CountLines.sh
 Counting lines in a file
 Arguments: $1-file to count lines in
 
+CompileLaTeX.sh
+Making a latex file with references 
+Input: First Example (referring to FirstExample.tex)
+Output: FirstExample.blg, FirstExample.bbl, FirstBiblio.bib in same directory as original file
+
 FirstExample.tex
-FirstExample.blg
-FirstExample.bbl
-LaTex
+for writing LaTeX file 
 
 FirstBiblio.bib
-
-Bibliography
-
+reference information for CompileLaTeX.sh
 
 
