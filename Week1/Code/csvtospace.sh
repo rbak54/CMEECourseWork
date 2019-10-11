@@ -5,8 +5,5 @@
 #Arguments: $1 -file to be converted --> text file
 #Date: October 2019
 
-new=`basename $1 | cut -f 1 -d "."` #cut with deli . column 1st
+new=`basename $1 | cut -f 1 -d "."` #cut with deliminator as ., 1st column
 cat $1 | tr -s "," " " >> ../Results/${new}.txt  # {} to contain variable
-
-#`command`
-#dirname
