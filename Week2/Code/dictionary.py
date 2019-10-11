@@ -28,9 +28,9 @@ for order in taxa_dic:
             yes.append(row[0])
     #print(yes)
     #convert to set
-    set(yes)
+    f=set(yes)
     #still in for loop, so for each order add the set yes to the dictionary
-    taxa_dic[order]=yes
+    taxa_dic[order]=f
 
 print(taxa_dic)
 
