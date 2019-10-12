@@ -61,7 +61,7 @@ count lines in
 
 Making a latex file with references 
 
-Arguments: First Example (referring to FirstExample.tex)
+Arguments: FirstExample.tex (latex file to be compiled)
 
 Output: FirstBiblio.pdf in Results
 
