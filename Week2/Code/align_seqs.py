@@ -1,15 +1,50 @@
 # Two example sequences to match
 import sys
+import csv
 with open(str(sys.argv[1]),'r') as g: 
-    a = []
-    for lines in g:
-        a.append(lines) #. 
-        seq1 = a[]
-
-        
+    ##Works sort of but 6 because brackets
     
-#seq2 =g[1]
-#seq1 =g[0]
+    h = csv.reader(g, delimiter=',')
+    fish=list(h)
+    #print(fish)
+    #seq1=str(fish[0])
+    #seq1= seq1.replace("'","")
+    #print(seq1)
+    #seq2=str(fish[1])
+    #seq2= seq2.replace("'","")
+    #print(seq2)
+    seq=[]
+    
+    #print(fish)
+    for f in fish:
+        seq.append(str(f))
+    #print(seq)
+    ###works but so clunky
+    seq1=seq[0]
+    seq2=seq[1]
+    rem="[]'"
+    for r in rem:
+        seq1=seq1.replace(r, "")
+        seq2=seq2.replace(r, "")
+    #seq1= seq1.replace("'","")
+    #seq2= seq2.replace("'","")
+    #seq1= seq1.replace("[","")
+    #seq2= seq2.replace("[","")
+    #seq1= seq1.replace("]","")
+    #seq2= seq2.replace("]","")
+    #h = csv.reader(g, delimiter=',')
+    #fish=str(h)
+    #print(fish)
+    #seq1=fish[0]
+    #seq1= seq1.replace("'","")
+    #print(seq1)
+    #seq2=fish[1]
+    #seq2= seq2.replace("'","")
+    #print(seq2)
+    
+
+
+    
 
 # Assign the longer sequence s1, and the shorter to s2
 # l1 is length of the longest, l2 that of the shortest

@@ -1,17 +1,18 @@
 import sys
+import csv
 with open(str(sys.argv[1]),'r') as g: 
-    
-    for each in g.line():
+    print(g)
+    for each in g:
 
         for lines in g:
-            print[lines]
+           # print[lines]
             a = []
             a.append(lines) #. 
             seqs[lines]=a
-print (seqs)
+            print (seqs)
         
         #seq1 = a
         #print(seq1)
 
 
-###do in terms of g 
+###do in terms of g
