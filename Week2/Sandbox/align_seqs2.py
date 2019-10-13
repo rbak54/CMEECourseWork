@@ -1,11 +1,18 @@
 import sys
 import csv
 with open(str(sys.argv[1]),'r') as g: 
-    print(g.readlines()) in 
-      #fieldnames=['1','2']
-    #writer=csv.Dict
-    #reader=csv.DictReader(g)
-#for row in csv.DictReader(str(sys.argv[1]),'1 2'.split()):
- #   print(row)
-    for row in csv.DictReader(g.readlines(),'1 2'.split()):
-        print(row)
+    print(g)
+    for each in g:
+
+        for lines in g:
+           # print[lines]
+            a = []
+            a.append(lines) #. 
+            seqs[lines]=a
+            print (seqs)
+        
+        #seq1 = a
+        #print(seq1)
+
+
+###do in terms of g

@@ -2,48 +2,18 @@
 import sys
 import csv
 with open(str(sys.argv[1]),'r') as g: 
-    ##Works sort of but 6 because brackets
-    
-    h = csv.reader(g, delimiter=',')
-    fish=list(h)
-    #print(fish)
-    #seq1=str(fish[0])
-    #seq1= seq1.replace("'","")
-    #print(seq1)
-    #seq2=str(fish[1])
-    #seq2= seq2.replace("'","")
-    #print(seq2)
-    seq=[]
-    
-    #print(fish)
-    for f in fish:
-        seq.append(str(f))
-    #print(seq)
-    ###works but so clunky
-    seq1=seq[0]
-    seq2=seq[1]
-    rem="[]'"
-    for r in rem:
-        seq1=seq1.replace(r, "")
-        seq2=seq2.replace(r, "")
-    #seq1= seq1.replace("'","")
-    #seq2= seq2.replace("'","")
-    #seq1= seq1.replace("[","")
-    #seq2= seq2.replace("[","")
-    #seq1= seq1.replace("]","")
-    #seq2= seq2.replace("]","")
-    #h = csv.reader(g, delimiter=',')
-    #fish=str(h)
-    #print(fish)
-    #seq1=fish[0]
-    #seq1= seq1.replace("'","")
-    #print(seq1)
-    #seq2=fish[1]
-    #seq2= seq2.replace("'","")
-    #print(seq2)
-    
-
-
+    reader=csv.reader(g, delimiter=",",quoting=csv.QUOTE_NONE)
+    for row in reader:
+        print(row)
+    seq1=row[0]
+    seq2=row[1]
+    #s=g.read()
+    #print(s)
+    #ban=s.rsplit(",")
+    #print(ban)
+    #seq1=ban[0]
+    #seq2=ban[1]
+    #both work ON sEQUENCES2
     
 
 # Assign the longer sequence s1, and the shorter to s2
@@ -95,6 +65,9 @@ for i in range(l1): # Note that you just take the last alignment with the highes
     if z > my_best_score:
         my_best_align = "." * i + s2 # think about what this is doing!
         my_best_score = z 
-print(my_best_align)
-print(s1)
-print("Best score:", my_best_score)
+t=open("../Results/Best_Alignment.txt","w+")
+t.write("Alignment:")
+t.write(my_best_align)
+t.write("\n")
+t.write("Best score:")
+t.write(str(my_best_score))
