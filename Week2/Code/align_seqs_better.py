@@ -63,20 +63,36 @@ my_best_score = -1
 Dictionary={}
 for i in range(l1): # Note that you just take the last alignment with the highest score
     z = calculate_score(s1, s2, l1, l2, i)
+ #   Q=[]
+    Doc=[]
     if z >= my_best_score:
         my_best_align = "." * i + s2 # think about what this is doing!
         my_best_score = z 
         Dictionary[my_best_align]=z
+        Doc.append(z)
+
+##### 1 doesnt work but is what I would like to do 
 print(Dictionary)
-Dict=max(Dictionary, key=Dictionary.get)
-print(Dict)
-Out={}
+
+print(Doc)
+r=[]
+list(r)
+for n in Dictionary:
+       if Doc[n]!= Doc[n-1]:
+           r.append(Doc[n])
+####2 runs but only gets one value
+#Dict=max(Dictionary, key=Dictionary.get)
+#print(Dict)
+#Out={}
 #for d in Dict:
 #    Out.append(Dictionary[d])
-for d in Dictionary:
-    if d is Dict:
-        Out[d]=Dictionary[d]
-print(Out)
+#for d in Dictionary:
+#    if d is Dict:
+#        Out[d]=Dictionary[d]
+#print(Out)
+#only gets one!!
+
+######quite stuck. 
 
 t=open("../Results/Best_Alignment.txt","w+")
 t.write("Alignment:")
