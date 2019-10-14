@@ -1,6 +1,6 @@
 #Author: Ruth Keane (ruth.keane19@imperial.ac.uk)
-#Script: basic.io2.py
-#Desc: write the numbers 1:100 in a test file in
+#Script: basic_io2.py
+#Desc: write the numbers 1:100 in a test file in Sandbox
 #Arguments: none
 #Input: none
 #Output: none
