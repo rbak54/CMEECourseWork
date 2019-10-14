@@ -1,0 +1,3 @@
+touch readmeb.md
+open readmeb.md
+echo "Directory Content for This Week">>readmeb.md
