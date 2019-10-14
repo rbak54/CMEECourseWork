@@ -1,3 +1,10 @@
+#Author: Ruth Keane (ruth.keane19@imperial.ac.uk)
+#Script: basic.io1.py
+#Desc: printing contents of the file test.txt without spaces removed and with spaces removed
+#Arguments: none 
+#Input: none
+#Output: none
+#Date: Oct 2019
 #######################
 # FILE INPUT
 #######################

@@ -2,6 +2,8 @@
 import sys
 import csv
 import operator
+import pickle
+
 with open(str(sys.argv[1]),'r') as g: 
     reader=csv.reader(g, delimiter=",",quoting=csv.QUOTE_NONE)
     for row in reader:
@@ -60,26 +62,38 @@ def calculate_score(s1, s2, l1, l2, startpoint):
 # now try to find the best match (highest score) for the two sequences
 align = None
 my_best_score = -1
-Dictionary={}
+b=open('../Results/Aligns.txt','wb')
 for i in range(l1): # Note that you just take the last alignment with the highest score
     z = calculate_score(s1, s2, l1, l2, i)
- #   Q=[]
-    Doc=[]
-    if z >= my_best_score:
+    if z > my_best_score:
+        b.close()
+        b=open('../Results/Aligns.txt','wb')
         my_best_align = "." * i + s2 # think about what this is doing!
         my_best_score = z 
-        Dictionary[my_best_align]=z
-        Doc.append(z)
+        a=[my_best_align, my_best_score]
+        pickle.dump(a,b)
+    if z == my_best_score:
+        my_best_align = "." * i + s2 # think about what this is doing!
+        my_best_score = z 
+        a=[my_best_align,my_best_score]
+        pickle.dump(a,b)
+with open('../Results/Align.txt',"rb") as R:
+    c=pickle.load(b)
+    print(c)
+
+#=pickle.load(b)
+
+
 
 ##### 1 doesnt work but is what I would like to do 
-print(Dictionary)
 
-print(Doc)
-r=[]
-list(r)
-for n in Dictionary:
-       if Doc[n]!= Doc[n-1]:
-           r.append(Doc[n])
+#print(Doc)
+#r=[]
+##list(r)
+#  ## why won't tiis work? prob set operations??
+# for n in Dictionary:
+#       if Doc[n]!= Doc[n-1]:
+ #          r.append(Doc[n])
 ####2 runs but only gets one value
 #Dict=max(Dictionary, key=Dictionary.get)
 #print(Dict)
@@ -94,9 +108,12 @@ for n in Dictionary:
 
 ######quite stuck. 
 
-t=open("../Results/Best_Alignment.txt","w+")
-t.write("Alignment:")
-t.write(my_best_align)
-t.write("\n")
-t.write("Best score:")
-t.write(str(my_best_score))
+#t=open("../Results/Best_Alignment.txt","w+")
+#t.write("Alignment:")
+#t.write(my_best_align)
+#t.write("\n")
+#t.write("Best score:")
+#t.write(str(my_best_score))
+ #> 
+#lose and open
+#= append

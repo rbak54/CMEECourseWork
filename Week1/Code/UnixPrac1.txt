@@ -1,5 +1,5 @@
 #Author: Ruth Keane ruth.keane19@imperial.ac.uk
-#Desc: text file, linux code for exploring sequences
+#Desc: explores line and word counting for amino acid sequences. calculates AT/GC ratio for E.coli
 #Arguments: none
 #Date: Oct 2019
 

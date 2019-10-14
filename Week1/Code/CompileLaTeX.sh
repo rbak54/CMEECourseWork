@@ -2,16 +2,18 @@
 #Author: Ruth Keane ruth.keane19@imperial.ac.uk
 #Script: CompileLaTex.sh
 #Desc: script compiling LaTex and bibtex
-#Arguments: $1-file to be compiled
+#Input: $1-file to be compiled
+#Arguments: 1
 #Date: Oct 2019
+#change name so filename.tex works
 f=`basename $1 |cut -f 1 -d "."`
 pdflatex $f
 pdflatex $f
 bibtex $f
 pdflatex $f
 pdflatex $f
-
-mv ./FirstExample.pdf ../Results/
+#move pdf to results folder
+mv ./$f.pdf ../Results/ ##generalise
 evince ../Results/$f.pdf &
 
 ##Cleanup

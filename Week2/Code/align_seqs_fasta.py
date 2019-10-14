@@ -17,21 +17,21 @@ if a==3:
         rem=",\ n'[]"
         for r in rem:
             seq1=seq1.replace(r,"")
-#else:
- #   with open("../Data/fasta/407228326.fasta") as g:
-  #      seq1=g.readlines()
-   #     seq1=seq1[1:]
-    #    seq1=str(seq1)
-     #   rem=",\ n'[]"
-      #  for r in rem:
-       #     seq1=seq1.replace(r,"")
-    #with open("../Data/fasta/407228412.fasta") as g:
-     #   seq2=g.readlines()
-      #  seq2=seq1[1:]
-       # seq2=str(seq1)
-        #rem=",\ n'[]"
-        #for r in rem:
-         #   seq2=seq2.replace(r,"")   
+else:
+    with open("../Data/fasta/407228326.fasta") as h:
+        seq1=h.readlines()
+        seq1=seq1[1:]
+        seq1=str(seq1)
+        rem=",\ n'[]"
+        for r in rem:
+            seq1=seq1.replace(r,"")
+    with open("../Data/fasta/407228412.fasta") as g:
+        seq2=g.readlines()
+        seq2=seq2[1:]
+        seq2=str(seq2)
+        rem=",\ n'[]"
+        for r in rem:
+            seq2=seq2.replace(r,"")   
     #print(seq2)
     #s=g.read()
     #print(s)
@@ -42,6 +42,7 @@ if a==3:
     #both work ON sEQUE
 # Assign the longer sequence s1, and the shorter to s2
 # l1 is length of the longest, l2 that of the shortest
+
 
 l1 = len(seq1)
 l2 = len(seq2)
@@ -65,14 +66,14 @@ def calculate_score(s1, s2, l1, l2, startpoint):
                 score = score + 1
             else:
                 matched = matched + "-"
-        print(i)
+        ##print(i)
 
     # some formatted output
-    print("." * startpoint + matched)           
-    print("." * startpoint + s2)
-    print(s1)
-    print(score) 
-    print(" ")
+    ##print("." * startpoint + matched)           
+    ##print("." * startpoint + s2)
+    ##print(s1)
+    ##print(score) 
+    ##print(" ")
 
     return score
 
@@ -90,6 +91,7 @@ for i in range(l1): # Note that you just take the last alignment with the highes
     if z > my_best_score:
         my_best_align = "." * i + s2 # think about what this is doing!
         my_best_score = z 
+        print(z)
 
 print(my_best_align)
 print(s1) ###?

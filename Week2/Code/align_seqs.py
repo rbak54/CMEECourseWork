@@ -65,6 +65,8 @@ for i in range(l1): # Note that you just take the last alignment with the highes
     if z > my_best_score:
         my_best_align = "." * i + s2 # think about what this is doing!
         my_best_score = z 
+my_best_align
+my_best_score
 t=open("../Results/Best_Alignment.txt","w+")
 t.write("Alignment:")
 t.write(my_best_align)

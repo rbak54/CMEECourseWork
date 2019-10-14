@@ -9,7 +9,7 @@ Desc: simple boilerplate for shell scripts
 
  
 
-Arguments: none
+Input: none
 
  
 
@@ -21,7 +21,7 @@ Desc: script compiling LaTex and bibtex
 
  
 
-Arguments: $1-file to be compiled
+Input: $1-file to be compiled
 
  
 
@@ -33,10 +33,11 @@ Desc: concatenating two files
 
  
 
-Arguments: $1 and $2 -two files to be compiled
+Input: $1 and $2 -two files to be compiled, ($3- empty file for output)
 
  
 
+Output: File containing contents of $1 and $2 called Concatenated.txt in Results (unless specified as argument)
 ## CountLines.sh
 
 
@@ -45,7 +46,7 @@ Desc: counting lines in a file
 
  
 
-Arguments: $1-file to count lines in
+Input: $1-file to count lines in
 
  
 
@@ -53,14 +54,15 @@ Arguments: $1-file to count lines in
 
 
 
-Description: make a new file with spaces instead of commas
+Desc: make a new file with spaces instead of commas
 
  
 
-Arguments: $1 -file to be converted --> text file
+Input: $1 -file to be converted 
 
  
 
+Output: text file in Results
 ## FirstBiblio.bib
 
 
@@ -89,17 +91,7 @@ Desc: variables practice
 
  
 
-Arguments: $USER
-
- 
-
-## readmeb.md
-
-
-
-
- 
-
+Input: $USER-name
 
  
 
@@ -107,36 +99,36 @@ Arguments: $USER
 
 
 
-Desc: substitutte the tabs in the files with commas
+Desc: substitutes the tabs in the files with commas and saves the output into a .csv file
 
  
 
-Arguments: 1 -> tab deliminated file
+Input: A tab deliminated file
 
  
 
-saves the output into a .csv file
+Output: A CSV file 
 ## tiff2png.sh
 
 
 
-Desc: converting tiff to png
+Desc: converting tiff files to png files
 
  
 
-Arguments: tiff file
+Input: none (takes any in data folder)
 
  
 
+Output: png file in Results
 ## UnixPrac1.txt
 
 
 
-Desc: text file, linux code for exploring sequences
+Desc: explores line and word counting for amino acid sequences. calculates AT/GC ratio for E.coli
 
  
 
-Arguments: none
 
  
 
@@ -148,311 +140,7 @@ Desc: assigning variables in shell scripts
 
  
 
-Arguments: MyVar , a , b
-
- 
-
-# Directory Content for This Week
-
-
-## boilerplate.sh
-
-
-
-Desc: simple boilerplate for shell scripts
-
- 
-
-Arguments: none
-
- 
-
-## CompileLaTeX.sh
-
-
-
-Desc: script compiling LaTex and bibtex
-
- 
-
-Arguments: $1-file to be compiled
-
- 
-
-## ConcatenateTwoFiles.sh
-
-
-
-Desc: concatenating two files
-
- 
-
-Arguments: $1 and $2 -two files to be compiled
-
- 
-
-## CountLines.sh
-
-
-
-Desc: counting lines in a file
-
- 
-
-Arguments: $1-file to count lines in
-
- 
-
-## csvtospace.sh
-
-
-
-
- 
-
-Arguments: $1 -file to be converted --> text file
-
- 
-
-## FirstBiblio.bib
-
-
-
-
- 
-
-
- 
-
-## FirstExample.tex
-
-
-
-
- 
-
-
- 
-
-## MyExampleScript.sh
-
-
-
-Desc: variables practice
-
- 
-
-Arguments: $USER
-
- 
-
-## readmeb.md
-
-
-
-
- 
-
-
- 
-
-## tabtocsv.sh
-
-
-
-Desc: substitutte the tabs in the files with commas
-
- 
-
-Arguments: 1 -> tab deliminated file
-
- 
-
-## tiff2png.sh
-
-
-
-Desc: converting tiff to png
-
- 
-
-Arguments: tiff file
-
- 
-
-## UnixPrac1.txt
-
-
-
-Desc: text file, linux code for exploring sequences
-
- 
-
-Arguments: none
-
- 
-
-## variables.sh
-
-
-
-Desc: assigning variables in shell scripts
-
- 
-
-Arguments: MyVar , a , b
-
- 
-
-# Directory Content for This Week
-
-
-## boilerplate.sh
-
-
-
-Desc: simple boilerplate for shell scripts
-
- 
-
-Arguments: none
-
- 
-
-## CompileLaTeX.sh
-
-
-
-Desc: script compiling LaTex and bibtex
-
- 
-
-Arguments: $1-file to be compiled
-
- 
-
-## ConcatenateTwoFiles.sh
-
-
-
-Desc: concatenating two files
-
- 
-
-Arguments: $1 and $2 -two files to be compiled
-
- 
-
-## CountLines.sh
-
-
-
-Desc: counting lines in a file
-
- 
-
-Arguments: $1-file to count lines in
-
- 
-
-## csvtospace.sh
-
-
-
-
- 
-
-Arguments: $1 -file to be converted --> text file
-
- 
-
-## FirstBiblio.bib
-
-
-
-
- 
-
-
- 
-
-## FirstExample.tex
-
-
-
-
- 
-
-
- 
-
-## MyExampleScript.sh
-
-
-
-Desc: variables practice
-
- 
-
-Arguments: $USER
-
- 
-
-## readmeb.md
-
-
-
-
- 
-
-
- 
-
-## tabtocsv.sh
-
-
-
-Desc: substitutte the tabs in the files with commas
-
- 
-
-Arguments: 1 -> tab deliminated file
-
- 
-
-## tiff2png.sh
-
-
-
-Desc: converting tiff to png
-
- 
-
-Arguments: tiff file
-
- 
-
-## UnixPrac1.txt
-
-
-
-Desc: text file, linux code for exploring sequences
-
- 
-
-Arguments: none
-
- 
-
-## variables.sh
-
-
-
-Desc: assigning variables in shell scripts
-
- 
-
-Arguments: MyVar , a , b
+Input: three numbers-MyVar , a , b
 
  
 
