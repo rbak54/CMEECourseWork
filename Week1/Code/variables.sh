@@ -13,15 +13,22 @@ read MyVar
 echo 'the current value of the variable is' $MyVar
 ##using multiple variables
 echo 'Enter two numbers separated by space(s)'
-read a b 
+read a b
+##if no values entered- defaults 0
+a=${a:-0}
+b=${b:-0}
+
+
 echo "you entered" $a 'and' $b ". Their sum is:"
 mysum=`expr $a + $b`
 echo $mysum
+
 ##trying to remove error if no input- but always shows no variabels entered
-#if [ -e "$a" ]; then
-#    mysum=`expr $a + $b`
-#    echo $mysum
+#if [ -z "$2" ];
+#then
+#   echo "no variables were entered"
 #else
-#    echo "no variables were entered"
+#   mysum=`expr $a + $b`
+#   echo $mysum
 #fi
-#exit
+exit
