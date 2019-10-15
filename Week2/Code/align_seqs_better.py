@@ -62,32 +62,77 @@ def calculate_score(s1, s2, l1, l2, startpoint):
 # now try to find the best match (highest score) for the two sequences
 align = None
 my_best_score = -1
-b=open('../Results/Aligns.txt','wb')
-#dic={}
-list=[]
+#with open('../Results/Aligns.txt','wb') as c:
 for i in range(l1): # Note that you just take the last alignment with the highest score
     z = calculate_score(s1, s2, l1, l2, i)
     if z > my_best_score:
-        my_best_align = "." * i + s2 # think about what this is doing!
+        my_best_align = "; ." * i + s2 # think about what this is doing!
         my_best_score = z 
-        #taxa_dic[my_best_align]=my_best_score
-        list.clear()
-        list.append(my_best_align)
-        list.append(my_best_score)
+        best=[my_best_align,my_best_score,]
+        c = open('../Results/Aligns.txt','wb')
+        pickle.dump(best, c)
+        c.close()
+        # #with open('../Results/Align.txt',"rb") as R:
+# #    pickle.load(R)
+# print(list)
+# #=pickle.load(b)
+# answer= pickle.load(open('../Results/Aligns.txt','rb'))
     elif z == my_best_score:
-        my_best_align = "." * i + s2 # think about what this is doing!
+        my_best_align = "; ." * i + s2 # think about what this is doing!
         my_best_score = z 
-        list.append(my_best_align)
-        list.append(my_best_score)
-    pickle.dump(list,open('../Results/Aligns.txt','wb'))
+        best=pickle.load(open('../Results/Aligns.txt','rb'))
+        best.append(my_best_align)
+        best.append(my_best_score)
+        best.append
+        q=open('../Results/Aligns.txt','wb')
+        pickle.dump(best, q)
+        q.close()
+
 #with open('../Results/Align.txt',"rb") as R:
 #    pickle.load(R)
-print(list)
 #=pickle.load(b)
+this=pickle.load(open('../Results/Aligns.txt','rb'))
+print(this)
+this=str(this)
+with open('../Results/Aligns.csv','w') as a:
+    csvwrite=csv.writer(a)
+    bee=this.split(";")
+    print(bee)
+    csvwrite.writerow(this)
+    a.close()
+
+
+# answer= pickle.load(open('../Results/Aligns.txt','rb'))
+
+# # now try to find the best match (highest score) for the two sequences
+# align = None
+# my_best_score = -1
+# b=open('../Results/Aligns.txt','wb')
+# #dic={}
+# list=[]
+# for i in range(l1): # Note that you just take the last alignment with the highest score
+#     z = calculate_score(s1, s2, l1, l2, i)
+#     if z > my_best_score:
+#         my_best_align = "." * i + s2 # think about what this is doing!
+#         my_best_score = z 
+#         #taxa_dic[my_best_align]=my_best_score
+#         list.clear()
+#         list.append(my_best_align)
+#         list.append(my_best_score)
+#     elif z == my_best_score:
+#         my_best_align = "." * i + s2 # think about what this is doing!
+#         my_best_score = z 
+#         list.append(my_best_align)
+#         list.append(my_best_score)
+#     pickle.dump(list,open('../Results/Aligns.txt','wb'))
+# #with open('../Results/Align.txt',"rb") as R:
+# #    pickle.load(R)
+# print(list)
+# #=pickle.load(b)
 
 
 
-answer= pickle.load(open('../Results/Aligns.txt','rb'))
+# answer= pickle.load(open('../Results/Aligns.txt','rb'))
 
 
 ##### 1 doesnt work but is what I would like to do 
