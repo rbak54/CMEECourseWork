@@ -17,13 +17,13 @@ def is_an_oak(name):
     True
    
     >>> is_an_oak('Quercusrobur')
-    True
+    False
    
     >>> is_an_oak('Quercuss robur')
-    True
+    False
 
     """
-    return name.lower().startswith('quercu')
+    return name.lower().startswith('quercus ')
 
 def main(argv): 
     f = open('../Data/TestOaksData.csv','r')
