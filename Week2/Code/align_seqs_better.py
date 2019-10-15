@@ -63,26 +63,31 @@ def calculate_score(s1, s2, l1, l2, startpoint):
 align = None
 my_best_score = -1
 b=open('../Results/Aligns.txt','wb')
+#dic={}
+list=[]
 for i in range(l1): # Note that you just take the last alignment with the highest score
     z = calculate_score(s1, s2, l1, l2, i)
     if z > my_best_score:
-        b.close()
-        b=open('../Results/Aligns.txt','wb')
         my_best_align = "." * i + s2 # think about what this is doing!
         my_best_score = z 
-        a=[my_best_align, my_best_score]
-        pickle.dump(a,b)
-    if z == my_best_score:
+        #taxa_dic[my_best_align]=my_best_score
+        list.clear()
+        list.append(my_best_align)
+        list.append(my_best_score)
+    elif z == my_best_score:
         my_best_align = "." * i + s2 # think about what this is doing!
         my_best_score = z 
-        a=[my_best_align,my_best_score]
-        pickle.dump(a,b)
-with open('../Results/Align.txt',"rb") as R:
-    c=pickle.load(b)
-    print(c)
-
+        list.append(my_best_align)
+        list.append(my_best_score)
+    pickle.dump(list,open('../Results/Aligns.txt','wb'))
+#with open('../Results/Align.txt',"rb") as R:
+#    pickle.load(R)
+print(list)
 #=pickle.load(b)
 
+
+
+answer= pickle.load(open('../Results/Aligns.txt','rb'))
 
 
 ##### 1 doesnt work but is what I would like to do 
