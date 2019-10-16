@@ -6,6 +6,7 @@
 #Input: none
 #Output: none
 #Date: Oct 2019
+"""practice for control flow"""
 for j in range(12):
     if j % 3 ==0:
         print('hello')

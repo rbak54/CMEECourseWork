@@ -6,6 +6,7 @@
 #Input: none
 #Output: bodymass.csv in Data
 #Date: Oct 2019
+"""opens a csv data file and prints the species from it. Then writes a new csv file containing the species and the body mass."""
 import csv
 #read a file containing :
 #'Species', 'Infraorder','Family','Distribution','

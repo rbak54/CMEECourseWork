@@ -6,7 +6,7 @@
 #Input: two fasta files 
 #Output: Best_Alignment_fasta.txt in Results
 #Date: Oct 2019
-
+"""aligns sequences from two fasta files then produces a text file containing the best alignment and score of the best alignment"""
 # Two example sequences to match
 import sys
 import csv

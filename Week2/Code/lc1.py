@@ -6,6 +6,7 @@
 #Input: none
 #Output: none
 #Date: Oct 2019
+"""file to separate latin names, common names and masses from data using both loops and comprehensions"""
 birds = ( ('Passerculus sandwichensis','Savannah sparrow',18.7),
           ('Delichon urbica','House martin',19),
           ('Junco phaeonotus','Yellow-eyed junco',19.5),

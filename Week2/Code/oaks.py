@@ -6,6 +6,7 @@
 #Input: none
 #Output: none
 #Date: Oct 2019
+"""explores taxa list using loops and list comprehensions"""
 ##Finds just the taxa that are oak
 taxa=['Quercus robur',
 'Fraxinus excelsior','Pinus sylvestris','Quercus cerris','Quercus petraea',

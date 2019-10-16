@@ -1,0 +1,15 @@
+#!/bin/bash
+###be in week2
+cd Code
+all=`ls *.*`
+for each in $all
+if 
+do
+    echo -e "##" $each >> ../readme.md
+    echo -e "\n\n" >> ../readme.md
+    grep -i "Desc" $each | tr -d "#" >> ../readme.md
+    echo -e "\n \n" >>../readme.md
+    grep -i "Input:" $each | tr -d "#" >> ../readme.md
+    echo -e "\n \n" >> ../readme.md
+    grep -i "Output:" $each | tr -d "#" >> ../readme.md
+done

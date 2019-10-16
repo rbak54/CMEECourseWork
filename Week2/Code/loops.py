@@ -1,11 +1,12 @@
 #!/usr/bin/env python3
 #Author: Ruth Keane ruth.keane19@imperial.ac.uk
 #Script: loops.py
-#Desc: runs an infinite loop
+#Desc: explores control statements and makes an infinite loop
 #Arguments: none
 #Input: none
 #Output: none
 #Date: Oct 2019#####
+"""explores control statements and makes an infinite loop"""
 # For loop in python
 for i in range(5):
     print(i)

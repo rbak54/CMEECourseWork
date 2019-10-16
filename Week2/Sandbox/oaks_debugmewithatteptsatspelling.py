@@ -6,7 +6,7 @@ import csv
 import sys
 import doctest
 import re
-##Desc: function to determine if something is an oak then print oaks in a csv
+##Desc: function to determine if something is an oak, then print oaks in a csv
 ##Arguments: is_an_oak has 1 argument
 ##Input: none (input file is obtained in script-TestOaksData.csv in Data)
 ##Output:csv file in Data called JustOaksData.csv
@@ -28,7 +28,27 @@ def is_an_oak(name):
     True
 
     """
-#returns true if begins with quercus but also if common spelling errors
+
+    #nam=print(name)
+    
+    #na=str(nam)
+    #n=re.search("quercus", na)
+    #if n:nam=name
+     #   return True
+     #if n in name.lower():
+     # #else:
+     #    return False
+    # f=str(name)
+    
+    # Str2 = f
+    #     #Distance = lev.distance(Str1.lower(),Str2.lower()),
+    #     #Distance = lev.distance(Str1.lower(),Str2.lower()),
+    # Ratio = fuzz.ratio(Str1.lower(),Str2.lower()),
+    # #print(Distance)
+    # #Ratio = lev.ratio(Str1.lower(),Str.higher())
+    # print(Ratio)
+    # #print(Str2)
+
     if name.lower().startswith('quercus'):
         return True
     if name.lower().startswith('qercus'):
@@ -37,6 +57,7 @@ def is_an_oak(name):
         return True
     else:
         return False
+    #return name.lower().startswith('quercus')
     
 doctest.testmod()   
  
@@ -58,7 +79,7 @@ def main(argv):
             if is_an_oak(row[0]) ==True:
                 print('FOUND AN OAK!\n')
                 csvwrite.writerow([row[0], row[1]])     
-    return None
+        #return None
 
 if __name__ == "__main__":
     """so main function is called"""

@@ -6,7 +6,7 @@
 #Input: csv file containing sequences
 #Output: Aligns.csv
 #Date: Oct 2019
-
+"""aligns sequences contained in a csv file then outputs a csv file containing the alignment and score of all of the best alignments"""
 # Two example sequences to match
 import sys
 import csv

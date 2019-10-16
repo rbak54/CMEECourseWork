@@ -6,6 +6,7 @@
 #Input: none
 #Output: none
 #Date: Oct 2019
+"""practice for list comprehensions"""
 #printing range(10)
 x= [i for i in range(10)]
 print (x)

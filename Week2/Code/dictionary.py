@@ -6,7 +6,7 @@
 #Input: none
 #Output: none
 #Date: Oct 2019
-
+"""Script making a dictionary containing where each order is mapped to set of taxa"""
 taxa = [ ('Myotis lucifugus','Chiroptera'),
          ('Gerbillus henleyi','Rodentia',),
          ('Peromyscus crinitus', 'Rodentia'),

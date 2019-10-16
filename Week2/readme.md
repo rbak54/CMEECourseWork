@@ -226,7 +226,7 @@ Output: none
 
 
 
-Desc: function to determine if something is an oak, then print oaks in a csv
+Desc: function to determine if something is an oak then print oaks in a csv
 
  
 
@@ -248,16 +248,6 @@ Input: none
  
 
 Output: none
-## readme.md
-
-
-
-
- 
-
-
- 
-
 ## scope.py
 
 

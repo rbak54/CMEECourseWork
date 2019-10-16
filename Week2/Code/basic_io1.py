@@ -5,6 +5,7 @@
 #Input: none
 #Output: none
 #Date: Oct 2019
+"""printing contents of the file test.txt without spaces removed and with spaces"""
 #######################
 # FILE INPUT
 #######################

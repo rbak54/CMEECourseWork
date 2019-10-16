@@ -6,6 +6,7 @@
 #Output: none
 #Input: none
 #Date: Oct 2019
+"""script to seperate tuples and print in sections"""
 birds = ( ('Passerculus sandwichensis','Savannah sparrow',18.7),
           ('Delichon urbica','House martin',19),
           ('Junco phaeonotus','Yellow-eyed junco',19.5),

@@ -6,6 +6,7 @@
 #Input: none
 #Output: none
 #Date: Oct 2019
+"""counts numbers of arguments"""
 import sys
 print("This is the name of the script:", sys.argv[0])
 print("Number of arguments:", len(sys.argv))
