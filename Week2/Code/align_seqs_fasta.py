@@ -11,6 +11,7 @@
 import sys
 import csv
 a=len(sys.argv)
+#if 3 arguments (file is 1st argument!) then open files, otherwise default to 2 fasta files in fasta folder
 if a==3:
     with open(str(sys.argv[2]),'r') as h:
         seq2=h.readlines()
@@ -41,14 +42,7 @@ else:
         rem=",\ n'[]"
         for r in rem:
             seq2=seq2.replace(r,"")   
-    #print(seq2)
-    #s=g.read()
-    #print(s)
-    #ban=s.rsplit(",")
-    #print(ban)
-    #seq1=ban[0]
-    #seq2=ban[1]
-    #both work ON sEQUE
+
 # Assign the longer sequence s1, and the shorter to s2
 # l1 is length of the longest, l2 that of the shortest
 
@@ -101,9 +95,9 @@ for i in range(l1): # Note that you just take the last alignment with the highes
         my_best_align = "." * i + s2 # think about what this is doing!
         my_best_score = z 
         print(z)
-
+##add best score to a text file with alignment
 print(my_best_align)
-print(s1) ###?
+print(s1) 
 print("Best score:", my_best_score)
 p=open("../Results/Best_Alignment_fasta.txt","w+")
 p.write("Alignment:")
