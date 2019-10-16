@@ -4,7 +4,7 @@
 #Desc: aligns sequences contained in a csv file then outputs a csv file containing the alignment and score of all of the best alignments
 #Arguments: 1
 #Input: csv file containing sequences
-#Output: Aligns.csv
+#Output: Aligns.csv in Results
 #Date: Oct 2019
 """aligns sequences contained in a csv file then outputs a csv file containing the alignment and score of all of the best alignments"""
 # Two example sequences to match
@@ -12,14 +12,17 @@ import sys
 import csv
 import operator
 import pickle
-
-with open(str(sys.argv[1]),'r') as g: 
-    reader=csv.reader(g, delimiter=",",quoting=csv.QUOTE_NONE)
-    for row in reader:
-        print(row)
-    seq1=row[0]
-    seq2=row[1]
-    
+#if no input, both sequence 1 and 2, contain original sequences as defaults
+if len(sys.argv) ==2: 
+    with open(str(sys.argv[1]),'r') as g: 
+        reader=csv.reader(g, delimiter=",",quoting=csv.QUOTE_NONE)
+        for row in reader:
+            print(row)
+        seq1=row[0]
+        seq2=row[1]
+else:
+    seq1="ATCGCCGGATTACGGG"
+    seq2 = "CAATTCGGAT"
 # Assign the longer sequence s1, and the shorter to s2
 # l1 is length of the longest, l2 that of the shortest
 

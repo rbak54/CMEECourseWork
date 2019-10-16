@@ -3,7 +3,7 @@
 #Script: lc2.py
 #Desc: finding low and high rainfall months
 #Arguments: none
-#Input: 0
+#Input: none
 #Output: none
 #Date: Oct 2019
 """finding low and high rainfall months"""

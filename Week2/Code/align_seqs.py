@@ -7,18 +7,23 @@ __license__='Public domain'
 #Desc: aligns sequences from two fasta files then produces a text file containing the best alignment and score of the best alignment
 #Arguments: 1
 #Input: csv file containing sequences
-#Output: Best_Alignment.txt
+#Output: Best_Alignment.txt in Results
 #Date: Oct 2019
 ###imports###
 import sys
 import csv
 ###inputs###
-with open(str(sys.argv[1]),'r') as g: 
-    reader=csv.reader(g, delimiter=",",quoting=csv.QUOTE_NONE)
-    for row in reader:
-        print(row)
-    seq1=row[0]
-    seq2=row[1]   
+#if no input, both sequence 1 and 2 just contain original sequences as defaults
+if len(sys.argv) ==2: 
+    with open(str(sys.argv[1]),'r') as g: 
+        reader=csv.reader(g, delimiter=",",quoting=csv.QUOTE_NONE)
+        for row in reader:
+            print(row)
+        seq1=row[0]
+        seq2=row[1]  
+else:
+    seq1="ATCGCCGGATTACGGG"
+    seq2 = "CAATTCGGAT"
 
 # Assign the longer sequence s1, and the shorter to s2
 # l1 is length of the longest, l2 that of the shortest
@@ -82,6 +87,7 @@ t.write(my_best_align)
 t.write("\n")
 t.write("Best score:")
 t.write(str(my_best_score))
+t.close()
 
 if __name__=="___main___":
     """Ensures that the main function is called"""

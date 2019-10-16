@@ -107,7 +107,7 @@ Input: A tab deliminated file
 
  
 
-Output: A CSV file 
+Output: A CSV file in Results
 ## tiff2png.sh
 
 

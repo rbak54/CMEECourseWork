@@ -4,7 +4,7 @@
 #Desc: substitutes the tabs in the files with commas and saves the output into a .csv file
 #Arguments: 1 
 #Input: A tab deliminated file
-#Output: A CSV file 
+#Output: A CSV file in Results
 #Date:Oct 2019
 
 if [ -e "$1" ]

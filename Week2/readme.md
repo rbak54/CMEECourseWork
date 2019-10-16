@@ -13,7 +13,7 @@ Input: csv file containing sequences
 
  
 
-Output: Aligns.csv
+Output: Aligns.csv in Results
 ## align_seqs_fasta.py
 
 
@@ -39,7 +39,7 @@ Input: csv file containing sequences
 
  
 
-Output: Best_Alignment.txt
+Output: Best_Alignment.txt in Results
 ## basic_csv.py
 
 
@@ -204,7 +204,7 @@ Desc: finding low and high rainfall months
 
  
 
-Input: 0
+Input: none
 
  
 
@@ -213,7 +213,7 @@ Output: none
 
 
 
-Desc: runs an infinite loop
+Desc: explores control statements and makes an infinite loop
 
  
 
