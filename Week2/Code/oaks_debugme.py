@@ -5,6 +5,7 @@ __version__ = '0.0.1'
 import csv
 import sys
 import doctest
+import re
 ##Desc: function to determine if something is an oak, then print oaks in a csv
 ##Arguments: is_an_oak has 1 argument
 ##Input: none (input file is obtained in script-TestOaksData.csv in Data)
@@ -26,15 +27,15 @@ def is_an_oak(name):
     False
 
     """
-    #if "quercus" in name.lower():
-    #    return True
-    #else:
-    #    return False
-    return name.lower().startswith('quercus ')
-
-
-
+    # if "quercus" in name.lower():
+    #     return True
+    # else:
+    #     return False
+    return name.lower().startswith('quercus')
+    
+   
 def main(argv): 
+    """writing a csv containing oaks only--> Just Oaks data"""
     f = open('../Data/TestOaksData.csv','r')
     g = open('../Data/JustOaksData.csv','w')
     taxa = csv.reader(f)
@@ -42,18 +43,17 @@ def main(argv):
     csvwrite = csv.writer(g)
     csvwrite.writerow(["Genus","Species"])
     for row in taxa:
-##if the first part is not genus, then do this (if genus it will ignore that row_)
+    ##if the first part is not genus, then do this (if genus it will ignore that row_)
         if row[0] !=('Genus'):
             print(row)
             print ("The genus is: ") 
             print(row[0] + '\n')
-            if is_an_oak(row[0]):
+            if is_an_oak(row[0]) ==True:
                 print('FOUND AN OAK!\n')
                 csvwrite.writerow([row[0], row[1]])     
-    return None
+        #return None
 
-if (__name__ == "__main__"):
+if __name__ == "__main__":
+    """so main function is called"""
     status = main(sys.argv)
-
-
-doctest.testmod()
+    sys.exit(status)
