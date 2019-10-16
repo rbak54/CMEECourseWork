@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 #Author: Ruth Keane (ruth.keane19@imperial.ac.uk)
 #Script: basic_csv.py
 #Desc: opens a csv data file and prints the species from it. Then writes a new csv file containing the species and the body mass.

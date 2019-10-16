@@ -1,4 +1,12 @@
-#####For loop in python
+#!/usr/bin/env python3
+#Author: Ruth Keane ruth.keane19@imperial.ac.uk
+#Script: loops.py
+#Desc: runs an infinite loop
+#Arguments: none
+#Input: none
+#Output: none
+#Date: Oct 2019#####
+# For loop in python
 for i in range(5):
     print(i)
 #print each component of range 5
@@ -8,9 +16,9 @@ for k in my_list:
     print(k)
 #print each component of my_list    
  
- total=0
- summands=[0,1,11,111,1111]
- for s in summands:
+total=0
+summands=[0,1,11,111,1111]
+for s in summands:
      total=total + s
      print(total)
 #add each number in the list to total

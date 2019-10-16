@@ -1,8 +1,12 @@
-#Author: Ruth Keane ruth.keane19@imperial.ac.uk
+#!/usr/bin/env python3 
+#Author: Ruth Keane (ruth.keane19@imperial.ac.uk)
 #Script: lc2.py
 #Desc: finding low and high rainfall months
 #Arguments: none
+#Input: 0
+#Output: none
 #Date: Oct 2019
+
 # Average UK Rainfall (mm) for 1910 by month
 # http://www.metoffice.gov.uk/climate/uk/datasets
 rainfall = (('JAN',111.4),
@@ -19,20 +23,20 @@ rainfall = (('JAN',111.4),
             ('DEC',142.2),
            )
 
-# (1)  List of months where rainfall is >100mm-list comprehensino
-rainyc= [i[0] for i in rainfall if i[1]>100]
+# (1)  List of months where rainfall is >100mm , and rainfall-list comprehension
+rainyc= [i for i in rainfall if i[1]>100]
 print(rainyc)
 
-# (2) List of months where rainfall is <50mm-list comprehensino
+# (2) List of months where rainfall is <50mm-list comprehension
 dryc= [i[0] for i in rainfall if i[1]<50]
 print(dryc)
-# (3) List of months where rainfall is >100- loop
+# (3) List of months where rainfall is >100, and rainfall- loop
 rainy=[]
 for i in rainfall:
     if i[1]>100:
-        rainy.append(i[0])
+        rainy.append(i)
 print(rainy)
-#list of months wehre rainfall <50- loop
+#list of months where rainfall <50- loop
 dry=[]
 for i in rainfall:
     if i[1]<50:

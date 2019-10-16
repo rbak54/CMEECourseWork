@@ -1,3 +1,11 @@
+#!/usr/bin/env python3
+#Author: Ruth Keane ruth.keane19@imperial.ac.uk
+#Script: cfexercises2.py
+#Desc: practice for control flow
+#Arguments: none
+#Input: none
+#Output: none
+#Date: Oct 2019
 for j in range(12):
     if j % 3 ==0:
         print('hello')

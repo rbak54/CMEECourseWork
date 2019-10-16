@@ -1,8 +1,13 @@
 #!/usr/bin/env python3
-"""Some functions exemplifying the use of control statements"""
+"""Some functions exemplifying the use of control statements with doctests"""
 __author__='Ruth Keane ruth.keane19@imperial.ac.uk'
 __version__='0.0.1'
-
+#Desc: contains functions exemplifying the use of control statements in python-with doctests to check if working properly
+#Arguments: none
+#Input: none
+#Output: none
+#Date: Oct 2019
+## imports##
 ## imports##
 import sys #module to interface our program with the operating system
 ##constants##

@@ -2,7 +2,11 @@
 """Some functions exemplifying the use of control statements"""
 __author__='Ruth Keane (ruth.keane19s@imperial.ac.uk)'
 __version__='0.0.1'
-
+#Desc: contains functions exemplifying the use of control statements in python
+#Arguments: none
+#Input: none
+#Output: none
+#Date: Oct 2019
 ## imports##
 import sys #module to interface our program with the operating system
 ##constants##

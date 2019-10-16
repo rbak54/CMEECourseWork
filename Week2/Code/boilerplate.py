@@ -1,11 +1,14 @@
 #!/usr/bin/env python3
-"""Description of this programme or application. 
-    You can use several lines"""
+"""Prints This is a boilerplate."""
 __appname__='simple boilerplate'
 __author__='Ruth Keane (ruth.keane19@imperial.ac.uk)'
 __version__='0.0.1'
 __license__="License for this code/programme"
-
+#Desc: prints "This is a boilerplate"
+#Arguments: none
+#Input: none
+#Output: none
+#Date: Oct 2019
 ## imports##
 import sys #module to interface our program with the operating system
 ##constants##

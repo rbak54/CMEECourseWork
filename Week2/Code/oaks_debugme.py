@@ -5,7 +5,10 @@ __version__ = '0.0.1'
 import csv
 import sys
 import doctest
-#######why am I getting fails?)
+##Desc: function to determine if something is an oak, then print oaks in a csv
+##Arguments: is_an_oak has 1 argument
+##Input: none (input file is obtained in script-TestOaksData.csv in Data)
+##Output:csv file in Data called JustOaksData.csv
 ##Define function
 def is_an_oak(name):
     """ Returns True if name is starts with 'quercus' 
@@ -23,27 +26,34 @@ def is_an_oak(name):
     False
 
     """
+    #if "quercus" in name.lower():
+    #    return True
+    #else:
+    #    return False
     return name.lower().startswith('quercus ')
+
+
 
 def main(argv): 
     f = open('../Data/TestOaksData.csv','r')
     g = open('../Data/JustOaksData.csv','w')
-
     taxa = csv.reader(f)
+    #with open('../Data/JustOaksData.csv','w') as g:
     csvwrite = csv.writer(g)
     csvwrite.writerow(["Genus","Species"])
     for row in taxa:
-        ##if the first part is not genus, then do this (if genus it will ignore that row_)
+##if the first part is not genus, then do this (if genus it will ignore that row_)
         if row[0] !=('Genus'):
             print(row)
             print ("The genus is: ") 
             print(row[0] + '\n')
             if is_an_oak(row[0]):
                 print('FOUND AN OAK!\n')
-                csvwrite.writerow([row[0], row[1]])    
+                csvwrite.writerow([row[0], row[1]])     
+    return None
 
-    return 0
 if (__name__ == "__main__"):
     status = main(sys.argv)
+
 
 doctest.testmod()

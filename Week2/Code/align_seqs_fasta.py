@@ -1,3 +1,12 @@
+#!/usr/bin/env python3
+#Author: Ruth Keane ruth.keane19@imperial.ac.uk
+#Script: align_seqs_fasta.py
+#Desc: aligns sequences from two fasta files then produces a text file containing the best alignment and score of the best alignment
+#Arguments: 2 or 0
+#Input: two fasta files 
+#Output: Best_Alignment_fasta.txt in Results
+#Date: Oct 2019
+
 # Two example sequences to match
 import sys
 import csv

@@ -2,7 +2,11 @@
 """functions demonstrating conditional expressions"""
 __Author__='Ruth Keane (ruth.keane19@imperial.ac.uk)'
 __version__='0.0.1'
-
+#Desc: contains functions exemplifying the use of conditional expressions in python
+#Arguments: none
+#Input: none
+#Output: none
+#Date: Oct 2019
 ##imports##
 import sys
 

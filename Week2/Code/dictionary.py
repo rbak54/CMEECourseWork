@@ -1,3 +1,12 @@
+#!/usr/bin/env python3
+#Author: Ruth Keane ruth.keane19@imperial.ac.uk
+#Script: dictionary.py
+#Desc: Script making a dictionary containing where each order is mapped to set of taxa
+#Arguments: none
+#Input: none
+#Output: none
+#Date: Oct 2019
+
 taxa = [ ('Myotis lucifugus','Chiroptera'),
          ('Gerbillus henleyi','Rodentia',),
          ('Peromyscus crinitus', 'Rodentia'),

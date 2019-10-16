@@ -1,8 +1,10 @@
+#!/usr/bin/env python3
 #Author: Ruth Keane ruth.keane19@imperial.ac.uk
 #Script: tuple.py
 #Desc: script to seperate tuples and print in sections
 #Arguments: none
 #Output: none
+#Input: none
 #Date: Oct 2019
 birds = ( ('Passerculus sandwichensis','Savannah sparrow',18.7),
           ('Delichon urbica','House martin',19),
@@ -12,7 +14,7 @@ birds = ( ('Passerculus sandwichensis','Savannah sparrow',18.7),
         )
 
 for a in birds:
-    print("Latin name:",a[0])
+    print("Latin name:",a[0],)
     print("Common name:",a[1])
     print("Mass:",a[2])
     print("\n")
