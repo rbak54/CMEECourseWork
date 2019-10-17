@@ -1,16 +1,22 @@
- pre1<-function(){}
+ npre<-function(){
  a <- NA
- for  (i in 1:10) {
- a<- c(a,i)
- print(a)
- print(object.size(a)
-++++++++++++++++++
-
- a <- rep(NA,10)
- for (i in 1:10) {
-     a[i] <- i
-     print(a)
-     print(object.size(a))
+ for  (i in 1:100000) {
+    a<- c(a,i)
+  #  print(a)
+   # print(object.size(a))
  }
+ }
+##
+pre<-function(){
+ a <- rep(NA,100000)
+ for (i in 1:100000) {
+     a[i] <- i
+     #print(a)
+     #print(object.size(a))
+ }
+}
 
- print(system.time(SumAllElements(M)))
+print("Using loops, the time taken is:")
+print(system.time(npre()))
+print("Using preallocation, the time taken is:")
+print(system.time((pre())))
