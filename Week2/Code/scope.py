@@ -1,5 +1,14 @@
-# defining a function, in this function _a_global and _b_global are different but
-# once the function is over global returns to original falues  
+
+#Author: Ruth Keane (ruth.keane19@imperial.ac.uk)
+#Script: scope.py
+#Desc:functions exploring local and global variables
+#Arguments: none
+#Input: none
+#Output: none
+#Date: Oct 2019
+"""functions exploring local and global variables"""
+
+#defining a function, in this function _a_global and _b_global are different but once the function is over global returns to original values
 _a_global = 10
 
 if _a_global >= 5:

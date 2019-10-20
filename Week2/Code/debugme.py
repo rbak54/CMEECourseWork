@@ -9,7 +9,8 @@
 """file to debug"""
 def createabug(x):
     y=x**4
-    z=0.
+    #changed value of z so no longer an error
+    z=1
     y=y/z
     return y 
 createabug(25)
