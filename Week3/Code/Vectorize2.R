@@ -1,5 +1,5 @@
 # Runs the stochastic Ricker equation with gaussian fluctuations
-
+require(apply)
 rm(list=ls())
 
 stochrick<-function(p0=runif(1000,.5,1.5),r=1.2,K=1,sigma=0.2,numyears=100)
@@ -24,9 +24,10 @@ stochrick<-function(p0=runif(1000,.5,1.5),r=1.2,K=1,sigma=0.2,numyears=100)
 # to the extent possible, with improved performance: 
 
 #so plan is to make funcion and then use apple
-Rick<-function(p0=runif(1000,.5,1.5),r=1.2,K=1,sigma=0.2,numyears=100)
-{
-  N<-matrix(NA,numyears,length(p0))
+#Rick<-function(p0=runif(1000,.5,1.5),r=1.2,K=1,sigma=0.2,numyears=100)
+ Rick<-function(p0=runif(1000,.5,1.5),r=1.2,K=1,sigma=0.2,numyears=100){
+  #N<-matrix(NA,numyears,length(p0))
+  N<--rep(NA,length(numyears))
   N[yr,pop] <- N[yr-1,pop] * exp(r * (1 - N[yr - 1,pop] / K) + rnorm(1,0,sigma))
    # N[1]=p0
   #  for (N:numyears) 
@@ -48,3 +49,5 @@ stochrickvect<-function(p0=runif(1000,.5,1.5),r=1.2,K=1,sigma=0.2,numyears=100){
  print(N) 
 print("Vectorized Stochastic Ricker takes:")
 print(system.time(res2<-stochrickvect(p0=runif(1000,.5,1.5),r=1.2,K=1,sigma=0.2,numyears=100)))
+
+??????????????
