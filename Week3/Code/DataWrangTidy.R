@@ -19,7 +19,6 @@ library(plyr)
 ############# Load the dataset ###############
 # header = false because the raw data don't have real headers 
 MyData<- as.matrix(read.csv("../Data/PoundHillData.csv",header = F)) 
-
 # header = true because we do have metadata headers- don't want strings as factors 
 MyMetaData <- read.csv("../Data/PoundHillMetaData.csv",header = T, sep=";", stringsAsFactors = F)
 
@@ -41,8 +40,9 @@ MyData <- t(MyData)
 #dim(MyData)
 
 ############# Replace species absences with zeros ###############
-#MyData[MyData == ""] = 0
-tidyr::replace_na(MyData, 0)
+MyData[MyData == ""] = 0
+#MyData<-tidyr::replace(MyData, 0)
+#head(MyData)
 ############# Convert raw matrix to data frame ###############
 
 TempData <- as.data.frame(MyData[-1,],stringsAsFactors = F) #stringsAsFactors = F is important!
@@ -51,23 +51,29 @@ colnames(TempData) <- MyData[1,] # assign column names from original data
 ############# Convert from wide to long format  ###############
 #require(reshape2) # load the reshape2 package
 
-#?melt #check out the melt function
-#MyWrangledData<-tidyr::gather(TempData,"Cultivation","Block","Plot","Quadrat")
-MyPivotData<-tidyr::pivot_longer(TempData,TempData[,2])
+#?melt #check out the melt functio#MyWrangledData<-tidyr::gather(TempData,"Cultivation","Block","Plot","Quadrat")
+#MyPivotData<-tidyr::pivot_longer(TempData,cols="Cultivation","Block","Plot","Quadrat")
+MyPivotData<-TempData %>% 
+  gather(5:45, key="Species", value = "count")
+##'not working   MyPivotData1<-dplyr::group_by(MyPivotData, Species)
 ##above working!!--not right
-utils::View(MyWrangledData)
+utils::View(MyPivotData)
+
 #MyWrangledData <- melt(TempData, id=c("Cultivation", "Block", "Plot", "Quadrat"), variable.name = "Species", value.name = "Count")
 
-MyWrangledData[, "Cultivation"] <- as.factor(MyWrangledData[, "Cultivation"])
-MyWrangledData[, "Block"] <- as.factor(MyWrangledData[, "Block"])
-MyWrangledData[, "Plot"] <- as.factor(MyWrangledData[, "Plot"])
-MyWrangledData[, "Quadrat"] <- as.factor(MyWrangledData[, "Quadrat"])
-MyWrangledData[, "Count"] <- as.integer(MyWrangledData[, "Count"])
+#MyPivotData[, "Cultivation"] <- as.factor(MyPivotData[, "Cultivation"])
+#MyPivotData[, "Block"] <- as.factor(MyPivotData[, "Block"])
+#MyPivotData[, "Plot"] <- as.factor(MyPivotData[, "Plot"])
+#MyPivotData[, "Quadrat"] <- as.factor(MyPivotData[, "Quadrat"])
+#MyPivotData[, "Count"] <- as.integer(MyPivotData[, "Count"])
 
-str(MyWrangledData)
-head(MyWrangledData)
-dim(MyWrangledData)
+
+dplyr::tbl_df(MyPivotData)
+utils::View(MyPivotData)
+#str(MyWrangledData)
+#head(MyWrangledData)
+#dim(MyWrangledData)
 
 ############# Exploring the data (extend the script below)  ###############
-MyData[MyData==""]=0
-head(MyData)
+#MyData[MyData==""]=0
+#head(MyData)

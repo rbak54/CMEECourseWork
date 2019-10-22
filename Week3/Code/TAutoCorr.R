@@ -7,18 +7,42 @@
 #Output: 
 #Date: Oct 2019
 
-utocorrelation in weather (this Practical assumes you know about correlation coefficients and p-values). Your goal is to write an R script that will help answer the question: Are temperatures of one year significantly correlated with the next year (successive years), across years in a given location? For this, you need to calculate the correlation between n−1 pairs of years, where n
-
-is the total number of years. However, you can't use the standard p-value calculated for a correlation coefficient, because measurements of climatic variables in successive time-points in a time series (successive seconds, minutes, hours, months, years, etc.) are not independent. The general guidelines are:
-
-    Make a new script named TAutoCorr.R, and save in codedirectory
-    At the start of the script, load and examine and plot KeyWestAnnualMeanTemperature.Rdata, using load(). This is the temperature in Key West, Florida for the 20th century.
-    Now extend the script to:
-        Compute the appropriate correlation coefficient between successive years and store it (look at the help file for cor()
-        Repeat this calculation 10000 times by -- randomly permuting the time series, and then recalculating the correlation coefficient for each randomly permuted year sequence and storing it. Hint: you can use the sample function that we learned about). Read the help file for this function and experiment with it.
-        Then calculate what fraction of the correlation coefficients from the previous step were greater than that from step 1 (this is your approximate p-value).
-    How do you interpret these results? Why? Present your results and their interpretation in a pdf document written in LATEX
-
-(please include the the document's source code as well).
-
 load("/home/ruth/Documents/CMEECourseWork/Week3/Data/KeyWestAnnualMeanTemperature.RData")
+#utils::View(ats)
+ats2<-dplyr::lag(ats$Temp,n=1)
+ats1<-ats[,2]
+ats1<-ats1[2:100]
+ats2<-ats2[2:100]
+#ats1<-as.character(ats1)
+#ats2<-as.character(ats2)
+H<-data.frame(ats1,ats2)
+
+corR<-cor(ats1,ats2)
+print(corR)
+V<-rep(NA,10000)
+for (i in 1:10000){
+ats2<-sample(ats2)
+cor<-cor(ats1,ats2)
+V[i]=cor
+}
+Bee=0
+for (v in V) {
+  if (v > corR){
+  Bee=Bee+1}
+}
+#proportion greater
+p<-(Bee/length(V))
+print(p)
+graphics.off()
+A<-as.data.frame(V)
+##ggplot with my value on # write some words in
+#head(A)
+require(ggplot2)
+
+Q<-ggplot(ats,aes(Year,Temp))+geom_line()+ylab("Temperature")+ggtitle("Temperature changes from 1900 to 2000")
+R<-ggplot(H,aes(ats1,ats2))+geom_point()+geom_smooth(method="lm")+xlab("Temperature in year n")+ylab("Temperature in year n+1")+ ggtitle("Temperature change between years")
+S<-ggplot(A,aes(V))+geom_density()+xlab("Correlation Coefficient")+ylab("Density")+
+  geom_vline(xintercept=corR,colour="blue", show.legend = TRUE)+
+  geom_text(x=0.1,y=3, label="Weather Autocorrelation = 0.326", color="blue")+
+  ggtitle("Correlation Coefficient density")
+graphics.off()

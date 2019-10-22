@@ -16,25 +16,13 @@ DFwR<-plyr::mutate(DFwR,logPredator.mass= log(Predator.mass))
 DFwR<-plyr::mutate(DFwR,logPrey.mass= log(Prey.mass))
 DFwR<-plyr::mutate(DFwR,logRatio= log(Ratio))
 #utils::View(DFwR)
-densityplot(~logRatio| Type.of.feeding.interaction, data=DFwR)
-densityplot(~logPredator.mass| Type.of.feeding.interaction, data=DFwR)
-densityplot(~logPrey.mass| Type.of.feeding.interaction, data=DFwR)
-#his practical, you will write script that draws and saves three lattice graphs
-#by feeding interaction type: one of predator mass, one of prey mass and one of 
-#t#he size ratio of prey mass over predator mass. Note that you would want to use 
-#logarithms of masses (or mass-ratios)for all three plots. 
-#In addition, the script #will calculate the mean and median
-#predator mass, prey mass and predator-prey size-
-  #ratios to a csv file. So:
-#mean(DFwR$lgPrey.mass[type.of.feeding.interaction==predacious])
-#c=c("logPrey.mass","logPredator.mass","logRatio")
-#bothmatrix<-matrix(NA,nrow=5,ncol=3)
-#colnames(bothmatrix)=c
-#bothmatrix
-#for (i in bothmatrix){
-#  M<-aggregate(DFwR$i,list(DFwR$Type.of.feeding.interaction),mean)
-#  bothmatrix[,i]<-M[,2]
-#}
+pdf("../Results/Pred_Lattice.pdf")
+print(densityplot(~logPredator.mass| Type.of.feeding.interaction, data=DFwR))
+pdf("../Results/Prey_Lattice.pdf")
+print(densityplot(~logPrey.mass| Type.of.feeding.interaction, data=DFwR))
+pdf("../Results/SizeRatio_Lattice.pdf")
+print(densityplot(~logRatio| Type.of.feeding.interaction, data=DFwR))
+
 meanmatrix<-matrix(NA,nrow=5,ncol=3)
 M<-aggregate(DFwR$logPrey.mass,list(DFwR$Type.of.feeding.interaction),mean)
 meanmatrix[,1]<-M[,2]
@@ -61,6 +49,8 @@ com[,1:3]<-meanmatrix
 com[,4:6]<-medmatrix
 colnames(com)<-c("Mean.Log.Prey.mass","Mean.Log.Predator.mass","Mean.Log.Ratio","Median.Log.Prey.mass","Median.Log.Predator.mass","Median.Log.Ratio")
 rownames(com)<-E[,1]
+write.csv(com,"../Results/PP_Results.csv")
+graphics.off()
 #men<-tapply(DFwR$logPrey.mass,DFwR$Type.of.feeding.interaction,mean,simplify = FALSE)
 #med<-tapply(DFwR$logPrey.mass,DFwR$Type.of.feeding.interaction,median)
 #both<-c(men,med)
@@ -88,7 +78,19 @@ rownames(com)<-E[,1]
 #each iteration, or the R-savvy way, by using tapply or ddply and avoiding looping altogether.
 
 
-
-plot(log)
-MyDF %>% group_by(Type.of.feeding.interaction) %>% mean(...)
-
+#his practical, you will write script that draws and saves three lattice graphs
+#by feeding interaction type: one of predator mass, one of prey mass and one of 
+#t#he size ratio of prey mass over predator mass. Note that you would want to use 
+#logarithms of masses (or mass-ratios)for all three plots. 
+#In addition, the script #will calculate the mean and median
+#predator mass, prey mass and predator-prey size-
+  #ratios to a csv file. So:
+#mean(DFwR$lgPrey.mass[type.of.feeding.interaction==predacious])
+#c=c("logPrey.mass","logPredator.mass","logRatio")
+#bothmatrix<-matrix(NA,nrow=5,ncol=3)
+#colnames(bothmatrix)=c
+#bothmatrix
+#for (i in bothmatrix){
+#  M<-aggregate(DFwR$i,list(DFwR$Type.of.feeding.interaction),mean)
+#  bothmatrix[,i]<-M[,2]
+#}

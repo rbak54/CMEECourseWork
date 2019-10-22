@@ -46,7 +46,7 @@ MyWrangledData[, "Count"] <- as.integer(MyWrangledData[, "Count"])
 str(MyWrangledData)
 head(MyWrangledData)
 dim(MyWrangledData)
-
+View(MyWrangledData)
 ############# Exploring the data (extend the script below)  ###############
-MyData[MyData==""]=0
-head(MyData)
+#MyData[MyData==""]=0
+#head(MyData)

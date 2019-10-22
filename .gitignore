@@ -1,3 +1,5 @@
 *~ 
 *.tmp
 *.log
+*-c*ance.tex
+*.gz
