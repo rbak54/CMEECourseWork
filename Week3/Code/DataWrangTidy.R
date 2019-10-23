@@ -5,15 +5,6 @@
 #Input: none
 #Output: 
 #Date: Oct 2019
-#Write a new script called DataWrangTidy.R that uses
-#dplyr and tidyr for the same data wrangling steps. 
-#The best way to do this is to copy DataWrang.R and rename 
-#it DataWrangTidy.R. Then systematically redo the script from 
-#start to end, looking for a function in dplyr and tidyr that
-#does the same thing in each wrangling step.
-#For example, to convert from wide to long format, instead of 
-#using melt() (or dcast()) from the reshape2 package, you can
-#use gather() from tidyr.
 library(tidyr)
 library(plyr)
 ############# Load the dataset ###############
@@ -22,44 +13,23 @@ MyData<- as.matrix(read.csv("../Data/PoundHillData.csv",header = F))
 # header = true because we do have metadata headers- don't want strings as factors 
 MyMetaData <- read.csv("../Data/PoundHillMetaData.csv",header = T, sep=";", stringsAsFactors = F)
 
-############# Inspect the dataset ###############
 dplyr::tbl_df(MyData)
-dim(MyData) #####################can't find alternative but doesn't seem to be part of data wrangling
+dim(MyData) 
 dplyr::glimpse(MyData)
-utils::View(MyData) #you can also do this
-utils::View(MyMetaData)
-
-############# Transpose ###############
-# To get those species into columns and treatments into rows 
+#utils::View(MyData) 
+#utils::View(MyMetaData)
+# species into columns and treatments into rows 
 MyData <- t(MyData) 
-#MyDataFrame<-as.data.frame(MyData,stringsAsFactors = F)
-#tibble::rownames_to_column(MyDataFrame, var="v1") ##can't find alternative
-#utils::View(MyDataFrame)
-
-#head(MyData)
-#dim(MyData)
-
-############# Replace species absences with zeros ###############
+#replace with 0s
 MyData[MyData == ""] = 0
 #MyData<-tidyr::replace(MyData, 0)
-#head(MyData)
-############# Convert raw matrix to data frame ###############
-
+#convert to data frame
 TempData <- as.data.frame(MyData[-1,],stringsAsFactors = F) #stringsAsFactors = F is important!
 colnames(TempData) <- MyData[1,] # assign column names from original data
-
-############# Convert from wide to long format  ###############
-#require(reshape2) # load the reshape2 package
-
-#?melt #check out the melt functio#MyWrangledData<-tidyr::gather(TempData,"Cultivation","Block","Plot","Quadrat")
-#MyPivotData<-tidyr::pivot_longer(TempData,cols="Cultivation","Block","Plot","Quadrat")
+#wide to long
 MyPivotData<-TempData %>% 
   gather(5:45, key="Species", value = "count")
-##'not working   MyPivotData1<-dplyr::group_by(MyPivotData, Species)
-##above working!!--not right
-utils::View(MyPivotData)
-
-#MyWrangledData <- melt(TempData, id=c("Cultivation", "Block", "Plot", "Quadrat"), variable.name = "Species", value.name = "Count")
+#utils::View(MyPivotData)
 
 #MyPivotData[, "Cultivation"] <- as.factor(MyPivotData[, "Cultivation"])
 #MyPivotData[, "Block"] <- as.factor(MyPivotData[, "Block"])
@@ -67,9 +37,8 @@ utils::View(MyPivotData)
 #MyPivotData[, "Quadrat"] <- as.factor(MyPivotData[, "Quadrat"])
 #MyPivotData[, "Count"] <- as.integer(MyPivotData[, "Count"])
 
-
 dplyr::tbl_df(MyPivotData)
-utils::View(MyPivotData)
+#utils::View(MyPivotData)
 #str(MyWrangledData)
 #head(MyWrangledData)
 #dim(MyWrangledData)

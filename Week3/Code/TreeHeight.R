@@ -5,24 +5,23 @@
 #Input: none
 #Output: none
 #Date: Oct 2019
-
+#import data
 Trees<- read.csv("../Data/trees.csv", header= T ) #singsAsFactors = F
-#Trees[,"Angle"] <- as.numeric(Trees[, "Angle.degrees"])
-#Trees[,"Distance"] <- as.numeric(Trees[, "Angle.degrees"])
-#Trees[,"Species"] <- as.character(Trees[, "Species"])
+#empty column for height
 Trees$Tree.Height.m<-NA
-head(Trees)
+#calculation function
 TreeHeight <-function(degrees,distance) {
     radians <- degrees * pi / 180
     height <<- distance * tan(radians)
     #print(paste("Tree height is:", height))
     return(height)
 }
+#calculate height in Trees
 for (tree in 1:nrow(Trees)){
   degrees<-Trees[tree, "Angle.degrees"]
   distance<-Trees[tree,"Distance.m"]
   TreeHeight(degrees,distance)
   Trees$Tree.Height.m[tree]<-height
 }
-
+#export data
 write.csv(Trees,"../Results/TreeHts.csv")

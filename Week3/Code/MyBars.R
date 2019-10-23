@@ -1,4 +1,3 @@
-
 #Author: Ruth Keane (ruth.keane19@imperial.ac.uk)
 #Script: MyBars.R 
 #Desc: Make a bar chart from Results.txt
@@ -12,7 +11,7 @@ a<- read.table("../Data/Results.txt", header=TRUE)
 head(a)
 a$ymin<- rep(0,dim(a)[1]) #repeat, dimensions, append column of 0s
 #make pdf
-pdf("../Results/Results.pdf", 11.7, 8.3)
+pdf("../Results/MyBars.pdf", 11.7, 8.3)
 ##make graph
 p<-ggplot(a)
 #first linerange
@@ -44,6 +43,7 @@ p<- p +scale_x_continuous("My x axis",
                        breaks=seq(3,5, by = 0.05))
 p<- p +scale_y_continuous("My y axis")
 p<-p+theme_bw() + theme(legend.position = "none")
-p
+
+#print into pdf
 print(p)
 graphics.off()

@@ -1,9 +1,9 @@
 #Author: Ruth Keane (ruth.keane19@imperial.ac.uk)
 #Script: sample.R 
-#Desc: 
-#Arguments: 
-#Input: 
-#Output: 
+#Desc: vectorization using lapply and sapply
+#Arguments: none
+#Input: none
+#Output: none
 #Date: Oct 2019
 
 ###takes a sample size n from population and calculates mean
@@ -40,6 +40,7 @@ lapply_sample<- function(popn, n, num){
     result4<- lapply(1:num, function(i) myexperiment(popn, n))
     return(result4)
 }
+
 ##iterating experiment, vectorisation, sapply
 sapply_sample<- function(popn,n ,num){
     result5<- sapply(1:num, function(i) myexperiment(popn, n))

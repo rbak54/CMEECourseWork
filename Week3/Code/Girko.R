@@ -5,7 +5,7 @@
 #Input: none
 #Output: none
 #Date: Oct 2019
-
+graphics.off()
 require(ggplot2)
 ##build function
 #dev.off()
@@ -36,6 +36,6 @@ p<- p+geom_hline(aes(yintercept=0))
 p<-p+geom_vline(aes(xintercept=0))
 #add ellipse 
 p<-p+geom_polygon(data=ellDF, aes(x= Real, y= Imaginary, alpha=1/20, fill= "red"))
-print(p)
 ##saving as pdf
+print(p)
 graphics.off(); #you can also use dev.off()

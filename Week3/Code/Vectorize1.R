@@ -1,5 +1,13 @@
+#Author: Ruth Keane (ruth.keane19@imperial.ac.uk)
+#Script: Vectorize.R
+#Desc: Summing the elements of a matrix using both a vectorized and non-vectorized function
+#Arguments: none
+#Input: none
+#Output: none
+#Date: Oct 2019
+#matrix
 M <- matrix(runif(1000000),1000,1000)
-
+#sum making a manual function
 SumAllElements <- function(M) {
     Dimensions <- dim(M)
     Tot <- 0

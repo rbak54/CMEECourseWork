@@ -1,6 +1,6 @@
 #Author: Ruth Keane (ruth.keane19@imperial.ac.uk)
 #Script: plotLin.R
-#Desc: 
+#Desc: makes plot
 #Arguments: none
 #Input: none
 #Output: none
@@ -35,7 +35,7 @@ p<- p+ geom_text(aes(x=60, y=0,
                     parse=TRUE, size=6,
                    colour="blue")
 p
-
+#prints pdf
 pdf("../Results/MyLinReg.pdf") # Open blank pdf page using a relative path
 print(p)
-
+graphics.off()

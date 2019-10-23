@@ -1,3 +1,11 @@
+#Author: Ruth Keane (ruth.keane19@imperial.ac.uk)
+#Script: Ricker.R
+#Desc: Ricker model
+#Arguments: none
+#Input: none
+#Output: none
+#Date: Oct 2019
+
 Ricker<- function(N0=1, r=1, K=10, generations=50)
 {
   N<-rep(NA, generations)

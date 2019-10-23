@@ -8,10 +8,10 @@
 i <- 0
     while(i<Inf) {
         if(i==10){
-            break
+            break #breaks when i gets to 10. but otherwise woud go to inf!
         }
         else{
             cat("i equals", i, "\n")
-            i <- i + 1
+            i <- i + 1 #INCREASE i by one each time
     }
     }
