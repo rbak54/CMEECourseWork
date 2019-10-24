@@ -25,14 +25,22 @@ print(densityplot(~logPrey.mass| Type.of.feeding.interaction, data=DFwR))
 pdf("../Results/SizeRatio_Lattice.pdf")
 print(densityplot(~logRatio| Type.of.feeding.interaction, data=DFwR))
 #calculate means
-M<-matrix(NA,nrow=5,ncol=3)
+meanmatrix<-matrix(NA,nrow=5,ncol=3)
+R<-c("logPrey.mass","logPredator.mass","logRatio")
+R<-as.data.frame(R)
+R
+s=0
+for (i in R){
+  print(i)
+  s=s+1
+  M<-aggregate(DFwR$i,list(DFwR$Type.of.feeding.interaction),mean)
+  meanmatrix[,s]<-M[,2]  
+}
 
-M<-aggregate(DFwR$logPrey.mass,list(DFwR$Type.of.feeding.interaction),mean)
-meanmatrix[,1]<-M[,2]
-M<-aggregate(DFwR$logPredator.mass,list(DFwR$Type.of.feeding.interaction),mean)
-meanmatrix[,2]<-M[,2]
-M<-aggregate(DFwR$logRatio,list(DFwR$Type.of.feeding.interaction),mean)
-meanmatrix[,3]<-M[,2]
+#M<-aggregate(DFwR$logPredator.mass,list(DFwR$Type.of.feeding.interaction),mean)
+#meanmatrix[,2]<-M[,2]
+#M<-aggregate(DFwR$logRatio,list(DFwR$Type.of.feeding.interaction),mean)
+#meanmatrix[,3]<-M[,2]
 #calculate medians
 medmatrix<-matrix(NA,nrow=5,ncol=3)
 E<-aggregate(DFwR$logPrey.mass,list(DFwR$Type.of.feeding.interaction),median)

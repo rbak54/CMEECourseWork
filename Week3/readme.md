@@ -29,8 +29,6 @@ Input:
 Output: 
 ## autocorrelation.Rnw
 
-Desc: makes autocorrelation latex pdf
-
 
 
 
@@ -130,6 +128,19 @@ Input: none
  
 
 Output: 
+## get_TreeHeight.R
+
+
+
+Desc: function calculates heights of trees in a dataset. this data is exported as a csv. 
+
+ 
+
+Input: csv file containing tree distance and degrees data
+
+ 
+
+Output: file in results folder called *nameoffile*_treeheights.csv
 ## Girko.R
 
 
