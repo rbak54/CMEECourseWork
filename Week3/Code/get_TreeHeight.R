@@ -6,10 +6,19 @@
 #Output: file in results folder called *nameoffile*_treeheights.csv
 #Date: Oct 2019
 
-arg<-commandArgs() #can go to command line arguemtn#
-file<-arg[6]
+args<-commandArgs(trailingOnly = T) #can go to command line arguemtn#
+#file<-arg[6]
 #print(file)
-Trees<- read.csv(file, header= T ) #singsAsFactors = F
+if (length(args)==0) {
+  print("No file inputted. Default: trees.csv will be used")
+  file<-"../Data/trees.csv"
+  Trees<- read.csv(file, header= T )
+  
+} else if (length(args)==1) {
+  file<-args[1]
+  Trees<- read.csv(file, header= T ) 
+}
+#singsAsFactors = F
 #empty column for height
 Trees$Tree.Height.m<-NA
 #calculation function
@@ -29,7 +38,6 @@ for (tree in 1:nrow(Trees)){
 F<-basename(file)
 F<-tools::file_path_sans_ext(F)
 #utput file name as InputFileName_treeheights.csv.
-#want equiv of basenae for r acting on file then
 #export data
 TreeFile<-paste("../Results/",F,"_treeheights.csv",sep="")
 write.csv(Trees,TreeFile)

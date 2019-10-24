@@ -219,6 +219,19 @@ Input: none
  
 
 Output: none
+## PP_Regress_loc.R
+
+
+
+Desc: calculates regressions for location
+
+ 
+
+Input: none
+
+ 
+
+Output: none
 ## PP_Regress.R
 
 
@@ -245,6 +258,16 @@ Input: none
  
 
 Output: none
+## REMOVE.R
+
+
+
+
+ 
+
+
+ 
+
 ## Ricker.R
 
 

@@ -19,13 +19,13 @@ doit<-function(x){
 popn<-rnorm(50) #gen popn
 #lapply(1:15,function(i) doit(popn))
 ##try using "try" with vectorisation:
-result<- lapply(1:15, function(i) try(doit(popn),FALSE))
+#result<- lapply(1:15, function(i) try(doit(popn),FALSE))
 #class(result)
 ###using for loop 
-#result<- vector("list",100) #reallocate/initialse
-#for (i in 1:100) {
- #   result[[i]] <- try(doit(popn), FALSE)
+result<- vector("list",100) #reallocate/initialse
+for (i in 1:100) {
+    result[[i]] <- try(doit(popn), FALSE)
 
-#}
+}
 
 # 
