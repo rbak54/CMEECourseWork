@@ -1,7 +1,13 @@
+#Author: Ruth Keane (ruth.keane19@imperial.ac.uk)
+#Script: ho4.R
+#Desc: standard errors
+#Arguments: none
+#Input: none
+#Output: none
+#Date: Oct 2019
 ###standard errors
 #se=sprt(s^2 / n)
 rm(list=ls())
-setwd("~/Documents/CMEECourseWork/Week4/Code/")
 d<-read.table("../Data/SparrowSize.txt", header=TRUE)
 ##se tarsus
 d1<-subset(d,d$Tarsus!="NA")
@@ -11,7 +17,7 @@ seTarsus
 d12001<-subset(d1,d1$Year==2001)
 seTarsus2001<-sqrt(var(d12001$Tarsus)/length(d12001$Tarsus))
 seTarsus2001
-
+#function to print se and n for different
 SEnona<-function(s,t){
   a1<-subset(t,t!="NA")
   N<-length(a1)
@@ -23,6 +29,7 @@ SEnona<-function(s,t){
  #print(se="se")
   
 }
+
 SEnona(d,d$Tarsus)
 SEnona(d,d$Mass)
 SEnona(d,d$Wing)
@@ -91,59 +98,33 @@ t.test5
 #sink("t-tests.txt")
 #summary(t.test3)
 #sink()
-https://stackoverflow.com/questions/32034815/format-ttest-output-by-r-for-tex
+#https://stackoverflow.com/questions/32034815/format-ttest-output-by-r-for-tex
 require(pander)
-p<-pander(t.test3)
-stargazer(t.test4)
+pander(t.test3)
+#exploring ideas for nice output t test . eg stargazer, eg pander
 require(broom)
-https://cran.r-project.org/web/packages/broom/vignettes/broom.html
+#https://cran.r-project.org/web/packages/broom/vignettes/broom.html
 glance(t.test3)
-tidy(t.)
+tidy(t.test3)
 
-##above exploring how to output nicely . not mentioned in class. like pander but still trying to get off R 
+##above exploring how to output nicely . not mentioned in class. I like pander but still trying to get off R 
 
 #errors##type 1 error- doctor telling pregnant person not preganant bc test wrong
 ##type 2 error- doctor telling person without uterus pregnant bc test said so
 #always 5% type I error
 #type 2 error -sample size  bigger, type 2 smallr
 
-#> pander(t.test3)-
-#-------------------------------------------------------------------
-#  Test statistic   df   P value   Alternative hypothesis   mean of x 
-#---------------- ---- --------- ------------------------ -----------
- # 1.129        94   0.2616          two.sided            77.65   
-#--------------------------------------------------------------------
-  
- # Table: One Sample t-test: `d2001$Wing`
 
 #> capture.output(pander(t.test3),file = "../Sandbox/pander.txt")THIS WAY WORKED
 #> str(t.test3)
-#List of 9
-#$ statistic  : Named num 1.13
-#..- attr(*, "names")= chr "t"
-#$ parameter  : Named num 94
 
-#..- attr(*, "names")= chr "df"
-#$ p.value    : num 0.262
-#$ conf.int   : atomic [1:2] 77.2 78.1
-#..- attr(*, "conf.level")= num 0.95
-#$ estimate   : Named num 77.7
-#..- attr(*, "names")= chr "mean of x"
-#$ null.value : Named num 77.4
-#..- attr(*, "names")= chr "mean"
-#$ alternative: chr "two.sided"
-#$ method     : chr "One Sample t-test"
-#$ data.name  : chr "d2001$Wing"
-#- attr(*, "class")= chr "htest"
-#> t.test3$p.value
-#[1] 0.2615991
-> 
+
 ##don't want to focus so much on p-values. effect size is more helpful! so differences between values
 #in the bird tarsus, 0.5mm was the effect size 
 #think bout measurement error
 #statistical power - mean, N(what we want to find out) ,sd, powe level(usually 80% is ok)
 #pwr.t.test
-install.packages("pwr")
+#install.packages("pwr")
 library(pwr)
 pwr.t.test(d=(0-0.16)/0.96,power=.8, sig.level=0.05,type="two.sample",alternative = "two.sided")
 #not sure what d is foing

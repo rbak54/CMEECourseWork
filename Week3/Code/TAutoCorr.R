@@ -7,7 +7,7 @@
 #Output: none
 #Date: Oct 2019
 
-load("/home/ruth/Documents/CMEECourseWork/Week3/Data/KeyWestAnnualMeanTemperature.RData")
+load("../Data/KeyWestAnnualMeanTemperature.RData")
 #utils::View(ats)
 ats2<-dplyr::lag(ats$Temp,n=1)
 ats1<-ats[,2]

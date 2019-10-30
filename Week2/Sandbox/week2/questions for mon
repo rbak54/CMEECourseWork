@@ -1,0 +1,22 @@
+w2 questions- 
+align seqs 
+	only works 1 orientation
+		dseuqneces.csv- outofrange
+		sequences2.csv- qworks
+
+	
+	second- runs happy 
+	real stuck last bit of align--close- need to figure out pickle though. also not sure what I wanted t odo doesn't work
+`		algn was ok
+
+
+oaks debug 
+	-V , NO QUOTE WORKS
+
+	has_header -solved better solution was switching it if row[0] !=genus then do things!!
+	happy
+	also not sure what I wanted t odo doesn't work
+
+spelling oaks
+
+functions and programmes need docstrings

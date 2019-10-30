@@ -25,8 +25,7 @@ print(densityplot(~logPrey.mass| Type.of.feeding.interaction, data=DFwR))
 pdf("../Results/SizeRatio_Lattice.pdf")
 print(densityplot(~logRatio| Type.of.feeding.interaction, data=DFwR))
 #calculate means
-M<-matrix(NA,nrow=5,ncol=3)
-
+meanmatrix<-matrix(NA,nrow=5,ncol=3)
 M<-aggregate(DFwR$logPrey.mass,list(DFwR$Type.of.feeding.interaction),mean)
 meanmatrix[,1]<-M[,2]
 M<-aggregate(DFwR$logPredator.mass,list(DFwR$Type.of.feeding.interaction),mean)
