@@ -1,12 +1,13 @@
 #Author: Ruth Keane (ruth.keane19@imperial.ac.uk)
 #Script: ho18.R
-#Desc: 
-#Arguments: 
-#Input: 
-#Output: 
+#Desc: mixed effects models and repeatability
+#Arguments: none
+#Input: none
+#Output: none
 #Date: Oct 2019
-a<-read.table("../Data/ObserverRepeatability.txt", header = TRUE)
 library(dplyr)
+require(lme4)
+a<-read.table("../Data/ObserverRepeatability.txt", header = TRUE)
 a  %>%   	
   group_by(StudentID)  %>% 	
   summarise  (count=length(StudentID)) 	
@@ -30,8 +31,8 @@ mod<-lm(Tarsus~StudentID,data=a)
 anova(mod)
 mod<-lm(Tarsus~Leg+Handedness+StudentID,data=a) 	
 anova(mod)
-require(lme4)
 lmm<-lmer(Tarsus~Leg+Handedness+(1|StudentID),data=a)
 #modelling studnet id as random effect
 summary(lmm)
-
+var(a$Tarsus)
+##repeatability is amoung/amoung +within

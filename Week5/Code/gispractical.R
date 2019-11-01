@@ -2,6 +2,8 @@ library(raster)
 library(sf)
 library(viridis)
 library(units)
+
+
 library("lwgeom")
 pop_dens <- data.frame(n_km2 = c(260, 67,151, 4500, 133), 
                        country = c('England','Scotland', 'Wales', 'London', 'Northern Ireland'))
@@ -42,8 +44,12 @@ ni_area<-st_polygon(list(cbind(x=c(-8.1, -6, -5, -6, -8.1), y=c(54.4,56,55,54,54
 
 northern_ireland<-st_intersection(ireland, ni_area)                         
 
+
 eire<-st_difference(ireland, ni_area)
 uk_eire<- st_sfc(wales, england_no_london, scotland, london, northern_ireland, eire, crs=4326)
+
+
+
 plot(uk_eire,asp=1)
 
 uk_country<-st_union(uk_eire[-6])
@@ -99,88 +105,12 @@ d<-units::set_units(25, km)
 st_pauls_bng <- st_transform(st_pauls, crs=27700)
 london_bng<-st_buffer(st_pauls_bng, d)
 #plot(london_bng)
-england_bng<-st_transform( england, 27700)
+england_bng<-st_transform(st_sfc(england, crs=4326), crs=27700)
 england_no_london_bng<-st_difference(england_bng, london_bng)
 others_bng<-st_transform(st_sfc(eire, northern_ireland, wales, scotland, crs=4326), 27700)
 #plot(uk_eire)
-uk_eire_bng<-st_sfc(others_bng, england_no_london_bng, london_bng)
-length(england)
-###########4
+uk_eire_bng<-c(others_bng, england_no_london_bng, london_bng)
+plot(uk_eire_bng, axes=TRUE, main ="25 km radius around London"
 ###########
-
-#england_not_london_bng <- st_difference(st_transform(st_sfc(england, crs=4326), 27700), london_bng)
-# project the other features and combine everything together
-#others_bng <- st_transform(st_sfc(eire, northern_ireland, scotland, wales, crs=4326), 27700)
-#corrected <- c(others_bng, london_bng, england_not_london_bng)
-# Plot that and marvel at the nice circular feature around London
-##par(mar=c(3,3,1,1))
-#plot(corrected, main='25km radius London', axes=TRUE)
-
-#graphics.off()
-england_no_london<-st_difference(england, london)
-
-lengths(scotland)
-lengths(england_no_london)
-
-wales<-st_difference(wales, england)
-ni_area<-st_polygon(list(cbind(x=c(-8.1, -6, -5, -6, -8.1), y=c(54.4,56,55,54,54.4))))
-
-
-northern_ireland<-st_intersection(ireland, ni_area)                         
-
-eire<-st_difference(ireland, ni_area)
-uk_eire<- st_sfc(wales, england_no_london, scotland, london, northern_ireland, eire, crs=4326)
-plot(uk_eire,asp=1)
-
-uk_country<-st_union(uk_eire[-6])
-print(uk_eire)
-graphics.off()
-
-print(uk_country)
-par(mfrow=c(1,2),mar=c(3,3,1,1))
-plot(uk_eire, asp=1, col=rainbow(6))
-plot(st_geometry(uk_eire_capitals), add=TRUE)
-plot(uk_country, asp=1, col="lightblue")
-uk_eire<-st_sf(name=c('Wales','England','Scotland','London','Northern Ireland', 'Eire'),
-               geometry=uk_eire)
-plot(uk_eire,asp=1)
-
-uk_eire$capital<-c('London', 'Edinburgh', 'Cardiff', NA, 'Belfast', 'Dublin')
-uk_eire<-merge(uk_eire,pop_dens, by.x='name', by.y='country', all.x=TRUE)
-
-print(uk_eire)
-uk_eire_centroids<- st_centroid(uk_eire)
-st_coordinates(uk_eire_centroids)
-uk_eire$area<-st_area(uk_eire)
-uk_eire$length<-st_length(uk_eire)
-print(uk_eire)
-uk_eire$area<-set_units(uk_eire$area,'km^2')
-uk_eire$length<-set_units(uk_eire$length, 'km')
-uk_eire$area<-set_units(uk_eire$area, 'kg^2')
-uk_eire$length<-as.numeric(uk_eire$length)
-print(uk_eire)
-st_distance(uk_eire)
-st_distance(uk_eire_centroids)
-#plotting sf objects
-plot(uk_eire['n_km2'],asp=1,logz=TRUE)
-#logz so log scale axis
-#reprojecting vector data
-uk_eire_BNG<-st_transform(uk_eire, 27700)
-st_bbox(uk_eire)
-st_bbox(uk_eire_BNG)
-uk_eire_UTM50N<-st_transform(uk_eire,32650)
-par(mfrow=c(1,3), mar=c(3,3,1,1))
-plot(st_geometry(uk_eire), asp=1, axes=TRUE, main='WGS 84')
-plot(st_geometry(uk_eire_BNG), asp=1, axes=TRUE, main='OSGB 1936/ BNG')
-plot(st_geometry(uk_eire_UTM50N), asp=1, axes=TRUE, main='UTM 50N')
-graphics.off()
-st_pauls<-st_sfc(st_pauls, crs=4326)
-one_deg_west_pt<-st_sfc(st_pauls - c(1,0), crs=4326)
-one_deg_north_pt<-st_sfc(st_pauls + c(0,1), crs=4326)
-st_distance(st_pauls, one_deg_west_pt)
-st_distance(st_pauls, one_deg_north_pt)
-st_distance(st_transform(st_pauls, 27700), st_transform(one_deg_west_pt, 27700))
-library(units)
-d<-units::set_units(25, km)
-st_pauls_bng <- st_transform(st_pauls, crs=27700)
-london_bng<-st_buffer(st_pauls_bng, d)
+#####RASTERS
+uk_raster_WGS84<- raster(x)

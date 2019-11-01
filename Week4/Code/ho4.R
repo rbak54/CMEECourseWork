@@ -7,6 +7,9 @@
 #Date: Oct 2019
 ###standard errors
 #se=sprt(s^2 / n)
+library(pwr)
+require(pander)
+require(broom)
 rm(list=ls())
 d<-read.table("../Data/SparrowSize.txt", header=TRUE)
 ##se tarsus
@@ -99,10 +102,10 @@ t.test5
 #summary(t.test3)
 #sink()
 #https://stackoverflow.com/questions/32034815/format-ttest-output-by-r-for-tex
-require(pander)
+
 pander(t.test3)
 #exploring ideas for nice output t test . eg stargazer, eg pander
-require(broom)
+
 #https://cran.r-project.org/web/packages/broom/vignettes/broom.html
 glance(t.test3)
 tidy(t.test3)
@@ -125,7 +128,7 @@ tidy(t.test3)
 #statistical power - mean, N(what we want to find out) ,sd, powe level(usually 80% is ok)
 #pwr.t.test
 #install.packages("pwr")
-library(pwr)
+
 pwr.t.test(d=(0-0.16)/0.96,power=.8, sig.level=0.05,type="two.sample",alternative = "two.sided")
 #not sure what d is foing
 #n minus number of parameters to be estimated=df=n-2

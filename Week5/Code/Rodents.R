@@ -1,9 +1,9 @@
 #Author: Ruth Keane (ruth.keane19@imperial.ac.uk)
 #Script: Rodents.R
-#Desc: 
-#Arguments: 
-#Input: 
-#Output: 
+#Desc: data analysis practice
+#Arguments: none
+#Input: none
+#Output: none
 #Date: Oct 2019
 Rodents<-read.csv("../Data/rodents.csv")
   DS<-subset(Rodents,species=="DS")
@@ -17,4 +17,4 @@ MOD<-lmer(wgt~hfl*sex+(1|yr)+(1|mo), data=DSSub)
 #na.omit(Rodemts))
 
 hist(hfl, data=Ds)
-##sudo apt install r-cran-lme4 in terminal
+##sudo apt install r-cran-lme4 in terminal  

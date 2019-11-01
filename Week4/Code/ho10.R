@@ -1,9 +1,9 @@
 #Author: Ruth Keane (ruth.keane19@imperial.ac.uk)
 #Script: ho10.R
 #Desc: linear models
-#Arguments: 
-#Input: 
-#Output: 
+#Arguments: none
+#Input: none
+#Output: none
 #Date: Oct 2019rm(list=ls())
 #setwd("~/Documents/CMEECourseWork/Week4/Code")
 d<-read.table("../Data/SparrowSize.txt", header=TRUE)
