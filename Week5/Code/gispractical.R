@@ -2,7 +2,7 @@ library(raster)
 library(sf)
 library(viridis)
 library(units)
-
+library(rdgal)
 
 library("lwgeom")
 pop_dens <- data.frame(n_km2 = c(260, 67,151, 4500, 133), 
@@ -36,6 +36,7 @@ london<-st_buffer(st_pauls, 0.25)
 england_no_london<-st_difference(england, london)
 
 lengths(scotland)
+
 lengths(england_no_london)
 
 wales<-st_difference(wales, england)
@@ -74,9 +75,10 @@ st_coordinates(uk_eire_centroids)
 uk_eire$area<-st_area(uk_eire)
 uk_eire$length<-st_length(uk_eire)
 print(uk_eire)
+
 uk_eire$area<-set_units(uk_eire$area,'km^2')
 uk_eire$length<-set_units(uk_eire$length, 'km')
-uk_eire$area<-set_units(uk_eire$area, 'kg^2')
+#uk_eire$area<-set_units(uk_eire$area, 'kg^2')
 uk_eire$length<-as.numeric(uk_eire$length)
 print(uk_eire)
 st_distance(uk_eire)
@@ -110,7 +112,46 @@ england_no_london_bng<-st_difference(england_bng, london_bng)
 others_bng<-st_transform(st_sfc(eire, northern_ireland, wales, scotland, crs=4326), 27700)
 #plot(uk_eire)
 uk_eire_bng<-c(others_bng, england_no_london_bng, london_bng)
-plot(uk_eire_bng, axes=TRUE, main ="25 km radius around London"
+plot(uk_eire_bng, axes=TRUE, main ="25 km radius around London")
 ###########
 #####RASTERS
-uk_raster_WGS84<- raster(x)
+graphics.off()
+uk_raster_WGS84<- raster(xmn=-11, xmx=2, ymn=49.5, ymx=59,
+                         res=0.5, crs="+init=EPSG:4326")
+hasValues(uk_raster_WGS84)
+values(uk_raster_WGS84)<-seq(length(uk_raster_WGS84))
+plot(uk_raster_WGS84)
+plot(st_geometry(uk_eire), add=TRUE, border='black', lwd=2, col="#FFFFFF44")
+
+m<-matrix(c(1, 1, 3, 3,
+            1, 2, 4, 3,
+            5, 5, 7, 8,
+            6, 6, 7, 7), ncol=4, byrow=TRUE)
+square<-raster(m)
+square_agg_mean<-aggregate(square, fact=2, fun=mean)
+values(square_agg_mean)
+square_agg_max<-aggregate(square, fact=2, fun=max)
+values(square_agg_max)
+square_agg_modal<- aggregate(square, fact=2, fun = modal)
+values(square_agg_modal)
+square_disagg<- disaggregate(square, fact=2)
+square_disagg_interp<- disaggregate(square, fact=2, method='bilinear')
+##reprojecting a raster
+uk_pts_WGS84 <- st_sfc(st_point(c(-11, 49.5)), st_point(c(2, 59)), crs=4326)
+uk_pts_BNG<-st_sfc(st_point(c(-2e5,0)),st_point(c(7e5,1e6)), crs=27700)
+uk_grid_WGS84<-st_make_grid(uk_pts_WGS84, cellsize=0.5)
+uk_grid_BNG<-st_make_grid(uk_pts_BNG, cellsize = 1e5)
+uk_grid_BNG_as_WGS84<-st_transform(uk_grid_BNG, 4326)
+plot(uk_grid_WGS84, asp=1, border='grey', xlim=c(-13,4))
+plot(st_geometry(uk_eire), add= TRUE, border='darkgreen', lwd=2)
+plot(uk_grid_BNG_as_WGS84, border='red', add=TRUE)
+
+uk_raster_BNG<- raster(xmn=-200000, xmx=700000, ymn=0, ymx=1000000,
+                       res=100000, crs='+init=ESPG:27700')
+
+uk_raster_BNG_interp<-projectRaster(uk_raster_WGS84, uk_raster_BNG, method='bilinear')
+uk_raster_BNG_ngb<-projectRaster(uk_raster_WGS84, uk_raster_BNG, method='ngb')
+#compare
+round(values(uk_raster_BNG_interp)[1:9], 2)
+values(uk_raster_BNG_ngb)[1:9]
+##converting between data types
