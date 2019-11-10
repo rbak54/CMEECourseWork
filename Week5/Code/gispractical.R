@@ -1,9 +1,17 @@
+#Author: Ruth Keane (ruth.keane19@imperial.ac.uk)
+#Script: gispractical.R
+#Desc: gis work
+#Arguments: none
+#Input: none 
+#Output: none
+#Date: Nov 2019
+#http://rpubs.com/david_orme/GIS_in_R
 library(raster)
 library(sf)
 library(viridis)
 library(units)
-library(rdgal)
-
+library(rgdal)
+library(rgeos)
 library("lwgeom")
 pop_dens <- data.frame(n_km2 = c(260, 67,151, 4500, 133), 
                        country = c('England','Scotland', 'Wales', 'London', 'Northern Ireland'))
@@ -169,5 +177,68 @@ par(mfrow=c(1,3), mar=c(1,1,2,1))
 plot(uk_raster_BNG_interp, main='Interpolated', axes=FALSE, legend=FALSE)
 plot(uk_raster_BNG_ngb, main='Nearest Neighbour', axes=FALSE, legend=FALSE)
 ##converting between data types
-
 graphics.off()
+uk_20km <- raster(xmn=-200000, xmx=650000, ymn=0, ymx=1000000, 
+                 res=20000, crs='+init=epsg:27700')
+
+# Rasterizing polygons
+uk_eire_poly_20km  <- rasterize(as(uk_eire_BNG, 'Spatial'), uk_20km, field='name')
+
+# Rasterizing lines
+st_agr(uk_eire_BNG)<-'constant'
+uk_eire_BNG_line <- st_cast(uk_eire_BNG, 'LINESTRING')
+uk_eire_line_20km <- rasterize(as(uk_eire_BNG_line, 'Spatial'), uk_20km, field='name')
+
+# Rasterizing points 
+# - This isn't quite as neat. You need to take two steps in the cast and need to convert 
+#   the name factor to numeric.
+uk_eire_BNG_point <- st_cast(st_cast(uk_eire_BNG, 'MULTIPOINT'), 'POINT')
+uk_eire_BNG_point$name <- as.numeric(uk_eire_BNG_point$name)
+uk_eire_point_20km <- rasterize(as(uk_eire_BNG_point, 'Spatial'), uk_20km, field='name')
+
+# Plotting those different outcomes
+par(mfrow=c(1,3), mar=c(1,1,1,1))
+plot(uk_eire_poly_20km, col=viridis(6, alpha=0.5), legend=FALSE, axes=FALSE)
+plot(st_geometry(uk_eire_BNG), add=TRUE, border='grey')
+
+plot(uk_eire_line_20km, col=viridis(6, alpha=0.5), legend=FALSE, axes=FALSE)
+plot(st_geometry(uk_eire_BNG), add=TRUE, border='grey')
+
+plot(uk_eire_point_20km, col=viridis(6, alpha=0.5), legend=FALSE, axes=FALSE)
+
+plot(st_geometry(uk_eire_BNG), add=TRUE, border='grey')
+
+##raster to vector
+# rasterToPolygons returns a polygon for each cell and returns a Spatial object
+poly_from_rast <- rasterToPolygons(uk_eire_poly_20km)
+poly_from_rast <- as(poly_from_rast, 'sf')
+
+# but can be set to dissolve the boundaries between cells with identical values
+poly_from_rast_dissolve <- rasterToPolygons(uk_eire_poly_20km, dissolve=TRUE)
+poly_from_rast_dissolve <- as(poly_from_rast_dissolve, 'sf')
+
+# rasterToPoints returns a matrix of coordinates and values.
+points_from_rast <- rasterToPoints(uk_eire_poly_20km)
+points_from_rast <- st_as_sf(data.frame(points_from_rast), coords=c('x','y'))
+
+# Plot the outputs - using key.pos=NULL to suppress the key and
+# reset=FALSE to avoid plot.sf altering the par() options
+par(mfrow=c(1,3), mar=c(1,1,1,1))
+plot(poly_from_rast['layer'], key.pos = NULL, reset = FALSE)
+plot(poly_from_rast_dissolve, key.pos = NULL, reset = FALSE)
+plot(points_from_rast, key.pos = NULL, reset = FALSE)
+
+##saving
+#vectors
+st_write(uk_eire,'../Data/uk_eire_WGS84.shp')
+st_write(uk_eire_BNG, '../Data/uk_eire_BNG.shp')
+st_write(uk_eire, '../Data/uk_eire_WGS84.geojson')
+st_write(uk_eire, '../Data/uk_eire_WGS84.gpkg')
+st_write(uk_eire, '../Data/uk_eire_WGS84.json', driver='GeoJSON')
+st_drivers()
+#rasters
+#tiff most common
+writeRaster(uk_raster_BNG_interp, '../Data/uk_raster_BNG_interp.tif')
+writeRaster(uk_raster_BNG_ngb, '../Data/uk_raster_BNG_ngb.asc', format='ascii')
+writeFormats()
+

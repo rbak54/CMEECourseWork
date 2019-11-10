@@ -7,7 +7,6 @@
 #Date: Oct 2019
 library(matrixStats)
 data<-read.csv("../Data/bears.csv", stringsAsFactors = FALSE, colClasses=c("character"))
-#head(data)
 points<-c()
 ####go over 
 #1
