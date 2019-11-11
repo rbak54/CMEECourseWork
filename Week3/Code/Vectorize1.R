@@ -1,5 +1,5 @@
 #Author: Ruth Keane (ruth.keane19@imperial.ac.uk)
-#Script: Vectorize.R
+#Script: Vectorize1.R
 #Desc: Summing the elements of a matrix using both a vectorized and non-vectorized function
 #Arguments: none
 #Input: none

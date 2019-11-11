@@ -42,6 +42,7 @@ else:
 # from arbitrary startpoint (chosen by user)
 ##functions##
 def calculate_score(s1, s2, l1, l2, startpoint):
+    """calculating score"""
     matched = "" # to hold string displaying alignments
     score = 0
     for i in range(l2):
