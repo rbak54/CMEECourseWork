@@ -60,6 +60,6 @@ def main(argv):
     print(foo_6(9))
     return 0 
 if (__name__=="__main__"):
-    """Makes sure the main functino is called"""
+    """Makes sure the main function is called"""
     status =  main(sys.argv)
     sys.exit(status)
