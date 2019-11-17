@@ -48,12 +48,12 @@ for (dir, subdir, files) in subprocess.os.walk(home):
 #################################
 # Get files and directories in your home/ that start with either an 
 # upper or lower case 'C'
-# m=str(l)
+m=str(l)
 # n=m.replace("[]","")
 # re.findall(r"[\]'[Cc]{1}[\w\d-]*.[/w/d]*","\'Cab.code")
 # ##weird! backslash. removes code
-# re.findall(r"[Cc]{1}[\w\d-]*.[./w/d]*.[\w\d]*.[\w\d]*.[\w\d]*.[\w\d]*.[\w\d]*.[\w\d]*.[\w\d]*.[\w\d]*.[\w\d]*",'com.sun.star.comp.deployment.executable.PackageRegistryBackend')
-#re.findall(r"[Cc]{1}[\w\d-]*.[./w/d]*.[\w\d]*.[\w\d]*.[\w\d]*.[\w\d]*.[\w\d]*.[\w\d]*.[\w\d]*.[\w\d]*.[\w\d]*",m)
+ #re.findall(r"[Cc]{1}[\w\d-]*.[./w/d]*.[\w\d]*.[\w\d]*.[\w\d]*.[\w\d]*.[\w\d]*.[\w\d]*.[\w\d]*.[\w\d]*.[\w\d]*",'com.sun.star.comp.deployment.executable.PackageRegistryBackend')
+p=re.findall(r"[Cc]{1}[\w\d\-\._]*",m)
 #doesn't only get first letter c!
 # #\w\d\]*.[\w\d]*&",
 # Type your code here:
@@ -61,5 +61,12 @@ for (dir, subdir, files) in subprocess.os.walk(home):
 #################################
 # Get only directories in your home/ that start with either an upper or 
 #~lower case 'C' 
-
+s=[]
 # Type your code here:
+a=subprocess.os.walk(home)
+
+for(dir,subdir, files) in a:
+    s.append(subdir)
+    #s.append(files)
+t=str(s)
+p=re.findall(r"[Cc]{1}[\w\d\-\._]*",t)

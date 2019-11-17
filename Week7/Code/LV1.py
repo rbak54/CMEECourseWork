@@ -54,10 +54,12 @@ def main():
     p.title('Consumer resource population dynamics')
     #p.show()
     f2.savefig('../Results/LV_model_2.pdf')
-
-# if (__name__ == "__main__"):
-#     """runs main"""
-#     status=main(sys.argv)
-#     sys.exit(status)
+    print("final resource density is")
+    print(pops[-1][0])
+    print("final consumer density is")
+    print(pops[-1][1])
+if (__name__ == "__main__"):
+    """runs main"""
+    
 
     #poss moveing variables down????????
