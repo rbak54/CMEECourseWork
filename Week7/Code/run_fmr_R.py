@@ -5,6 +5,8 @@
 #Input: none 
 #Output: none
 #Date: Nov 2019
+import subprocess
 """runs fmr_R"""
-subprocess.call("/usr/bin/Rscript --vanilla /Documents/CMEECourseWork/Week7/Code/fmr.R", shell=True)
-process=subprocess.run("~/Documents/CMEECourseWork/Week7/Code/Rscript --vanilla ~/Documents/CMEECourseWork/Week7/Code/fmr.R", shell=False)
+h=subprocess.Popen("Rscript --verbose fmr.R", shell=True).wait()
+if h==0:
+    print("fmr.R ran successfully")
