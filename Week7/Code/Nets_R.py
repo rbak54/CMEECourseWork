@@ -38,7 +38,11 @@ for row in links:
 #network x gets coordinates from places
 #p.figure()
 #places=sc.array(templ[0])
-places=np.array(templ[0])
+place=np.array(templ[0])
+places=sc.zeros(5)
+for v in place:
+    place[]=
+
 #dtype which is not helping ##stuck here
 pos= nx.circular_layout(places)
 G=nx.Graph()
