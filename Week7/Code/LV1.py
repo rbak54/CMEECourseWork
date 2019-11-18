@@ -33,8 +33,6 @@ def dCR_dt(pops, t=0):
 def main():
     """defines variables and plots graphs"""
     pops, infodict = integrate.odeint(dCR_dt, RC0, t, full_output=True)
-    pops
-    infodict.keys()
     f1 = p.figure()
     p.plot(t, pops[:,0], 'g-', label='Resource density')
     p.plot(t,pops[:,1],'b-',label='Consumer density')
@@ -60,6 +58,6 @@ def main():
     print(pops[-1][1])
 if (__name__ == "__main__"):
     """runs main"""
-    
+    main()
 
     #poss moveing variables down????????

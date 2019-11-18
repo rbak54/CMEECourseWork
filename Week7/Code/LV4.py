@@ -1,17 +1,18 @@
 #/usr/bin/env python3
-"""Lotka volterra model discrete"""
+"""Lotka volterra model discrete with variability"""
 #Author: Ruth Keane (ruth.keane19@imperial.ac.uk)
-#Script: LV3.py
-#Desc: Lotka volterra model discrete
+#Script: LV4.py
+#Desc: Lotka volterra model discrete with variability
 #Arguments: none
 #Input: none 
 #Output: none
 #Date: Nov 2019
-##variability??
+##variability?? NEED TO ACTUALL ADD
 def main():
-    """runs and plots discrete model"""
+    """runs and plots discrete model with variability"""
     import scipy as sc
     import scipy.stats as scs
+    from scipy.stats import norm
     import sys
     import scipy.integrate as integrate
     import matplotlib.pylab as p
@@ -32,13 +33,19 @@ def main():
     K=33.
     for i in (range(15)):
         if Rt[i]>0:
-            Rt[i+1] = Rt[i]*(1+r*(1-(Rt[i]/K))-a*Ct[i])
+            epsilon=norm.rvs()
+            Rt[i+1] = Rt[i]*(1+(r+epsilon)*(1-(Rt[i]/K))-a*Ct[i])
         else:
             Rt[i+1]=0
         if Ct[i]>0:
             Ct[i+1]= Ct[i]*(1-z+e*a*Rt[i])
         else:
             Ct[i+1]=0
+    for j in range(16):
+        if Rt[j]<0:
+            Rt[j]=0
+        if Ct[j]<0:
+            Ct[j]=0
     print("final resource density is")
     print(Rt[-1])
     print("final consumer density is")
@@ -66,14 +73,14 @@ def main():
     p.ylabel('Population density')
     p.title('Consumer resource population dynamics')
     #p.show()
-    f1.savefig('../Results/LV_model_1_discrete.pdf')
+    f1.savefig('../Results/LV_model_1_discrete_fluctuatingresource.pdf')
     f2 = p.figure()
     p.plot(Rt,Ct,'r-')
     p.grid()
     #p.legend(loc='best')
     p.xlabel('Resource density')
     p.ylabel('Consumer density')
-    p.title('Consumer resource population dynamics')
+    p.title('Consumer resource population dynamics_fluctuatingresource.pdf')
     p.legend(handles=[rl,al,zl,el,kl],loc='best')
     #p.show()
     f2.savefig('../Results/LV_model_2_discrete.pdf')

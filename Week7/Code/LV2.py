@@ -22,7 +22,6 @@ def main(argv):
 
     def dCR_dt(pops, t=0):
         """returns growth rate of consumer and resource population at given time"""
-        K=70
         R = pops[0]
         C = pops[1]
         den = 1 - ( R / K )
@@ -47,17 +46,16 @@ def main(argv):
     R0=10
     C0=5
     RC0=sc.array([R0,C0])
+    K=33
 
     pops, infodict = integrate.odeint(dCR_dt, RC0, t, full_output=True)
+    #pops, infodict = integrate.odeint(dCR_dt, RC0, t, full_output=True)
 
     print("final resource density is")
     print(pops[-1][0])
     print("final consumer density is")
     print(pops[-1][1])
 
-    #type(infodict)
-    #infodict.keys()
-    
     f1 = p.figure()
     p.plot(t, pops[:,0], 'g-', label='Resource density')
     p.plot(t,pops[:,1],'b-',label='Consumer density')
@@ -66,13 +64,16 @@ def main(argv):
     aw="a="+str(a)
     zw="z="+str(z)
     ew="e="+str(e)
+    kw="K="+str(K)
     rl = mpatches.Patch(color='none',label=rw)
     al = mpatches.Patch(color='none',label=aw)
     zl = mpatches.Patch(color='none',label=zw)
     el = mpatches.Patch(color='none',label=ew)
+    kl = mpatches.Patch(color='none',label=kw)
+
     rd = mpatches.Patch(color='green',label="Resource Density")
     cd = mpatches.Patch(color='blue',label="Consumer Density")
-    p.legend(handles=[rl,al,zl,el,rd,cd],loc='best')
+    p.legend(handles=[rl,al,zl,el,kl,rd,cd],loc='best')
     p.xlabel('Time')
     p.ylabel('Population density')
     p.title('Consumer resource population dynamics')
@@ -84,7 +85,7 @@ def main(argv):
     p.xlabel('Resource density')
     p.ylabel('Consumer density')
     p.title('Consumer resource population dynamics')
-    p.legend(handles=[rl,al,zl,el])
+    p.legend(handles=[rl,al,zl,el,kl])
     f2.savefig('../Results/LV_model_density_dependent_2.pdf')
     
 if __name__ == "__main__":
