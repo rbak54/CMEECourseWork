@@ -9,7 +9,7 @@ l=0
 i=3
 for i in listID:
     datas=data[data.ID==i]
-    if len(datas)<5:
+    if len(datas)<4:
         #l=l+1
         data=data[data.ID !=i]
     # if len((data[['ID']]==i)==True) <4:
