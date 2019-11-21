@@ -12,7 +12,7 @@ Start<- function(subsetT) {
           modht=lm(N_TraitValue~ResDensity,data=subsetT)
           }
       a0<-as.numeric(modht$coefficients[2])
-      mat<-matrix(nrow=100,ncol=4)
+      mat<-matrix(nrow=1000,ncol=4)
       #mat<-matrix(nrow=100,ncol=3)
       
       for (j in 1:(nrow(mat))){
@@ -125,4 +125,4 @@ for (i in listID){
 #   HolFit<-nlsLM(N_TraitValue ~ Holling(ResDensity, a, h), data=subsetT, start=list(a=vala, h=valh))
 #   mat[j,3]<-AIC(HolFit)
 #   return(mat)
-This works! 20 where doesn't.' remove? then compare with polyomial for eACH ? AIC
+#This works! 20 where doesn't.' remove? then compare with polyomial for eACH ? AIC
