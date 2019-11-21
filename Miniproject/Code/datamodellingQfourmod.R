@@ -97,57 +97,63 @@ for (i in listID){
   plot(subsetT$ResDensity,subsetT$N_TraitValue) 
   if("try-error" %in% class(polc)){
     issuesPC<-append(issuesPC,i)
-    #modelqual[j,5]<-"error"
+    modelqual[j,5]<-"NA"
     }else{
-    modelqual[j,5]<-AIC(polc)
     Predic2Plotpolc<- predict.lm(pol, data.frame(ResDensity=Lengths) )
-    lines(Lengths,Predic2Plotpolc,col="orange",lwd=2.5) 
+    lines(Lengths,Predic2Plotpolc,col="#FF6600",lwd=2.5) 
+    modelqual[j,5]<-AIC(polc)
     }
   if("try-error" %in% class(pol)){
     issuesP<-append(issuesP,i)
-    #modelqual[j,4]<-"error"
+    modelqual[j,4]<-"NA"
   }else{
-    modelqual[j,4]<-AIC(pol)
     Predic2Plotpol<- predict.lm(pol, data.frame(ResDensity=Lengths) )
-    lines(Lengths,Predic2Plotpol,col="red",lwd=2.5) 
+    lines(Lengths,Predic2Plotpol,col="red",lwd=2.5)
+    modelqual[j,4]<-AIC(pol)
   }
   if("try-error" %in% class(HolFit)){        
     issuesH<-append(issuesH,i)
-    #modelqual[j,2]<-"error"
+    modelqual[j,2]<-"NA"
   } else {
     #   #first need to generate x so can calc predicted ys
     Predic2PlotHol<- Holling(Lengths, coef(HolFit)["a"], coef(HolFit)["h"])
     # pdf(paste0("../Results/Holgraphs/",i,".pdf") )
     #plot(subsetT$ResDensity,subsetT$N_TraitValue) 
+    
     lines(Lengths,Predic2PlotHol,col="blue",lwd=2.5) 
-    #lines(Lengths,Predic2Plotpol,col="red",lwd=2.5) 
     modelqual[j,2]<-AIC(HolFit)
+    #lines(Lengths,Predic2Plotpol,col="red",lwd=2.5) 
   }
 if("try-error" %in% class(HolFitGEN)){        
     issuesG<-append(issuesG,i)
     #pdf(paste0("../Results/Holgraphs/",i,".pdf") )
     #plot(subsetT$ResDensity,subsetT$N_TraitValue) 
     #lines(Lengths,Predic2Plotpol,col="red",lwd=2.5) 
-    #modelqual[j,3]<-"error"
+    modelqual[j,3]<-"NA"
   } else {
     #   #first need to generate x so can calc predicted ys
     Predic2PlotHolGEN<- HollingGEN(Lengths, coef(HolFitGEN)["a"], coef(HolFitGEN)["h"] , coef(HolFitGEN)["q"])
     # pdf(paste0("../Results/Holgraphs/",i,".pdf") )
     #plot(subsetT$ResDensity,subsetT$N_TraitValue) 
-    lines(Lengths,Predic2PlotHolGEN,col="green",lwd=2.5) 
     #lines(Lengths,Predic2Plotpol,col="red",lwd=2.5) 
-    modelqual[j,3]<-AIC(HolFitGEN)
+    modelqual[j,3]<-AIC(HolFitGEN)  
+    lines(Lengths,Predic2PlotHolGEN,col="green",lwd=2.5) 
+
   }
   graphics.off()
-  Best<-matrix(ncol=3,nrow=length(listID))
-  Best[,1]<-modelqual[,1]
-  for (l in listID) {
-    #print(l)
-#   
-    j<-which(modelqual[,1]==l)
-    Best[j,2]<- which(modelqual[j,2:4]==min(modelqual[j,2:4],na.rm=TRUE, arr.ind=TRUE))
-    Best[j,3]<-min(modelqual[j,2:4])
-  }
+  #Best<-matrix(ncol=3,nrow=length(listID))
+  ##try to move into above loop?
+  #s=0
+ #f#or (l in listID) {
+    #s=s+1
+    #Best[s,1]<-l
+    #t<-which(modelqual[,1]==l)
+    #print(t)
+   # Best[s,2]<-
+   # Best[s,2]<- which(modelqual[t,2:4]==min(modelqual[t,2:4],na.rm=TRUE, arr.ind=TRUE))
+    #Best[s,3]<-min(modelqual[t,2:4])
+    #this isnt working bc l isn't an index
+#  }
 }
   #minAIC<-which(mat[,4] == min(mat[,4],na.rm=TRUE,arr.ind=TRUE))
 
