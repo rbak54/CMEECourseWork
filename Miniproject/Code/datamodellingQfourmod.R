@@ -22,14 +22,14 @@ Start<- function(subsetT) {
   ##obtain gridient from model
   a0<-as.numeric(modht$coefficients[2])
   ##make matrix for initial values and aic
-  mat<-matrix(nrow=100,ncol=4)
+  mat<-matrix(nrow=200,ncol=4)
   #mat<-matrix(nrow=100,ncol=3)
   #for each row in matrix, sample around initial values and calculate model and AIC 
   for (k in 1:(nrow(mat))){
     #print(j)
     vala<-rnorm(1,mean=a0, 1)
     valh<-rnorm(1,mean=h0, 1)
-    valq<-runif(1,min=-2,max=2)
+    valq<-rnorm(1,mean=1.5, 1)
     #valq<-0
     mat[k,1]<-vala
     mat[k,2]<-valh
@@ -189,6 +189,9 @@ if("try-error" %in% class(HolFitGEN)){
     #this isnt working bc l isn't an index
 #  }
 }
+
+write.csv("../Results/CRatBest.csv")
+
   #minAIC<-which(mat[,4] == min(mat[,4],na.rm=TRUE,arr.ind=TRUE))
 
 #     #AICdiff<-AIC(PowFit)-AIC(QuaFit)
