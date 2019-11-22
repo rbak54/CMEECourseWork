@@ -68,10 +68,10 @@ Holling<- function(xR,a,h){
 }
 #}
 HollingGEN<- function(xR,a,h,q){
-  return(((a*xR))^(q+1)/(1+((h*a*xR))^(q+1)))
+  return(((a*xR)^(q+1))/(1+(h*a*xR)^(q+1)))
 }
-
-#listID<-2
+#
+#l#istID<-39910
 listID<-as.numeric(unique(data$ID))
 #listID<-c(39841,39839,39842)
 issuesH<-vector()
@@ -79,12 +79,18 @@ issuesG<-vector()
 issuesPC<-vector()
 issuesP<-vector()
 modelqual<-matrix(nrow=length(listID),ncol=5)
+modelqualb<-matrix(nrow=length(listID),ncol=5)
+
 j=0
+Best<-matrix(ncol=5,nrow=length(listID))
 for (i in listID){
   j=j+1
   modelqual[j,1]<-i
+  modelqualb[j,1]<-i
+  
   subsetT<-subset(data, ID==i)
   colnames(modelqual)<-c("ID","Holling","Holling_General","Pol_Quadratic","Pol_Cubic")
+  colnames(modelqualb)<-c("ID","Holling","Holling_General","Pol_Quadratic","Pol_Cubic")
   #starting values
   out<-Start(subsetT)
   #model fitting
@@ -95,25 +101,39 @@ for (i in listID){
   Lengths<- seq(min(subsetT$ResDensity), max(subsetT$ResDensity),len=200)  
   pdf(paste0("../Results/Holgraphs/",i,".pdf") )
   plot(subsetT$ResDensity,subsetT$N_TraitValue) 
-  if("try-error" %in% class(polc)){
+  if(!("try-error" %in% class(polc))){
+  #   &(AIC(polc)!="-Inf")){
+    Predic2Plotpolc<- predict.lm(polc, data.frame(ResDensity=Lengths) )
+    lines(Lengths,Predic2Plotpolc,col="#FF6600",lwd=2.5) 
+    if (AIC(polc)!=-Inf){
+      modelqual[j,5]<-AIC(polc)}
+    if (BIC(polc)!=-Inf){
+      modelqualb[j,5]<-BIC(polc)}
+    
+    #modelqualb[j,5]<-BIC(polc)
+  }else{
     issuesPC<-append(issuesPC,i)
     modelqual[j,5]<-"NA"
-    }else{
-    Predic2Plotpolc<- predict.lm(pol, data.frame(ResDensity=Lengths) )
-    lines(Lengths,Predic2Plotpolc,col="#FF6600",lwd=2.5) 
-    modelqual[j,5]<-AIC(polc)
+    modelqualb[j,5]<-"NA"
+
     }
   if("try-error" %in% class(pol)){
     issuesP<-append(issuesP,i)
     modelqual[j,4]<-"NA"
-  }else{
+    modelqualb[j,4]<-"NA"
+    
+      }else{
     Predic2Plotpol<- predict.lm(pol, data.frame(ResDensity=Lengths) )
     lines(Lengths,Predic2Plotpol,col="red",lwd=2.5)
     modelqual[j,4]<-AIC(pol)
-  }
+    modelqualb[j,4]<-BIC(pol)
+    
+      }
   if("try-error" %in% class(HolFit)){        
     issuesH<-append(issuesH,i)
     modelqual[j,2]<-"NA"
+    modelqualb[j,2]<-"NA"
+    
   } else {
     #   #first need to generate x so can calc predicted ys
     Predic2PlotHol<- Holling(Lengths, coef(HolFit)["a"], coef(HolFit)["h"])
@@ -122,7 +142,9 @@ for (i in listID){
     
     lines(Lengths,Predic2PlotHol,col="blue",lwd=2.5) 
     modelqual[j,2]<-AIC(HolFit)
-    #lines(Lengths,Predic2Plotpol,col="red",lwd=2.5) 
+    modelqualb[j,2]<-BIC(HolFit)
+    
+        #lines(Lengths,Predic2Plotpol,col="red",lwd=2.5) 
   }
 if("try-error" %in% class(HolFitGEN)){        
     issuesG<-append(issuesG,i)
@@ -130,28 +152,40 @@ if("try-error" %in% class(HolFitGEN)){
     #plot(subsetT$ResDensity,subsetT$N_TraitValue) 
     #lines(Lengths,Predic2Plotpol,col="red",lwd=2.5) 
     modelqual[j,3]<-"NA"
+    modelqualb[j,3]<-"NA"
+    
   } else {
     #   #first need to generate x so can calc predicted ys
     Predic2PlotHolGEN<- HollingGEN(Lengths, coef(HolFitGEN)["a"], coef(HolFitGEN)["h"] , coef(HolFitGEN)["q"])
-    # pdf(paste0("../Results/Holgraphs/",i,".pdf") )
+    lines(Lengths,Predic2PlotHolGEN,col="green",lwd=2.5)
+# pdf(paste0("../Results/Holgraphs/",i,".pdf") )
     #plot(subsetT$ResDensity,subsetT$N_TraitValue) 
     #lines(Lengths,Predic2Plotpol,col="red",lwd=2.5) 
     modelqual[j,3]<-AIC(HolFitGEN)  
-    lines(Lengths,Predic2PlotHolGEN,col="green",lwd=2.5) 
-
+    modelqualb[j,3]<-BIC(HolFitGEN)  
+    
   }
   graphics.off()
-  #Best<-matrix(ncol=3,nrow=length(listID))
   ##try to move into above loop?
   #s=0
- #f#or (l in listID) {
+ #for (l in listID) {
     #s=s+1
-    #Best[s,1]<-l
+ Best[j,1]<-i
     #t<-which(modelqual[,1]==l)
     #print(t)
    # Best[s,2]<-
-   # Best[s,2]<- which(modelqual[t,2:4]==min(modelqual[t,2:4],na.rm=TRUE, arr.ind=TRUE))
-    #Best[s,3]<-min(modelqual[t,2:4])
+ ###not callign correct valye
+ t<-which(modelqual[,1]==i)
+ u<-which(modelqualb[,1]==i)
+ Best[j,2]<- which(modelqual[t,2:5]==min(as.numeric(modelqual[t,2:5]),na.rm = TRUE))
+ Best[j,4]<- which(modelqualb[u,2:5]==min(as.numeric(modelqualb[u,2:5]),na.rm=TRUE))
+ 
+ #na.rm=TRUE, arr.ind=TRUE)
+  #Best[j,2]<- which(modelqual[j,2:5]==a), na.rm=TRUE, arr.ind=FALSE))
+ 
+ Best[j,3]<-min(as.numeric(modelqual[t,2:5]),na.rm=TRUE)
+ Best[j,5]<-min(as.numeric(modelqualb[u,2:5]),na.rm=TRUE)
+ 
     #this isnt working bc l isn't an index
 #  }
 }
