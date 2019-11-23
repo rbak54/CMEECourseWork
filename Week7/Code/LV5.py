@@ -18,19 +18,25 @@ def main():
     import matplotlib.pylab as p
     import matplotlib.patches as mpatches
 
+    #initial values for resource and consumer
     R0=10.
     #10 resources per unit are initially
     C0=5. 
     #5 consumers per unit area initially
+    #define other variables
     r=1.
     a=0.1
     z=1.5
     e=0.75
+    #preallocation of consumer and resource density vector. initial values added
     Rt=sc.zeros(16)
     Rt[0]=R0
     Ct=sc.zeros(16)
     Ct[0]=C0
-    K=33.
+    K=30.
+    
+    #for each timepoint, change Rt and Ct (only if positive)
+    #randomness added in R and C
     for i in (range(15)):
         if Rt[i]>0:
             epsilon=norm.rvs()
@@ -47,43 +53,39 @@ def main():
             Rt[j]=0
         if Ct[j]<0:
             Ct[j]=0        
-    print("final resource density is")
+
+    print("Final resource density is:")
     print(Rt[-1])
-    print("final consumer density is")
+    print("Final consumer density is:")
     print(Ct[-1])
+    #figure 1
     f1 = p.figure()
     tlen=len(Rt)
     t=range(tlen)
     p.plot(t, Rt, 'g-', label='Resource density')
     p.plot(t,Ct,'b-',label='Consumer density')
     p.grid()
-    rw="r="+str(r)
-    aw="a="+str(a)
-    zw="z="+str(z)
-    ew="e="+str(e)
-    kw="K="+str(K)
-    rl = mpatches.Patch(color='none',label=rw)
-    al = mpatches.Patch(color='none',label=aw)
-    zl = mpatches.Patch(color='none',label=zw)
-    el = mpatches.Patch(color='none',label=ew)
-    kl = mpatches.Patch(color='none',label=kw)
+    rl = mpatches.Patch(color='none',label=("r="+str(r)))
+    al = mpatches.Patch(color='none',label=("a="+str(a)))
+    zl = mpatches.Patch(color='none',label=("z="+str(z)))
+    el = mpatches.Patch(color='none',label=("e="+str(e)))
+    kl = mpatches.Patch(color='none',label=("K="+str(K)))
     rd = mpatches.Patch(color='green',label="Resource Density")
     cd = mpatches.Patch(color='blue',label="Consumer Density")
     p.legend(handles=[rl,al,zl,el,kl,rd,cd],loc='best')
     p.xlabel('Time')
     p.ylabel('Population density')
-    p.title('Consumer resource population dynamics')
-    #p.show()
+    p.title('Consumer-resource population dynamics')
     f1.savefig('../Results/LV_model_1_discrete_fluctuatingboth.pdf')
+
+    #figure 2 
     f2 = p.figure()
     p.plot(Rt,Ct,'r-')
     p.grid()
-    #p.legend(loc='best')
     p.xlabel('Resource density')
     p.ylabel('Consumer density')
-    p.title('Consumer resource population dynamics_fluctuatingboth.pdf')
+    p.title('Consumer-resource population dynamics_fluctuatingboth.pdf')
     p.legend(handles=[rl,al,zl,el,kl],loc='best')
-    #p.show()
     f2.savefig('../Results/LV_model_2_discrete.pdf')
 
 if __name__ == "__main__":

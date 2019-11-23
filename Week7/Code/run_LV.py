@@ -6,6 +6,7 @@
 #Output: none
 #Date: Nov 2019
 """runs and profiles LV1.py and LV2.py"""
+#import packages
 import pstats
 import cProfile
 import LV1
@@ -13,11 +14,11 @@ import LV2
 import LV3
 import LV4
 import LV5
+#run each of LVs
 print("LV1")
 LV1.main()
 print("LV2 with arguments")
 LV2.main(["LV2",1,0.2,1.3,0.7])
-###changearg
 print("LV3")
 LV3.main()
 print("LV4")
