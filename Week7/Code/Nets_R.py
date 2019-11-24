@@ -1,3 +1,4 @@
+#/usr/bin/env python3
 #Author: Ruth Keane (ruth.keane19@imperial.ac.uk)
 #Script: Nets_R.py
 #Desc: converts Nets.R to a python file
@@ -5,6 +6,7 @@
 #Input: none 
 #Output: none
 #Date: Nov 2019
+#load packages
 import csv
 import scipy as sc
 import numpy as np

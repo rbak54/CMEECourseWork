@@ -1,7 +1,16 @@
+#/usr/bin/env python3
+"""regex practice"""
+#Author: Ruth Keane (ruth.keane19@imperial.ac.uk)
+#Script: regex.py
+#Desc: regex practice
+#Arguments: none
+#Input: none 
+#Output: none
+#Date: Nov 2019
+#import packages
 import re
 my_string = "a given string"
 match= re.search(r'\s', my_string)
-##r tells r to read regex in raw form
 print(match)
 match.group()
 match=re.search(r'\d', my_string)
@@ -12,6 +21,7 @@ if match:
     print('found a match:', match.group())
 else:
     print('did not find a match')
+
 match=re.search(r'2', " it takes 2 to tango")
 match.group()
 match=re.search(r'\d', "it takes 2 to tango")
@@ -26,7 +36,6 @@ re.search(r'\w*\s\d.*\d', 'take 2 grams of H2O').group()
 re.search(r'^\w*.*\s', 'once upon a time').group()
 re.search(r'<.+>', 'This is a <EM>first</EM> test').group()
 re.search(r'<.+?>', 'This is a <EM>first</EM> test').group()
-###why not both?
 re.search(r'\d*\.?\d*','1432.75+60.22i').group()
 re.search(r'[AGTC]+','the sequence ATTCGT').group()
 re.search(r'\s+[A-Z]\w+\s*\w+',"The bird-shit frog's name is Theloderma asper.").group()
@@ -35,8 +44,8 @@ match=re.search(r"[\w\s]+,\s[\w\.@]+,\s[\w\s]+",MyStr)
 match.group()
 MyStr = 'Samraat Pawar, s-pawar@imperial.ac.uk, Systems biology and ecological theory'
 match=re.search(r"[\w\s]+,\s[\w\.@]+,\s[\w\s]+",MyStr)
-#match.group()
 match=re.search(r"[\w\s]+,\s[\w\.-]+@[\w\.-]+,\s[\w\s&]+",MyStr)
+#first part of 0
 match.group(0)
 ###PRACTICALS
 ##creating groups
@@ -69,10 +78,8 @@ pattern= r"((Dr*)|(Prof\w*))\s+\w+\s+\w+"
 regex=re.compile(pattern)
 for match in regex.finditer(My_Data):
     print(match.group())
-##make suggested changes
 New_Data=re.sub(r'\t'," ", My_Data)
 print(New_Data)
 
 
 re.search(r'(([1][9])|([2][0]))[0-9]{2}[0-1][0-9][0-3][1-9]',"19001212").group()
-##look at ones on his thing refexcercies_prac.md

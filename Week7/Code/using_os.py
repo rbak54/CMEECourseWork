@@ -1,3 +1,4 @@
+#/usr/bin/env python3
 #Author: Ruth Keane (ruth.keane19@imperial.ac.uk)
 #Script:using_os.py 
 #Desc: os practical
