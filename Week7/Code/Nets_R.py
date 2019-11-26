@@ -21,7 +21,7 @@ nodes = csv.reader(node)
 # links=csv.reader(h,delimiter=",")
 # x=list(links)
 linkm=np.loadtxt(open("../Data/QMEE_Net_Mat_edges.csv"),delimiter=",",skiprows=1).astype(int)
-#node=np.loadtxt(open("../Data/QMEE_Net_Mat_nodes.csv"),delimiter=",",skiprows=1)
+#node=np.loadtxt(open("../Data/QMEE_Net_Mat_nodes.csv"),delimiter=",",skiprows=1).astype(int)
 tempn=[]
 templ=[]
 #matlinks=sc.zeros((6,7))
@@ -29,26 +29,28 @@ for row in nodes:
     tempn.append(row)
 for row in links:
     templ.append(row)
+
+f=[]
+for i in range(len(tempn)):
+   f.append(tempn[i][0])
 # tempn=[]
 #templ=sc.zeros((6,6))
 #matlinks=sc.zeros((6,7))
 # for row in range(6):
 #     templ[row]=links[row]
 ## BELOW IS DRAWFW
-##so first nodes from nodes(think places
+##so first npnodes from nodes(think places
 # then edges from other
 #network x gets coordinates from places
 #p.figure()
 #places=sc.array(templ[0])
 place=np.array(templ[0])
-places=sc.zeros(5)
-for v in place:
-    place[]=
+
 
 #dtype which is not helping ##stuck here
-pos= nx.circular_layout(places)
+pos= nx.circular_layout(f)
 G=nx.Graph()
-G.add_nodes_from(places)
+G.add_nodes_from(f)
 #linkm
 #H=sc.array(0)
 H=[]

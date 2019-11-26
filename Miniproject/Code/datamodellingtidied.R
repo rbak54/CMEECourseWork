@@ -39,17 +39,19 @@ Start<- function(subsetT) {
   for (k in 1:(nrow(mat))){
     vala<-abs(rnorm(1,mean=a0, 1))
     valh<-abs(rnorm(1,mean=h0, 1))
-    valq<-abs(rnorm(1,mean=1.5, 1))
+    valq<-rnorm(1,mean=0, 1)
+    #valq<-runif(1,-5,5)
+    
     mat[k,1]<-vala
     mat[k,2]<-valh
     mat[k,3]<-valq
-    HolFit<-try(nlsLM(N_TraitValue ~ HollingGEN(ResDensity,a,h,q), data=subsetT, start=list(a=vala, h=valh, q=valq), lower=c(0,0,-10)), silent=TRUE)
+    HolFitS<-try(nlsLM(N_TraitValue ~ HollingGEN(ResDensity,a,h,q), data=subsetT, start=list(a=vala, h=valh, q=valq), lower=c(0,0,-10),control = list(maxiter=100)), silent=TRUE)
     #HolFit<-try(nlsLM(N_TraitValue ~ Holling(ResDensity,a,h), data=subsetT, start=list(a=vala, h=valh)),silent=TRUE)
-    if("try-error" %in% class(HolFit)){        
+    if("try-error" %in% class(HolFitS)){        
       mat[k,4]<-"error"  
       #calculate AIC for sucessful
     } else {
-      mat[k,4]<-AIC(HolFit) 
+      mat[k,4]<-AIC(HolFitS) 
     }
   }
   #find initial values with the lowest AIC
@@ -65,9 +67,9 @@ Holling<- function(xR,a,h){
   return((a*xR)/(1+(h*a*xR)))
 }
 HollingGEN<- function(xR,a,h,q){
-  return(((a*xR)^(q+1))/(1+((h*a*xR)^(q+1))))
+  return((a*xR^(q+1))/(1+(h*a*xR^(q+1))))
 }
-#listID<-39910
+#listID<-39855
 listID<-as.numeric(unique(data$ID))
 #listID<-c(39841,39839,39842)
 #make empty vectors for errors- can probably remove this
@@ -77,7 +79,7 @@ issuesPC<-vector()
 issuesP<-vector()
 #matrix for model aic values
 modelqual<-matrix(nrow=length(listID),ncol=5)
-#matrix for model bic values
+#matrix for model bic values    
 modelqualb<-matrix(nrow=length(listID),ncol=5)
 j=0
 #matrix for id, best model and value of aic or bic (best model depending on whether AIC or BIC is used)
@@ -95,8 +97,8 @@ for (i in listID){
   #starting values
   out<-Start(subsetT)
   #model fitting
-  HolFit<-try(nlsLM(N_TraitValue ~ Holling(ResDensity,a,h), data=subsetT, start=list(a=out[1],h=out[2]),lower=c(0,0)),silent=TRUE)
-  HolFitGEN<-try(nlsLM(N_TraitValue ~ HollingGEN(ResDensity,a,h,q), data=subsetT, start=list(a=out[1],h=out[2],q=out[3]),lower=c(0,0,-10)),silent=TRUE)
+  HolFit<-try(nlsLM(N_TraitValue ~ Holling(ResDensity,a,h), data=subsetT, start=list(a=out[1],h=out[2]),lower=c(0,0),control = list(maxiter=100)),silent=TRUE)
+  HolFitGEN<-try(nlsLM(N_TraitValue ~ HollingGEN(ResDensity,a,h,q), data=subsetT, start=list(a=out[1],h=out[2],q=out[3]),lower=c(0,0,-10),control = list(maxiter=1000)),silent=TRUE)
   pol<-try(lm(N_TraitValue ~ poly(ResDensity, degree=2), data=subsetT), silent=TRUE)
   polc<-try(lm(N_TraitValue ~ poly(ResDensity, degree=3), data=subsetT),silent=TRUE)
   #x values for model plotting
