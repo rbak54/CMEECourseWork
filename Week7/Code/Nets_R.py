@@ -7,6 +7,7 @@
 #Output: none
 #Date: Nov 2019
 #load packages
+"""network plot"""
 import csv
 import scipy as sc
 import numpy as np
@@ -40,17 +41,29 @@ for i in (range(len(lin))):
         if int(lin[i][j])>0:
             both=(groups[i],groups[j],lin[i][j])
             ee.append(both)
-f=[]
-for d in range(len(ee)):
+en=ee[:]
+et=ee[:]
+for d in range(len(et)):
     #print(ee[d][0:2])
-    r=ee[d][0:2]
-    print(r)
-    r=sorted(r)
-    ee[d][0:2]==r
+    r=tuple(sorted(et[d][0:2]))
+    #num=ee[d][2]
+   # number=(num,)
+    et[d] = r
+    #r + number
+    #    print(ee)
+emp=sc.empty(shape=len(en))
+for d in range(len(en)):
+    #r=tuple(sorted(en[d][0:2]))
+    #num=en[d][2]
+    num=en[d][2]
+    #number=(num,)
+    emp[d]=num
+    #en[d] = r + number
+    #    print(ee)
+    print(emp)
 
 
-
-ee[1]
+#ee[1]
 # tempn=[]
 #templ=sc.zeros((6,6))
 #matlinks=sc.zeros((6,7))
@@ -62,7 +75,7 @@ ee[1]
 #network x gets coordinates from places
 #p.figure()
 #places=sc.array(templ[0])
-place=np.array(templ[0])
+#place=np.array(templ[0])
 
 groupsa=np.array(groups)
 p.figure()
@@ -70,17 +83,19 @@ p.figure()
 pos= nx.circular_layout(groupsa)
 G=nx.Graph()
 G.add_nodes_from(groupsa)
-#G.add_edges_from(tuple(ee))
-nx.draw_networkx(G,pos)
+G.add_edges_from(tuple(et))
+NodSizs= 1000* (emp-min(emp))//(max(emp)-min(emp))
+
+nx.draw_networkx(G,pos,node_size=NodSizs)
 p.show()
 #linkm
 #H=sc.array(0)
 #H=[]
 
-for r in range(6):
-    for j in range(6):
-        if linkm[r][j]>0:
-            H.append(tuple((r,j)))
+#for r in range(6):
+ #   for j in range(6):
+  #      if linkm[r][j]>0:
+   #         H.append(tuple((r,j)))
 #nx.from_numpy_matrix(linkm, parallel_edges=True)
 # AdjL =
 # for r in range(6):
