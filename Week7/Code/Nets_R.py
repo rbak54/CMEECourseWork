@@ -29,10 +29,28 @@ for row in nodes:
     tempn.append(row)
 for row in links:
     templ.append(row)
-
 f=[]
 for i in range(len(tempn)):
    f.append(tempn[i][0])
+groups=f[1:]
+lin=templ[1:]
+ee=[]
+for i in (range(len(lin))):
+    for j in (range(len(lin))):
+        if int(lin[i][j])>0:
+            both=(groups[i],groups[j],lin[i][j])
+            ee.append(both)
+f=[]
+for d in range(len(ee)):
+    #print(ee[d][0:2])
+    r=ee[d][0:2]
+    print(r)
+    r=sorted(r)
+    ee[d][0:2]==r
+
+
+
+ee[1]
 # tempn=[]
 #templ=sc.zeros((6,6))
 #matlinks=sc.zeros((6,7))
@@ -46,14 +64,18 @@ for i in range(len(tempn)):
 #places=sc.array(templ[0])
 place=np.array(templ[0])
 
-
+groupsa=np.array(groups)
+p.figure()
 #dtype which is not helping ##stuck here
-pos= nx.circular_layout(f)
+pos= nx.circular_layout(groupsa)
 G=nx.Graph()
-G.add_nodes_from(f)
+G.add_nodes_from(groupsa)
+#G.add_edges_from(tuple(ee))
+nx.draw_networkx(G,pos)
+p.show()
 #linkm
 #H=sc.array(0)
-H=[]
+#H=[]
 
 for r in range(6):
     for j in range(6):
@@ -67,10 +89,10 @@ for r in range(6):
 #             np.append(H,[[r,j]])
 # #sc.array(GenRdmAdjList(MaxN, C))
 
-G.add_edges_from(H)
+#G.add_edges_from(H)
 #NodSizs= 1000* (Sizs-min(Sizs))//(max(Sizs)-min(Sizs))
-nx.draw_networkx(G, pos)
-p.show()
+#nx.draw_networkx(G, pos)
+#p.show()
 # # AdjL
 # # Sps = sc.unique(AdjL)
 # SizRan = ([-10,10]) #use log10 scale- size differences usually log10
