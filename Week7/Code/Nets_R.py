@@ -84,46 +84,11 @@ pos= nx.circular_layout(groupsa)
 G=nx.Graph()
 G.add_nodes_from(groupsa)
 G.add_edges_from(tuple(et))
-NodSizs= 1000* (emp-min(emp))//(max(emp)-min(emp))
-
-nx.draw_networkx(G,pos,node_size=NodSizs)
+#NodSizs= 1000* (emp-min(emp))//(max(emp)-min(emp))
+d=emp/100
+nx.draw_networkx(G,pos)
+nx.draw_networkx_edges(G, pos, width=emp/10)
 p.show()
-#linkm
-#H=sc.array(0)
-#H=[]
 
-#for r in range(6):
- #   for j in range(6):
-  #      if linkm[r][j]>0:
-   #         H.append(tuple((r,j)))
-#nx.from_numpy_matrix(linkm, parallel_edges=True)
-# AdjL =
-# for r in range(6):
-#     for j in range(6):
-#         if linkm[r][j]>0:
-#             np.append(H,[[r,j]])
-# #sc.array(GenRdmAdjList(MaxN, C))
 
-#G.add_edges_from(H)
-#NodSizs= 1000* (Sizs-min(Sizs))//(max(Sizs)-min(Sizs))
-#nx.draw_networkx(G, pos)
-#p.show()
-# # AdjL
-# # Sps = sc.unique(AdjL)
-# SizRan = ([-10,10]) #use log10 scale- size differences usually log10
-# Sizs = sc.random.uniform(SizRan[0],SizRan[1],MaxN)
-# # p.hist(Sizs)
-#.show()
-# # p.hist(10**Sizs)
-# # p.close('all')
-# pos= nx.circular_layout(Sps)
-# p.figure()
-# G=nx.Graph()
-# G.add_nodes_from(Sps)
-# G.add_edges_from(tuple(AdjL))
-# NodSizs= 1000* (Sizs-min(Sizs))//(max(Sizs)-min(Sizs))
-# nx.draw_networkx(G, pos, node_size=NodSizs)
-# #p.show()
-# p.savefig("../Results/Network.pdf")
-
-#need to work out templ thing , then lots more!
+##done good! need to sort colours and arrows and layout next
