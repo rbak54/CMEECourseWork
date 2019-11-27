@@ -5,7 +5,8 @@ name <- "Ruth Keane"
 preferred_name <- "Ruth"
 email <- "ruth.keane19@imperial.ac.uk"
 username <- "rbk119"
-personal_speciation_rate <- # will be assigned to each person individually in class and should be between 0.002 and 0.007
+personal_speciation_rate <- 0.004345 
+#only for hpc # will be assigned to each person individually in class and should be between 0.002 and 0.007
 
 # Question 1
 species_richness <- function(community){
@@ -224,12 +225,54 @@ cluster_run <- function(speciation_rate, size, wall_time, interval_rich, interva
  community<-init_community_min(size=size)
  a<-proc.time()
  b<-proc.time()-a
- while (b[3]<wall_time){
-   neutral_generation_speciation(community=community,speciation_rate =speciation_rate )
+ nruns=0
+ richrows=0
+ richness<-c()
+ oct<-list()
+ while (((b[3])/60)<wall_time){
+   community=neutral_generation_speciation(community=community,speciation_rate =speciation_rate )
+   nruns=nruns+1
    b<-proc.time()-a
- 
+   richness<-matrix(nrow=burn_in_generations)
+   #richness<-list()
+   #richness<-c()
+   if (nruns<burn_in_generations){
+     if (nruns%%interval_rich==0){
+       #richrows=richrows+1
+       #richness[richrows,]<-species_richness(community)
+      # richness[richrows]<-list(species_richness(community))
+       richness<-c(richness,species_richness(community))
+     }
+   }
+  #oct<-list()
+  octrows=0
+  if (nruns%%interval_oct==0){
+    octrows=octrows+1
+    #index<-length(oct) + 1
+    oct[octrows]<-list(octaves(species_abundance(community)))
+  }
+  # if (nruns%%interval_oct==0){
+     ##octrows=octrows+1
+   #  index<-length(oct) + 1
+    # oct[index]<-list(octaves(species_abundance(community)))
+   #}
  }
-  
+ c<-proc.time()-a
+ c<-c[3]
+ filename<-paste0("../Results/",output_file_name,".rda")
+save(oct,community,speciation_rate,richness,wall_time,interval_rich,interval_oct,burn_in_generations,c,file=filename)
+# save(oct,file=filename)
+ 
+# (richness,filename)
+ ##write.csv(oct,filename,append=TRUE)
+ #write.csv(community,filename,append=TRUE)
+ ##time
+ #write.csv(speciation_rate,filename,append=TRUE)
+ #write.csv(wall_time,filename,append=TRUE)
+ #write.csv(interval_rich,filename,append=TRUE)
+ #write.csv(interval_oct,filename,append=TRUE)
+ #write.csv(burn_in_generations,filename,append=TRUE)
+ #write.csv(c[3],filename,append=TRUE)
 }
 
 # Questions 18 and 19 involve writing code elsewhere to run your simulations on the cluster
@@ -341,3 +384,4 @@ Challenge_F <- function() {
 # Challenge question G should be written in a separate file that has no dependencies on any functions here.
 
 
+###go over richness , to see if my method worked

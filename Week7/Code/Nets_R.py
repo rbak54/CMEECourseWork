@@ -41,8 +41,18 @@ for i in (range(len(lin))):
         if int(lin[i][j])>0:
             both=(groups[i],groups[j],lin[i][j])
             ee.append(both)
-en=ee[:]
-et=ee[:]
+
+ea=ee[:]
+for d in range(len(ea)):
+    #print(ee[d][0:2])
+    r=tuple(sorted(ea[d][0:2]))
+    num=ea[d][2]
+    number=(num,)
+    ea[d] = r + number
+    list(set(ea))
+
+en=ea[:]
+et=ea[:] 
 for d in range(len(et)):
     #print(ee[d][0:2])
     r=tuple(sorted(et[d][0:2]))
@@ -62,7 +72,14 @@ for d in range(len(en)):
     #    print(ee)
     print(emp)
 
+forlabs=tempn[1:]
+#labels={}
+#for i in range(6):
+#    labels[forlabs[i][0]]=forlabs[i][1] 
 
+    #labs={forlabs[i][0]:forlabs[i][1]}  
+labels=pd.DataFrame({'INST':[forlabs[0][0], forlabs[1][0],forlabs[2][0],forlabs[3][0],forlabs[4][0],forlabs[5][0]], 'group':[forlabs[0][1], forlabs[1][1],forlabs[2][1],forlabs[3][1],forlabs[4][1],forlabs[5][1]]})
+#carac = pd.DataFrame({ 'Inst':['A', 'B', 'C','D','E'], 'myvalue':['group1','group1','group2','group3','group3'] })
 #ee[1]
 # tempn=[]
 #templ=sc.zeros((6,6))
@@ -88,7 +105,10 @@ G.add_edges_from(tuple(et))
 d=emp/100
 nx.draw_networkx(G,pos)
 nx.draw_networkx_edges(G, pos, width=emp/10)
+#nx.draw_networkx_labels(G,pos)
 p.show()
+#nx.draw_networkx(G,node_color=labels['group'])
 
-
+ 
 ##done good! need to sort colours and arrows and layout next
+import pandas as pd
