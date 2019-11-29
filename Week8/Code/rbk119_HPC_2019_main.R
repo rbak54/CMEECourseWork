@@ -309,59 +309,89 @@ chaos_game <- function()  {
   }
   return("A fractal is made on the graph. increasing the repetitions makes this more well defined. However at higher numbers of points some definition is lost")
 }
-  start_position<-c(0,0)
-  direction<-pi/4
-  length<-1
-  plot(-5:5,-5:5,"n")
+
 # Question 24
 turtle <- function(start_position, direction, length)  {
   A<-cos(direction)*length
   O<-sin(direction)*length
   B<-c(A,O)
   end<-start_position+B
-  segments(start_position[1],start_position[2],end[1],end[2])
+  segments(start_position[1],start_position[2],end[1],end[2],col="blue")
   return(end) # you should return your endpoint here.
 }
 
 # Question 25
 elbow <- function(start_position, direction, length)  {
  end<-turtle(start_position,direction,length) 
- turtle(start_position=end,direction=pi/4,length=0.95*length)
+ turtle(start_position=end,direction=direction-pi/4,length=0.95*length)
 }
 
 # Question 26
 spiral <- function(start_position, direction, length)  {
-  return("type your written answer here")
+  start_position<-turtle(start_position,direction,length) 
+  if (length>0.01){
+  start_position<-spiral(start_position=start_position,direction=direction-pi/4,length=length*0.95)
+  }
+  return("calling a function from a function in this way produces and infinite loop, causing an error message")
 }
 
 # Question 27
 draw_spiral <- function()  {
   # clear any existing graphs and plot your graph within the R window
-  
+  graphics.off()
+  plot(-5:5,-5:5,"n")
+  spi<-spiral(start_position = c(-2,1),direction<-pi/4,length=2)
+  return(spi)
 }
 
 # Question 28
 tree <- function(start_position, direction, length)  {
-  
+  start_position<-turtle(start_position,direction,length) 
+  if (length>0.01){
+    tree(start_position=start_position,direction=direction-pi/4,length=length*0.65)
+    tree(start_position=start_position,direction=direction+pi/4,length=length*0.65)
+  }
 }
 draw_tree <- function()  {
-  # clear any existing graphs and plot your graph within the R window
+   # clear any existing graphs and plot your graph within the R window
+  graphics.off()
+  plot(c(-2,2),c(-1,3),xlab=" ", ylab=" ","n")
+  tree(start_position = c(0,0), direction=pi/2, length=1)
 }
 
 # Question 29
 fern <- function(start_position, direction, length)  {
-  
+  start_position<-turtle(start_position,direction,length) 
+  if (length>0.01){
+    fern(start_position=start_position,direction=direction-pi/4,length=length*0.38)
+    fern(start_position=start_position,direction=direction,length=length*0.87)
+  }
 }
 draw_fern <- function()  {
   # clear any existing graphs and plot your graph within the R window
-}
+  graphics.off()
+  plot(c(-2,2),c(-1,3),xlab=" ", ylab=" ","n")
+  fern(start_position = c(0,0), direction=pi/2, length=1)
+  }
 
 # Question 30
-fern2 <- function(start_position, direction, length)  {
-  
+fern2 <- function(start_position, direction, length,dir)  {
+  start_position<-turtle(start_position,direction,length) 
+  if (length>0.01){
+    #dir=-1*dir
+    fern2(start_position=start_position,direction=direction+(dir*(pi/4)),length=length*0.38,dir=dir)
+    fern2(start_position=start_position,direction=direction,length=length*0.87,dir=-dir)
+  #  if (dir==1){
+  #   fern2(start_position=start_position,direction=direction+pi/4,length=length*0.38,dir=1)
+  #   fern2(start_position=start_position,direction=direction,length=length*0.87,dir=1)
+  # }
+    }
 }
 draw_fern2 <- function()  {
   # clear any existing graphs and plot your graph within the R window
+  graphics.off()
+  plot(c(-2,2),c(0,8),xlab=" ", ylab=" ","n")
+  fern2(start_position = c(0,0), direction=pi/2, length=1,dir=1)
 }
 
 # Challenge questions - these are optional, substantially harder, and a maximum of 16% is available for doing them.  
