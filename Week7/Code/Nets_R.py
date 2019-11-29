@@ -8,6 +8,7 @@
 #Date: Nov 2019
 #load packages
 """network plot"""
+import pandas as pd
 import csv
 import scipy as sc
 import numpy as np
@@ -93,19 +94,19 @@ labels=pd.DataFrame({'INST':[forlabs[0][0], forlabs[1][0],forlabs[2][0],forlabs[
 #p.figure()
 #places=sc.array(templ[0])
 #place=np.array(templ[0])
-
+labels['group']=pd.Categorical(labels['group'])
 groupsa=np.array(groups)
 p.figure()
 #dtype which is not helping ##stuck here
 pos= nx.circular_layout(groupsa)
 G=nx.Graph()
-G.add_nodes_from(groupsa)
+G.add_nodes_from(labels['INST'])
 G.add_edges_from(tuple(et))
 #NodSizs= 1000* (emp-min(emp))//(max(emp)-min(emp))
 d=emp/100
-nx.draw_networkx(G,pos)
-nx.draw_networkx_edges(G, pos, width=emp/10)
-#nx.draw_networkx_labels(G,pos)
+nx.draw_networkx(G,pos,node_colour=labels['group'].cat.codes)
+nx.draw_networkx_edges(G, pos, width=emp/10,)
+#nx.draw_networkx_node_c(G,pos,node_colour=labels['group'].cat.codes)
 p.show()
 #nx.draw_networkx(G,node_color=labels['group'])
 
