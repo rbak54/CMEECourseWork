@@ -29,18 +29,21 @@ stochrick<-function(p0=runif(1000,.5,1.5),r=1.2,K=1,sigma=0.2,numyears=100)
 
 # Now write another function called stochrickvect that vectorizes the above 
 # to the extent possible, with improved performance: 
-stochrickvect<-function(r=1.2,K=1,sigma=0.2){
+stochrickvect<-function(r=1.2,K=1,sigma=0.2,numyears=100,p0=runif(1000,.5,1.5)){
 #make matrix
-  N<-matrix(NA,100,1000)
+  N<-matrix(NA,numyears,length(p0))
 #add random initial population size
-  pop<-rnorm(1000,0.5,1.5)
-  N[1,]<-pop
+  #pop<-rnorm(1000,0.5,1.5)
+  N[1,]<-p0
 #loop through the populations
   for (yr in 2:100){ #for each pop, loop through the years
     
     N[yr,] <- N[yr-1,] * exp(r * (1 - N[yr - 1,] / K) + rnorm(1,0,sigma))
-}
+  }
  return(N)
 }
+
+print("Stochastic Ricker takes:")
+print(system.time(res2<-stochrick()))
 print("Vectorized Stochastic Ricker takes:")
 print(system.time(res2<-stochrickvect()))

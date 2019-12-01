@@ -7,7 +7,7 @@ email <- "ruth.keane19@imperial.ac.uk"
 username <- "rbk119"
 personal_speciation_rate <- 0.004345 
 #only for hpc # will be assigned to each person individually in class and should be between 0.002 and 0.007
-
+require(ggplot2)
 # Question 1
 species_richness <- function(community){
   richness<-length(unique(community))
@@ -222,55 +222,71 @@ question_16 <- function()  {
 
 # Question 17
 cluster_run <- function(speciation_rate, size, wall_time, interval_rich, interval_oct, burn_in_generations, output_file_name)  {
- community<-init_community_min(size=size)
- a<-proc.time()
- b<-proc.time()-a
- nruns=0
- richrows=0
- richness<-(0)
- oct<-list()  
- octrows=0
- while (((b[3])/60)<wall_time){
-   community=neutral_generation_speciation(community=community,speciation_rate =speciation_rate )
-   nruns=nruns+1
-   b<-proc.time()-a
-   #richness<-matrix(nrow=burn_in_generations)
-   #richness<-list()
-   #richness<-c()
-   if (nruns<burn_in_generations){
-     if (nruns%%interval_rich==0){
-       #richrows=richrows+1
-       #richness[richrows]<-species_richness(community)
-      # richness[richrows]<-list(species_richness(community))
-       richness<-c(richness,species_richness(community))
-     }
-   }
-  #oct<-list()
-
-  if (nruns%%interval_oct==0){
-    octrows=length(octrows)+1
-    #index<-length(oct) + 1
-    oct[[octrows]]<-(octaves(species_abundance(community)))
+  community<-init_community_min(size=size)
+  a<-proc.time()
+  b<-proc.time()-a
+  nruns=0
+  richrows=0
+  richness<-c()
+  oct<-list()
+  while (((b[3])/60)<wall_time){
+    community=neutral_generation_speciation(community=community,speciation_rate =speciation_rate )
+    nruns=nruns+1
+    b<-proc.time()-a
+    if (nruns<burn_in_generations){
+      if (nruns%%interval_rich==0){
+        richness<-c(richness,species_richness(community))
+      }
+    }
+    #oct<-list()
+    if (nruns%%interval_oct==1){
+      octrows=length(oct)+1
+      oct[[octrows]]<-(octaves(species_abundance(community)))
+      print(b)
+    }
   }
-  # if (nruns%%interval_oct==0){
-     ##octrows=octrows+1
-   #  index<-length(oct) + 1
-    # oct[index]<-list(octaves(species_abundance(community)))
-   #}
- }
- c<-proc.time()-a
- c<-c[3]
- filename<-paste0(output_file_name,".rda")
-save(oct,community,speciation_rate,richness,wall_time,interval_rich,interval_oct,burn_in_generations,size,c,file=filename)
-
+  c<-proc.time()-a
+  c<-c[3]
+  filename<-paste0(output_file_name,".rda")
+  save(oct,community,speciation_rate,richness,wall_time,interval_rich,interval_oct,burn_in_generations,size,c,file=filename)
 }
-
 # Questions 18 and 19 involve writing code elsewhere to run your simulations on the cluster
 
 # Question 20 
 process_cluster_results <- function()  {
   # clear any existing graphs and plot your graph within the R window
-  combined_results <- list() #create your list output here to return
+  graphics.off()
+    a<-list(vect500=c(0),vect1000=c(0),vect2500=c(0),vect5000=c(0))
+   count<-list(vect500=0,vect1000=0,vect2500=0,vect5000=0)
+  for (i in 1:100){
+    file<-paste0("output2_",i,".rda")
+    load(file)
+    v<-paste0("vect",size)
+    which<-(burn_in_generations/interval_oct)+1
+    for (j in (which:length(oct))){
+      a[[v]]<-sum_vect(a[[v]],oct[[j]])
+      count[[v]]<-count[[v]]+1
+    }
+  }
+  combined_results<-list(0,0,0,0)
+  for (k in (1:length(a))){
+        combined_results[[k]]<-a[[k]]/count[[k]]
+      } 
+  par(mfrow=c(2,2))
+  #sizes<-list(graph500=500,graph1000=1000,graph2500=2500,graph5000=5000)
+     barplot(combined_results[[1]],ylim=c(0,20),main="Size=500",xlab="Species Abundance Octave",ylab="Mean frequency") 
+     barplot(combined_results[[2]],ylim=c(0,20),main="Size=1000",xlab="Species Abundance Octave",ylab="Mean frequency")
+     barplot(combined_results[[3]],ylim=c(0,20),main="Size=2500",xlab="Species Abundance Octave",ylab="Mean frequency")
+     barplot(combined_results[[4]],ylim=c(0,20),main="Size=5000",xlab="Species Abundance Octave",ylab="Mean frequency")
+ #for (m in 1:4){
+#   data<-as.data.frame((combined_results[[m]]))     
+#data[2]<-seq(1,nrow(data),1)
+  # }
+   ## ggplot(data=data,aes(V2,(combined_results[[m]])))+geom_bar(stat="identity")+theme_bw()+ylim(0,20)
+ #  do.call(grid.arrange,p)
+  # ggarrange(p[[1]])
+   #p<-list()  #   grid.arrange(p1, p2, nrow = 1)
+     save(combined_results,file="rbk119_cluster_results.rda")
   return(combined_results)
 }
 

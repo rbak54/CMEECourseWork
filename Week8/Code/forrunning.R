@@ -232,40 +232,26 @@ cluster_run <- function(speciation_rate, size, wall_time, interval_rich, interva
   richrows=0
   richness<-c()
   oct<-list()
-  #octrows=0
   while (((b[3])/60)<wall_time){
     community=neutral_generation_speciation(community=community,speciation_rate =speciation_rate )
     nruns=nruns+1
     b<-proc.time()-a
-    #richness<-matrix(nrow=burn_in_generations)
-    #richness<-list()
-    #richness<-c()
     if (nruns<burn_in_generations){
       if (nruns%%interval_rich==0){
-        #richrows=richrows+1
-        #richness[richrows]<-species_richness(community)
-        # richness[richrows]<-list(species_richness(community))
         richness<-c(richness,species_richness(community))
       }
     }
     #oct<-list()
     if (nruns%%interval_oct==1){
       octrows=length(oct)+1
-      #index<-length(oct) + 1
       oct[[octrows]]<-(octaves(species_abundance(community)))
       print(b)
     }
-    # if (nruns%%interval_oct==0){
-    ##octrows=octrows+1
-    #  index<-length(oct) + 1
-    # oct[index]<-list(octaves(species_abundance(community)))
-    #}
   }
   c<-proc.time()-a
   c<-c[3]
   filename<-paste0(output_file_name,".rda")
   save(oct,community,speciation_rate,richness,wall_time,interval_rich,interval_oct,burn_in_generations,size,c,file=filename)
-  
 }
 
 # Questions 18 and 19 involve writing code elsewhere to run your simulations on the cluster
