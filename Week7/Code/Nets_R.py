@@ -110,6 +110,6 @@ nx.draw_networkx_edges(G, pos, width=emp/10,)
 p.show()
 #nx.draw_networkx(G,node_color=labels['group'])
 
- 
 ##done good! need to sort colours and arrows and layout next
 import pandas as pd
+##for loop for labels

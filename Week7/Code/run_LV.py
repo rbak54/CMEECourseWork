@@ -1,3 +1,4 @@
+#/usr/bin/env python3
 #Author: Ruth Keane (ruth.keane19@imperial.ac.uk)
 #Script: run_LV.py
 #Desc: runs and profiles LV1.py and LV2.py

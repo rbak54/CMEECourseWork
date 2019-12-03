@@ -41,3 +41,10 @@ F<-tools::file_path_sans_ext(F)
 #export data
 TreeFile<-paste("../Results/",F,"_treeheights.csv",sep="")
 write.csv(Trees,TreeFile)
+print("Tree heights calculated!")
+base<-basename(TreeFile)
+print(paste0("Output file is ",base))
+directory<-dirname(TreeFile)
+print(paste0("Directory of output file is ",directory))
+
+      

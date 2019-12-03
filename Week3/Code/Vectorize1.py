@@ -12,7 +12,7 @@ from random import random
 import numpy as np
 import scipy as sc
 from timeit import default_timer as timer
-a=10
+a=1000
 mat=np.random.rand(a,a)
 def SumAllElements(x):
     """sum of all elements in a matrix"""
