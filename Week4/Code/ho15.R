@@ -5,7 +5,7 @@
 #Input: none
 #Output: none
 #Date: Oct 2019
-
+graphics.off()
 rm(list=ls())
 daphnia<-read.delim("../Data/daphnia.txt")
 

@@ -10,6 +10,7 @@ __license__='Public domain'
 #Output: none
 #Date: Oct 2019
 if __name__=='__main__':
+    """so main function runs"""
     print('This program is being run by itself')
 else:
     print('I am being imported from another module')

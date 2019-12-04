@@ -14,6 +14,6 @@ then
     echo
 #if no input, no error messages
 else
-    echo "No file inputted. Please imput file."
+    echo "No file inputted. Please input file."
 fi
 exit

@@ -1,4 +1,10 @@
-# CMEE 2019 HPC excercises R code HPC run code proforma
+#Author: Ruth Keane (ruth.keane19@imperial.ac.uk)
+#Script: rbk119_HPC_2019_challengeG.R
+#Desc: test for HPC
+#Arguments: none
+#Input: none
+#Output: none
+#Date: NOv 2019
 
 rm(list=ls()) # good practice 
 source("rbk119_HPC_2019_main.R")

@@ -67,4 +67,4 @@ for (n in e) {
 M<-na.omit(Matrix)
 #make a csv of it!
 write.csv(M,"../Results/PP_Regress_Results.csv")
-
+print("PP_Regress_Results.csv in Results")

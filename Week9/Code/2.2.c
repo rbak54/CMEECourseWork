@@ -1,3 +1,10 @@
+//Author: Ruth Keane ruth.keane19@imperial.ac.uk
+//Script: 2.2.c
+//Desc: exploring ints, chars etc
+//Input: none
+//Arguments: none
+//Output:none 
+//Date: Dec 2019
 #include <stdio.h>
 
 int main (void)

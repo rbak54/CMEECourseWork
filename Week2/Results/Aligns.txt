@@ -1,8 +1,0 @@
-(lp0
-S'CAATTCGGAT'
-p1
-aI5
-aS'.......CAATTCGGAT'
-p2
-aI5
-a.

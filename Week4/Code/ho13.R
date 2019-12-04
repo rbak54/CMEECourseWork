@@ -6,6 +6,8 @@
 #Output: none
 #Date: Oct 2019
 graphics.off()
+rm(list=ls())
+
 d<-read.table("../Data/SparrowSize.txt",header=TRUE)
 d1<-subset(d, d$Wing!="NA")
 hist(d1$Wing)

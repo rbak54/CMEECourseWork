@@ -5,6 +5,7 @@
 #Input: none
 #Output: none
 #Date: Oct 2019
+graphics.off()
 
 Ricker<- function(N0=1, r=1, K=10, generations=50)
 {
@@ -17,3 +18,4 @@ Ricker<- function(N0=1, r=1, K=10, generations=50)
   return (N)
 }
 plot(Ricker(generations=10), type="l")
+print("Graph plotted")

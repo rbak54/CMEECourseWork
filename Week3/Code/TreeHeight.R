@@ -25,3 +25,4 @@ for (tree in 1:nrow(Trees)){
 }
 #export data
 write.csv(Trees,"../Results/TreeHts.csv")
+print("heights in TreeHts.csv in Results")

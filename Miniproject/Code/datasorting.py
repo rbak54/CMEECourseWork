@@ -1,3 +1,10 @@
+#Author: Ruth Keane (ruth.keane19@imperial.ac.uk)
+#Script: datasorting.py
+#Desc: initial sorting of data
+#Arguments: none
+#Input: none 
+#Output: none
+#Date: Nov 2019
 import csv
 import pandas as pd
 import numpy as np

@@ -5,6 +5,10 @@
 #Input: none
 #Output: none
 #Date: Oct 2019
+
+rm(list=ls())
+graphics.off()
+
 library(matrixStats)
 data<-read.csv("../Data/bears.csv", stringsAsFactors = FALSE, colClasses=c("character"))
 points<-c()

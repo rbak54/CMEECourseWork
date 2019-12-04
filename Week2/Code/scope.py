@@ -1,4 +1,3 @@
-
 #Author: Ruth Keane (ruth.keane19@imperial.ac.uk)
 #Script: scope.py
 #Desc:functions exploring local and global variables
@@ -15,8 +14,8 @@ if _a_global >= 5:
     _b_global = _a_global + 5
 
 def a_function():
+    """function demonstrating global variables"""
     _a_global = 5
-
     if _a_global >= 5:
         _b_global = _a_global +5
 
@@ -27,7 +26,6 @@ def a_function():
     print ("Inside the function, the value of _a_local is", _a_local)
 
     return None
-
 a_function()
 print("Outside the function, the value of _a_global is",_a_global)
 print("Outside the function, the value of _b_global is", _b_global)
@@ -35,6 +33,7 @@ print("Outside the function, the value of _b_global is", _b_global)
 #in a function, global variables are still available
 _a_global = 10
 def a_function():
+    """function using global variable"""
     _a_local = 4 
 
     print("Inside the function, the value of _a_local is", _a_local)
@@ -52,6 +51,7 @@ _a_global = 10
 print ("Outside the function, the value of _a_global is" ,_a_global)
 
 def a_function():
+    """function defining variable as global"""
     global _a_global
     _a_global = 5
     _a_local = 4
@@ -68,9 +68,11 @@ print("Outside the function, the value of _a_global now is", _a_global)
 
 ###value of a_global changes when global is used in a function 
 def a_function():
+    """function with global variable"""
     _a_global = 10
 
     def _a_function2():
+        """function with different global variable"""
         global _a_global
         _a_global =20
 
@@ -90,7 +92,9 @@ print("The value of a_global in main workspace/namespace is", _a_global)
 _a_global = 10
 
 def a_function(): 
+    """function outside"""
     def _a_function2():
+        """function inside"""
         global _a_global
         _a_global = 20
 

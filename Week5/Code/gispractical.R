@@ -230,15 +230,15 @@ plot(points_from_rast, key.pos = NULL, reset = FALSE)
 
 ##saving
 #vectors
-st_write(uk_eire,'../Data/uk_eire_WGS84.shp')
-st_write(uk_eire_BNG, '../Data/uk_eire_BNG.shp')
-st_write(uk_eire, '../Data/uk_eire_WGS84.geojson')
-st_write(uk_eire, '../Data/uk_eire_WGS84.gpkg')
-st_write(uk_eire, '../Data/uk_eire_WGS84.json', driver='GeoJSON')
+st_write(uk_eire,'../Results/uk_eire_WGS84.shp')
+st_write(uk_eire_BNG, '../Results/uk_eire_BNG.shp')
+st_write(uk_eire, '../Results/uk_eire_WGS84.geojson')
+st_write(uk_eire, '../Results/uk_eire_WGS84.gpkg')
+st_write(uk_eire, '../Results/uk_eire_WGS84.json', driver='GeoJSON')
 st_drivers()
 #rasters
 #tiff most common
-writeRaster(uk_raster_BNG_interp, '../Data/uk_raster_BNG_interp.tif')
-writeRaster(uk_raster_BNG_ngb, '../Data/uk_raster_BNG_ngb.asc', format='ascii')
+writeRaster(uk_raster_BNG_interp, '../Results/uk_raster_BNG_interp.tif')
+writeRaster(uk_raster_BNG_ngb, '../Results/uk_raster_BNG_ngb.asc', format='ascii')
 writeFormats()
 

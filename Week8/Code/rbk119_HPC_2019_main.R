@@ -1,3 +1,14 @@
+#Author: Ruth Keane (ruth.keane19@imperial.ac.uk)
+#Script: rbk119_HPC_2019_main.R
+#Desc: main classwork HPC
+#Arguments: none
+#Input: none
+#Output: none
+#Date: Nov 2019
+
+rm(list=ls())
+graphics.off()
+
 # CMEE 2019 HPC excercises R code main proforma
 # you don't HAVE to use this but it will be very helpful.  If you opt to write everything yourself from scratch please ensure you use EXACTLY the same function and parameter names and beware that you may loose marks if it doesn't work properly because of not using the proforma.
 

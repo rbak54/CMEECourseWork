@@ -5,6 +5,9 @@
 #Input: none
 #Output: none
 #Date: Oct 2019
+rm(list=ls())
+graphics.off()
+
 library(dplyr)
 require(lme4)
 a<-read.table("../Data/ObserverRepeatability.txt", header = TRUE)

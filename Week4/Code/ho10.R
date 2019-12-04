@@ -4,8 +4,11 @@
 #Arguments: none
 #Input: none
 #Output: none
-#Date: Oct 2019rm(list=ls())
+#Date: Oct 2019
 #setwd("~/Documents/CMEECourseWork/Week4/Code")
+rm(list=ls())
+graphics.off()
+
 d<-read.table("../Data/SparrowSize.txt", header=TRUE)
 plot(d$Mass~d$Tarsus, ylab="Mass (g)",xlab="Tarsus (mm)", pch=19, cex=0.4)
 x<-c(1:100)

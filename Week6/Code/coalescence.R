@@ -5,6 +5,9 @@
 #Input: none 
 #Output: none
 #Date: Oct 2019
+rm(list=ls())
+graphics.off()
+
 north<-as.matrix(read.csv("../Data/killer_whale_North.csv",stringsAsFactors = FALSE,colClasses=rep("numeric"), header=FALSE))
 south<-as.matrix(read.csv("../Data/killer_whale_South.csv",stringsAsFactors = FALSE,colClasses=rep("numeric"), header=FALSE))
 ##Tajimas estimator 

@@ -13,14 +13,17 @@ import sys
 ##functions##
 #finds the square root of x
 def foo_1(x):
+    """square root"""
     return x ** 0.5
 #returns largest one of two valies
 def foo_2(x,y):
+    """return larger"""
     if x>y:
         return x
     return y 
 #if not x>y>z then switches some around and returns values in the order x>y>z
 def foo_3(x,y,z):
+    """return largest"""
     if x>y:
         tmp=y
         y=x
@@ -32,17 +35,20 @@ def foo_3(x,y,z):
     return[x,y ,z]
 #for 1 until x+1 , multiply by 1, then multiply that by 1+1 etc so the factorial
 def foo_4(x):
+    """factorial"""
     result = 1
     for i in range(1, x+1):
         result=result*i
     return result
 #factorial (recursive) 
 def foo_5(x):
+    """factorial"""
     if x==1:
         return 1
     return x* foo_5(x-1)
 #factorial
 def foo_6(x):
+    """factorial"""
     facto=1
     while x>=1: 
         facto = facto * x
@@ -52,6 +58,7 @@ def foo_6(x):
 
 ##Test arguments 
 def main(argv):
+    """main argument"""
     print(foo_1(16))
     print(foo_2(120,22))
     print(foo_3(27,12,98))

@@ -10,6 +10,7 @@
 #library(lme4) 	
 #require(lme4) 	
 rm(list=ls())
+graphics.off()
 
 d<-read.table("../Data/SparrowSize.txt", header=TRUE)
 str(d)

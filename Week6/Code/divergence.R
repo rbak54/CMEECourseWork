@@ -5,6 +5,9 @@
 #Input: none 
 #Output: none
 #Date: Oct 2019
+rm(list=ls())
+graphics.off()
+
 #load data
 west<-read.csv("../Data/western_banded_gecko.csv",stringsAsFactors = FALSE, colClasses=c("character"), header=FALSE)
 bent<-read.csv("../Data/bent-toed_gecko.csv",stringsAsFactors = FALSE, colClasses=c("character"),header=FALSE)
@@ -64,5 +67,5 @@ WL<-diffWL/ncol(dataWL)
 mu<-WL/2*30000000
 tAB<-(2*mu)/WB
 #divergence time
-print("Divergence time is")
+print("Divergence time is:")
 print(tAB)

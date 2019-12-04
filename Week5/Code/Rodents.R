@@ -5,6 +5,10 @@
 #Input: none
 #Output: none
 #Date: Oct 2019
+graphics.off()
+rm(list=ls())
+
+require("lme4")
 Rodents<-read.csv("../Data/rodents.csv")
   DS<-subset(Rodents,species=="DS")
   DSSub<-subset(DS,sex!="")
@@ -16,5 +20,5 @@ MOD<-lmer(wgt~hfl*sex+(1|yr)+(1|mo), data=DSSub)
 #ggplot(DS,aes(hfl,wgt, colour=sex))+geom_point()
 #na.omit(Rodemts))
 
-hist(hfl, data=Ds)
+hist(DS$hfl)
 ##sudo apt install r-cran-lme4 in terminal  

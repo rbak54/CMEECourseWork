@@ -20,10 +20,13 @@ DFwR<-plyr::mutate(DFwR,logRatio= log(Ratio))
 #make pdfs for pred, prey and size ratio
 pdf("../Results/Pred_Lattice.pdf")
 print(densityplot(~logPredator.mass| Type.of.feeding.interaction, data=DFwR))
+print("Pred_Lattice.pdf in Results folder")
 pdf("../Results/Prey_Lattice.pdf")
 print(densityplot(~logPrey.mass| Type.of.feeding.interaction, data=DFwR))
+print("Prey_Lattice.pdf in Results folder")
 pdf("../Results/SizeRatio_Lattice.pdf")
 print(densityplot(~logRatio| Type.of.feeding.interaction, data=DFwR))
+print("SizeRatio_Lattice.pdf in Results folder")
 #calculate means
 meanmatrix<-matrix(NA,nrow=5,ncol=3)
 M<-aggregate(DFwR$logPrey.mass,list(DFwR$Type.of.feeding.interaction),mean)
@@ -53,4 +56,5 @@ colnames(com)<-c("Mean.Log.Prey.mass","Mean.Log.Predator.mass","Mean.Log.Ratio",
 rownames(com)<-E[,1]
 #wrote ito csv
 write.csv(com,"../Results/PP_Results.csv")
+print("PP_Results.csv in Results folder")
 graphics.off()

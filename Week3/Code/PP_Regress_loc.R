@@ -50,4 +50,4 @@ for (n in f) {
 M<-na.omit(Matrix)
 #make a csv of it!
 write.csv(M,"../Results/PP_Regress_Results_loc.csv")
-
+print("PP_Regress_Results_loc.csv in Results")

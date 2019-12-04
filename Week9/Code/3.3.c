@@ -1,3 +1,10 @@
+//Author: Ruth Keane ruth.keane19@imperial.ac.uk
+//Script: 3.3.c 
+//Desc:  increments 
+//Input: none
+//Arguments: none
+//Output: none
+//Date: Dec 2019
 #include <stdio.h>
 
 int main (void)

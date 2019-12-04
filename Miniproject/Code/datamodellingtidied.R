@@ -1,3 +1,10 @@
+#Author: Ruth Keane (ruth.keane19@imperial.ac.uk)
+#Script: datamodellingtidied.R
+#Desc: best version of data modelling
+#Arguments: none
+#Input: none 
+#Output: none
+#Date: Nov 2019
 require("minpack.lm")
 
 #load data

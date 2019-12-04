@@ -66,6 +66,9 @@ Output: text file in Results
 ## FirstBiblio.bib
 
 
+Desc: bibliography
+
+
 
 
  
@@ -76,7 +79,7 @@ Output: text file in Results
 ## FirstExample.tex
 
 
-
+Desc: file to be compiled
 
  
 

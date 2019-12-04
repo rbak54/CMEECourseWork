@@ -39,3 +39,4 @@ p<-p+geom_polygon(data=ellDF, aes(x= Real, y= Imaginary, alpha=1/20, fill= "red"
 ##saving as pdf
 print(p)
 graphics.off(); #you can also use dev.off()
+print("pdf saved as graph")

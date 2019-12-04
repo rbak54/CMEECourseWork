@@ -1,3 +1,10 @@
+//Author: Ruth Keane ruth.keane19@imperial.ac.uk
+//Script: operators.c
+//Desc: intro to operators 
+//Input: none
+//Arguments: none
+//Output: none
+//Date: Dec 2019
 #include <stdio.h>
 
 int main (void)

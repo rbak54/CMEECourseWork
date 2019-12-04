@@ -15,3 +15,4 @@ f=open('../Sandbox/testout.txt','w')
 for i in list_to_save:
     f.write(str(i)+'\n') ## add a new line at the end
 f.close
+print("New file saved into Sandbox")

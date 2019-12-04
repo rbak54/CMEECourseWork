@@ -6,6 +6,10 @@
 #Arguments: 1
 #Date: Oct 2019
 #change name so filename.tex works
+if [ $# -eq 0 ]
+then
+echo "No file inputted.Please input file."
+else
 f=`basename $1 |cut -f 1 -d "."`
 pdflatex $f
 pdflatex $f
@@ -27,3 +31,4 @@ rm *.snm
 rm *.toc
 rm *.bbl
 rm *.blg
+fi

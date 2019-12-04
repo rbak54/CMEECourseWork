@@ -1,3 +1,10 @@
+#Author: Ruth Keane (ruth.keane19@imperial.ac.uk)
+#Script: datamodellingattempt.R
+#Desc: data modelling with code that is no longer in use
+#Arguments: none
+#Input: none 
+#Output: none
+#Date: Nov 2019
 require("minpack.lm")
 #require("browser")
 

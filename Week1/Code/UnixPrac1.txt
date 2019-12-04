@@ -21,7 +21,7 @@ tail -n +2 ../Data/fasta/E.coli.fasta |tr -d '[:space:] '  | wc -m
 #Count the matches of a particular sequence, "ATGC" in the genome of E. coli (hint: Start by removing the first line and removing newline characters)
 tail -n +2 ../Data/fasta/E.coli.fasta |tr -d '[:space:]' | grep "ATGC" -o | wc -l
 
-5 #AT/GC ratio
+#AT/GC ratio
 AT=$(tail -n +2 ../Data/fasta/E.coli.fasta |tr -d '[:space:]'| grep -o "A\|T" | wc -l) && CG=$(tail -n +2 ../Data/fasta/E.coli.fasta |tr -d '[:space:]'| grep -o "G\|C" | wc -l) && echo "scale=5; $AT/ $CG" | bc
 
 

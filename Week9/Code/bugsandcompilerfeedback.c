@@ -1,3 +1,10 @@
+//Author: Ruth Keane ruth.keane19@imperial.ac.uk
+//Script:bugs and compilerfeedback.c
+//Desc: variables, fixing bugs
+//Input: none
+//Arguments: none
+//Output: none
+//Date: Dec 2019
 #include <stdio.h>
  
 int main()

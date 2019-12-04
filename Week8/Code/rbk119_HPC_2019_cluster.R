@@ -1,3 +1,12 @@
+#Author: Ruth Keane (ruth.keane19@imperial.ac.uk)
+#Script: rbk119_HPC_2019_cluster.R
+#Desc: cluster code
+#Arguments: none
+#Input: none
+#Output: none
+#Date: Nov 2019
+
+
 rm(list=ls())
 graphics.off()
 
@@ -6,7 +15,7 @@ source("rbk119_HPC_2019_main.R")
 
 
 #iter<-as.numeric(Sys.getenv("PBS_ARRAY_INDEX"))
-iter<-3
+iter<-300
 #last thing- undo above
 #set.seed(iter)
 #if iter<25

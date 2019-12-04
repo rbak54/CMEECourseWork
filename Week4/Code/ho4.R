@@ -2,6 +2,7 @@
 #Script: ho4.R
 #Desc: standard errors
 #Arguments: none
+
 #Input: none
 #Output: none
 #Date: Oct 2019
@@ -11,6 +12,8 @@ library(pwr)
 require(pander)
 require(broom)
 rm(list=ls())
+graphics.off()
+
 d<-read.table("../Data/SparrowSize.txt", header=TRUE)
 ##se tarsus
 d1<-subset(d,d$Tarsus!="NA")

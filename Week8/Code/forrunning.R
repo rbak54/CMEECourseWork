@@ -1,3 +1,12 @@
+#Author: Ruth Keane (ruth.keane19@imperial.ac.uk)
+#Script: forrunning.R
+#Desc: code that actually ran (with iter changed)
+#Arguments: none
+#Input: none
+#Output: none
+#Date: Oct 2019
+
+
 rm(list=ls())
 graphics.off()
 
@@ -366,8 +375,8 @@ Challenge_F <- function() {
 ###go over richness , to see if my method worked
 #source("rbk119_HPC_2019_main.R")
 
-iter<-as.numeric(Sys.getenv("PBS_ARRAY_INDEX"))
-#   iter<-3
+#iter<-as.numeric(Sys.getenv("PBS_ARRAY_INDEX"))
+   iter<-303
 #last thing- undo above
 set.seed(iter)
 #if iter<25

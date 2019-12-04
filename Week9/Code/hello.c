@@ -1,3 +1,10 @@
+//Author: Ruth Keane ruth.keane19@imperial.ac.uk
+//Script: hello.c
+//Desc:prints hello 
+//Input: none
+//Arguments: none
+//Output: none
+//Date: Dec 2019
 #include <stdio.h>
 
 int main(void)

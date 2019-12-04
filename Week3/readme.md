@@ -37,6 +37,16 @@ Output:
 
  
 
+## autocorrelation.tex
+
+
+
+
+ 
+
+
+ 
+
 ## basic_io.R
 
 
@@ -128,6 +138,19 @@ Input: none
  
 
 Output: 
+## get_TreeHeight.py
+
+
+
+Desc: function calculates heights of trees in a dataset. this data is exported as a csv. 
+
+ 
+
+Input: csv file containing tree distance and degrees data
+
+ 
+
+Output: file in results folder called *nameoffile*_treeheights.csv
 ## get_TreeHeight.R
 
 
@@ -258,16 +281,6 @@ Input: none
  
 
 Output: none
-## REMOVE.R
-
-
-
-
- 
-
-
- 
-
 ## Ricker.R
 
 
@@ -281,6 +294,29 @@ Input: none
  
 
 Output: none
+## Rplots.pdf
+
+
+
+
+ 
+
+
+ 
+
+## run_get_TreeHeight.sh
+
+
+
+Desc: function calculates heights of trees in a dataset. this data is exported as a csv. 
+
+ 
+
+Input: csv file containing tree distance and degrees data
+
+ 
+
+Output: file in results folder called *nameoffile*_treeheights.csv
 ## sample.R
 
 
@@ -303,6 +339,19 @@ Desc: finds correlation and p-value for autocorrelation. ggplot2 graphs.
  
 
 Input: load ats file
+
+ 
+
+Output: none
+## timeVectorize.sh
+
+
+
+Desc: time four Vectorize scripts
+
+ 
+
+Input: none
 
  
 
@@ -333,11 +382,37 @@ Input: none
  
 
 Output: none
+## Vectorize1.py
+
+
+
+Desc: Summing the elements of a matrix using both a vectorized and non-vectorized function
+
+ 
+
+Input: none
+
+ 
+
+Output: none
 ## Vectorize1.R
 
 
 
 Desc: Summing the elements of a matrix using both a vectorized and non-vectorized function
+
+ 
+
+Input: none
+
+ 
+
+Output: none
+## Vectorize2.py
+
+
+
+Desc: stochastic ricker equation for 1000 populations
 
  
 

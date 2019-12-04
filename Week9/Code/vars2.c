@@ -1,3 +1,10 @@
+//Author: Ruth Keane ruth.keane19@imperial.ac.uk
+//Script: vars2.c
+//Desc: variables more 
+//Input: none
+//Arguments: none
+//Output: none
+//Date: Dec 2019
 #include <stdio.h>
 int main (void)
 {

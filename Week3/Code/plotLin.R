@@ -39,3 +39,4 @@ p
 pdf("../Results/MyLinReg.pdf") # Open blank pdf page using a relative path
 print(p)
 graphics.off()
+print("plot saved as MyLinReg.pdf in results")

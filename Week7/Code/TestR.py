@@ -11,3 +11,4 @@ import subprocess
 #run  R script and store output and success
 subprocess.Popen("Rscript --verbose TestR.R > ../Results/TestR.Rout 2>../Results/TestR_errFile.Rout", shell=True).wait()
 #subprocess.Popen("Rscript --verbose NonExistScript.R > ../Results/outputFile.Rout 2> ../Results/errorFile.Rout", shell=True).wait()
+print("Output stored in TestR.Rout and error stored in Test_errFile.Rout in Results ")

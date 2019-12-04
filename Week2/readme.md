@@ -252,12 +252,15 @@ Output: none
 
 
 
+Desc:functions exploring local and global variables
 
  
 
+Input: none
 
  
 
+Output: none
 ## sysargv.py
 
 

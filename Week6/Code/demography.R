@@ -5,6 +5,8 @@
 #Input: none 
 #Output: none
 #Date: Nov 2019
+rm(list=ls())
+graphics.off()
 
 #load data
 turtlegenotypes<- read.csv("../Data/turtle.genotypes.csv", stringsAsFactors = FALSE,header=FALSE)
