@@ -3,6 +3,12 @@
 \begin{document}
 \SweaveOpts{concordance=TRUE}
 
+\title{Autocorrelation in Weather}
+\author{Ruth Keane}
+\date{30/10/2019}
+\maketitle
+
+\section{p-value and Interpretation}
 The p-value is:
 <<echo=FALSE>>=
 load("/home/ruth/Documents/CMEECourseWork/Week3/Data/KeyWestAnnualMeanTemperature.RData")
@@ -33,22 +39,23 @@ A<-as.data.frame(V)
 @
 
 Therefore, there is a significant correlation between the temperatures in one year compared to the next year. This is a weak positive correlation(0.326).
+
+\section{Temperature Change betweem 1900 and 2000}
 <<fig=TRUE,echo=FALSE>>=
 require(ggplot2)
-Q<-ggplot(ats,aes(Year,Temp))+geom_line()+ylab("Temperature")+ggtitle("Temperature changes from 1900 to 2000")
+Q<-ggplot(ats,aes(Year,Temp))+geom_line()+ylab("Temperature")+theme_bw()
 print(Q)
 @
-
+\section{Temperature Change between year n and year n+1}
 <<fig=TRUE,echo=FALSE>>=
-R<-ggplot(H,aes(ats1,ats2))+geom_point()+geom_smooth(method="lm")+xlab("Temperature in year n")+ylab("Temperature in year n+1")+ ggtitle("Temperature change between years")
+R<-ggplot(H,aes(ats1,ats2))+geom_point()+geom_smooth(method="lm")+xlab("Temperature in year n")+ylab("Temperature in year n+1")+ theme_bw()
 print(R)
 @
-
+\section{Correlation Coefficient Density}
 <<fig=TRUE,echo=FALSE>>=
 S<-ggplot(A,aes(V))+geom_density()+xlab("Correlation Coefficient")+ylab("Density")+
   geom_vline(xintercept=corR,colour="blue", show.legend = TRUE)+
-  geom_text(x=0.1,y=3, label="Weather Autocorrelation = 0.326", color="blue")+
-  ggtitle("Correlation Coefficient density")
+  geom_text(x=0.1,y=3, label="Weather Autocorrelation = 0.326", color="blue")+theme_bw()
 print(S)
 @
 

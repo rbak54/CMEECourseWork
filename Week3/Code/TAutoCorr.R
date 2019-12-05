@@ -36,7 +36,6 @@ p<-(Bee/length(V))
 print(p)
 graphics.off()
 A<-as.data.frame(V)
-##ggplot with my value on # write some words in
 #head(A)
 require(ggplot2)
 #ggplots

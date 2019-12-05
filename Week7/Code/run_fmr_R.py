@@ -7,7 +7,9 @@
 #Input: none 
 #Output: none
 #Date: Nov 2019
+#import packages
 import subprocess
+#use subprocess to run fmr.R
 h=subprocess.Popen("Rscript --verbose fmr.R", shell=True).wait()
 if h==0:
     print("fmr.R ran successfully")
