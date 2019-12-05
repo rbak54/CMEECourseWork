@@ -17,7 +17,7 @@ def main():
     import scipy.integrate as integrate
     import matplotlib.pylab as p
     import matplotlib.patches as mpatches
-    
+
     #define variables
     R0=10.
     #10 resources per unit are initially
@@ -76,6 +76,8 @@ def main():
     p.title('Consumer resource population dynamics')
     p.legend(handles=[rl,al,zl,el,kl],loc='best')
     f2.savefig('../Results/LV_model_2_discrete.pdf')
+    p.close('all')
+    print("figures saved in Results")
 
 if __name__ == "__main__":
     """runs main"""

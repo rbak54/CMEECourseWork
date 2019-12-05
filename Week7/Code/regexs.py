@@ -73,13 +73,15 @@ webpage_html=r.data
 type(webpage_html)
 My_Data= webpage_html.decode()
 #print(My_Data)
-pattern= r"((Dr*)|(Prof\w*))\s+\w+\s+\w+"
-#not quite
+pattern= r"((Dr*)|(Professor*))(\s[A-Z]{1}[\w\']*)+"
+#dr or professor then words after this beginning with capital letter
 regex=re.compile(pattern)
+matches=[]
 for match in regex.finditer(My_Data):
-    print(match.group())
+    matches.append(match.group())
+matches=list(set(matches))
+
 New_Data=re.sub(r'\t'," ", My_Data)
 print(New_Data)
-
-
+#capturing realistic dates
 re.search(r'(([1][9])|([2][0]))[0-9]{2}[0-1][0-9][0-3][1-9]',"19001212").group()

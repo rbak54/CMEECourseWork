@@ -85,20 +85,20 @@ labels['group']=pd.Categorical(labels['group'])
 groupsa=np.array(groups)
 p.figure()
 #dtype which is not helping ##stuck here
+pos= nx.spiral_layout(groupsa)
 G=nx.DiGraph()
 G.add_nodes_from(labels['INST']) ##this is essential for correct labelling
 G.add_edges_from(tuple(et))
 NodSizs= 1000* (emp-min(emp))//(max(emp)-min(emp))
 d=emp/100
 node_colour=labels['group'].cat.codes
-pos= nx.spring_layout(G)
 nx.draw_networkx(G,pos,node_size=1500,edge_color="grey")
 nx.draw_networkx_nodes(G,pos,node_color=node_colour, cmap=p.cm.brg,node_size=1500)
 nx.draw_networkx_edges(G, pos, width=emp/10,edge_color="grey")
-Hosting = mpatches.Patch(color='blue',label="Hosting Partner")
+Hosting = mpatches.Patch(color='green',label="Hosting Partner")
 NonHost = mpatches.Patch(color='red',label="Non-Hosting Partner")
-Uni = mpatches.Patch(color='lime',label="University")
+Uni = mpatches.Patch(color='blue',label="University")
 p.legend(handles=[Hosting,NonHost,Uni],loc='best')
 p.show()
 
-##best so far but colours not quite right and shape off!
+##not correct labelling

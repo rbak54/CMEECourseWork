@@ -20,7 +20,7 @@ links = csv.reader(edges)
 node= open('../Data/QMEE_Net_Mat_nodes.csv','r')
 nodes = csv.reader(node)
 
-#linkm=np.loadtxt(open("../Data/QMEE_Net_Mat_edges.csv"),delimiter=",",skiprows=1).astype(int)
+linkm=np.loadtxt(open("../Data/QMEE_Net_Mat_edges.csv"),delimiter=",",skiprows=1).astype(int)
 tempn=[]
 templ=[]
 for row in nodes:
@@ -41,29 +41,27 @@ for i in (range(len(lin))):
 
 ea=ee[:]
 for d in range(len(ea)):
-    r=tuple(ea[d][0:2])
-    #r=tuple(sorted(ea[d][0:2]))
+    r=tuple(sorted(ea[d][0:2]))
     num=ea[d][2]
     number=(num,)
     ea[d] = r + number
-    #list(set(ea))
+    list(set(ea))
 
 en=ea[:]
 et=ea[:] 
 for d in range(len(et)):
-    r=tuple(et[d][0:2])
+    r=tuple(sorted(et[d][0:2]))
     et[d] = r
 emp=sc.empty(shape=len(en))
 for d in range(len(en)):
     num=en[d][2]
     emp[d]=num
     print(emp)
-##BELOW IS LABELS STUFF -llav
-forlabs=tempn[1:]
-#lllabels={}
 
+forlabs=tempn[1:]
+#labels={}
 #for i in range(6):
- #   lllabels[forlabs[i][0]]=forlabs[i][1] 
+#    labels[forlabs[i][0]]=forlabs[i][1] 
 
     #labs={forlabs[i][0]:forlabs[i][1]}  
 labels=pd.DataFrame({'INST':[forlabs[0][0], forlabs[1][0],forlabs[2][0],forlabs[3][0],forlabs[4][0],forlabs[5][0]], 'group':[forlabs[0][1], forlabs[1][1],forlabs[2][1],forlabs[3][1],forlabs[4][1],forlabs[5][1]]})
@@ -85,20 +83,19 @@ labels['group']=pd.Categorical(labels['group'])
 groupsa=np.array(groups)
 p.figure()
 #dtype which is not helping ##stuck here
-G=nx.DiGraph()
-G.add_nodes_from(labels['INST']) ##this is essential for correct labelling
+pos= nx.circular_layout(groupsa)
+G=nx.Graph()
+
+G.add_nodes_from(labels['INST'])
 G.add_edges_from(tuple(et))
 NodSizs= 1000* (emp-min(emp))//(max(emp)-min(emp))
 d=emp/100
 node_colour=labels['group'].cat.codes
-pos= nx.spring_layout(G)
-nx.draw_networkx(G,pos,node_size=1500,edge_color="grey")
-nx.draw_networkx_nodes(G,pos,node_color=node_colour, cmap=p.cm.brg,node_size=1500)
-nx.draw_networkx_edges(G, pos, width=emp/10,edge_color="grey")
-Hosting = mpatches.Patch(color='blue',label="Hosting Partner")
-NonHost = mpatches.Patch(color='red',label="Non-Hosting Partner")
-Uni = mpatches.Patch(color='lime',label="University")
+nx.draw_networkx(G,pos)
+nx.draw_networkx_nodes(G,pos,node_color=node_colour)
+nx.draw_networkx_edges(G, pos, width=emp/10,arrows=True)
+Hosting = mpatches.Patch(color='yellow',label="Hosting Partner")
+NonHost = mpatches.Patch(color='blue',label="Non-Hosting Partner")
+Uni = mpatches.Patch(color='purple',label="University")
 p.legend(handles=[Hosting,NonHost,Uni],loc='best')
 p.show()
-
-##best so far but colours not quite right and shape off!

@@ -7,6 +7,6 @@
 #Output: none
 #Date:Dec 2019
 
-
+rm ./a.out
 gcc -Wall $1 
-./out
+./a.out

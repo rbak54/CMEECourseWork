@@ -285,10 +285,10 @@ process_cluster_results <- function()  {
       } 
   par(mfrow=c(2,2))
   #sizes<-list(graph500=500,graph1000=1000,graph2500=2500,graph5000=5000)
-     barplot(combined_results[[1]],ylim=c(0,20),main="Size=500",xlab="Species Abundance Octave",ylab="Mean frequency") 
-     barplot(combined_results[[2]],ylim=c(0,20),main="Size=1000",xlab="Species Abundance Octave",ylab="Mean frequency")
-     barplot(combined_results[[3]],ylim=c(0,20),main="Size=2500",xlab="Species Abundance Octave",ylab="Mean frequency")
-     barplot(combined_results[[4]],ylim=c(0,20),main="Size=5000",xlab="Species Abundance Octave",ylab="Mean frequency")
+     barplot(combined_results[[1]],main="Size=500",xlab="Species Abundance Octave",ylab="Mean frequency") 
+     barplot(combined_results[[2]],main="Size=1000",xlab="Species Abundance Octave",ylab="Mean frequency")
+     barplot(combined_results[[3]],main="Size=2500",xlab="Species Abundance Octave",ylab="Mean frequency")
+     barplot(combined_results[[4]],main="Size=5000",xlab="Species Abundance Octave",ylab="Mean frequency")
  #for (m in 1:4){
 #   data<-as.data.frame((combined_results[[m]]))     
 #data[2]<-seq(1,nrow(data),1)
@@ -426,6 +426,42 @@ draw_fern2 <- function()  {
 # Challenge question A
 Challenge_A <- function() {
   # clear any existing graphs and plot your graph within the R window
+  graphics.off()
+  rm(list=ls()) 
+  
+  #oc<-matrix(nrow=200,ncol=10)
+ #max<-init_community_max(100)
+  richnessmin<-matrix(ncol=1000,nrow=100)
+  for (i in 1:100){
+  richnessmin[i,]<-neutral_time_series_speciation(init_community_min(100),speciation_rate = 0.1,duration =1000)
+  }
+  for (k in 1:1000){
+    ####now need to print
+  }
+  
+  richnessmax<-matrix(ncol=1000,nrow=100)
+  for (i in 1:100){
+    richnessmax[i,]<-neutral_time_series_speciation(init_community_max(100),speciation_rate = 0.1,duration =1000)
+  }
+#ab<-species_abundance(max)
+  #oc<-octaves(ab)
+  #o<-1
+  #oc[1,1:length(octaves(ab))]<-octaves(ab)
+  
+  #dont need to do both
+  #gens<-seq(20,2000,20)
+  #nint<-1:19
+  
+  #for (d in gens){
+  #  for (q in nint){
+   #   max<-neutral_generation_speciation(community=max,speciation_rate = 0.1)}
+    #max<-neutral_generation_speciation(community=max,speciation_rate = 0.1)
+    #ab<-species_abundance(max)
+    #o<-o+1
+    #oc[o,1:length(octaves(ab))]<-octaves(ab)
+   # oc<-sum_vect(oc,octaves(ab))
+  #}
+  #oc<-oc/o
 }
 
 # Challenge question B

@@ -86,7 +86,9 @@ def main(argv):
     p.title('Consumer-resource population dynamics')
     p.legend(handles=[rl,al,zl,el,kl])
     f2.savefig('../Results/LV_model_density_dependent_2.pdf')
-    
+    p.close('all')
+    print("figures saved in Results")
+
 if __name__ == "__main__":
     """runs main"""
     import sys

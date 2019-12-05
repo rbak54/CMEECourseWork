@@ -15,18 +15,7 @@ import LV2
 import LV3
 import LV4
 import LV5
-#run each of LVs
-print("LV1")
-LV1.main()
-print("LV2 with arguments")
-LV2.main(["LV2",1,0.2,1.3,0.7])
-print("LV3")
-LV3.main()
-print("LV4")
-LV4.main()
-print("LV5")
-LV5.main()
-#cprofiling
+#cprofiling and running
 print("Cprofiling of LV1")
 cProfile.run("LV1.main()", filename="../Results/LV1output")
 f=pstats.Stats('../Results/LV1output')

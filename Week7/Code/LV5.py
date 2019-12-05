@@ -39,12 +39,12 @@ def main():
     #randomness added in R and C
     for i in (range(15)):
         if Rt[i]>0:
-            epsilon=norm.rvs()
+            epsilon=norm.rvs(scale=0.2)
             Rt[i+1] = Rt[i]*(1+(r+epsilon)*(1-(Rt[i]/K))-a*Ct[i])
         else:
             Rt[i+1]=0
         if Ct[i]>0:
-            epsilon=norm.rvs()
+            epsilon=norm.rvs(scale=0.2)
             Ct[i+1]= Ct[i]*(1-z+epsilon+e*a*Rt[i])
         else:
             Ct[i+1]=0
@@ -77,7 +77,7 @@ def main():
     p.ylabel('Population density')
     p.title('Consumer-resource population dynamics')
     f1.savefig('../Results/LV_model_1_discrete_fluctuatingboth.pdf')
-
+    
     #figure 2 
     f2 = p.figure()
     p.plot(Rt,Ct,'r-')
@@ -87,6 +87,8 @@ def main():
     p.title('Consumer-resource population dynamics_fluctuatingboth.pdf')
     p.legend(handles=[rl,al,zl,el,kl],loc='best')
     f2.savefig('../Results/LV_model_2_discrete.pdf')
+    p.close('all')
+    print("figures saved in Results")
 
 if __name__ == "__main__":
     """runs main"""

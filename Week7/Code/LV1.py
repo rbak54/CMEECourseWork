@@ -56,13 +56,13 @@ def main():
     p.ylabel('Consumer density')
     p.title('Consumer-resource population dynamics')
     f2.savefig('../Results/LV_model_2.pdf')
-
+    p.close('all')
     #prints final densities
     print("final resource density is:")
     print(pops[-1][0])
     print("final consumer density is:")
     print(pops[-1][1])
-
+    print("figures saved in Results")
 if (__name__ == "__main__"):
     """runs main"""
     main()

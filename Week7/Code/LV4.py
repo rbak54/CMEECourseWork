@@ -18,7 +18,7 @@ def main():
     import scipy.integrate as integrate
     import matplotlib.pylab as p
     import matplotlib.patches as mpatches
-
+    
     #value of variables
     R0=10.
     #10 resources per unit are initially
@@ -39,7 +39,7 @@ def main():
     #randomness added in Rt
     for i in (range(15)):
         if Rt[i]>0:
-            epsilon=norm.rvs()
+            epsilon=norm.rvs(scale=0.3)
             Rt[i+1] = Rt[i]*(1+(r+epsilon)*(1-(Rt[i]/K))-a*Ct[i])
         else:
             Rt[i+1]=0
@@ -86,6 +86,9 @@ def main():
     p.title('Consumer-resource population dynamics')
     p.legend(handles=[rl,al,zl,el,kl],loc='best')
     f2.savefig('../Results/LV_model_2_discrete_fluctuatingresource.pdf')
+    #close figures
+    p.close('all')
+    print("figures saved in Results")
 
 if __name__ == "__main__":
     """runs main"""
