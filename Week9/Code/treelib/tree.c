@@ -48,7 +48,7 @@ void delete_tree(tree_t* tree)
 void tree_clear_connects(tree_t* t)
 {
     int i = 0;
-    for (i=0, i < t -> num_nodes; ++i){
+    for (i=0; i < t -> num_nodes; ++i){
         t->nodes[i].left = NULL;
         t->nodes[i].right=NULL;
         t->nodes[i].anc=NULL;
@@ -63,10 +63,10 @@ void tree_read_anc_table(int *anctable, tree_t* t){
     int j=0;
 
 //clear all connector pointers so that wee can assume null vlalues
-tree_clear_connects(t);
+    tree_clear_connects(t);
 
     //loop over all elements of anctabl at each position link that node to its ancestor
-    for (i=0; i<t->numnodes;++i){
+    for (i=0; i<t->num_nodes;++i){
         t->nodes[i].anc=&t->nodes[anctable[i]]; ///first nodes ancestor table pointed to ancester -assigns the ancester
         if (t->nodes[anctable[i]].left ==NULL){  //t->nodes[j].left == NULL is same thin. checking ancestors node hasnt already been assigned
                     t->nodes[anctable[i]].left = &t->nodes[i]; //puts element on left node
@@ -75,6 +75,11 @@ tree_clear_connects(t);
             t->nodes[anctable[i]].right=&t->nodes[i]; //if left already assigned, put on right
         }
     }
+     t->root=&t->nodes[t->num_nodes-1];
 }
-
+void tree_traverse(tree_t* t)
+{
+    node_traverse(t->root);
+}
+   
 //error

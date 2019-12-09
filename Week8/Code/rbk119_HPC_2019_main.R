@@ -422,53 +422,104 @@ draw_fern2 <- function()  {
 }
 
 # Challenge questions - these are optional, substantially harder, and a maximum of 16% is available for doing them.  
-
+calc<-function(gen,community){
+  # graphics.off()
+  n<-length(community)
+  richness<-matrix(ncol=gen,nrow=n)
+  
+  for (i in 1:n){
+    richness[i,]<-neutral_time_series_speciation(community=community,speciation_rate = 0.1,duration =gen)
+  } 
+  matrix<-matrix(nrow=4,ncol=gen)
+  time<-1:gen
+  matrix[1,]<-time
+  for (k in 1:gen){
+    mean<-mean(richness[,k])
+    stddev<-sd(richness[,k])
+    error <- qnorm(0.986)*stddev/sqrt(n)
+    lower<-mean-error
+    higher<-mean+error
+    matrix[2,k]<-mean
+    matrix[3,k]<-lower
+    matrix[4,k]<-higher
+  }
+  matrix<-as.data.frame(t(matrix))
+  colnames(matrix)<-c("time","mean","low","high")
+  
+  
+  return(matrix)
+}
 # Challenge question A
 Challenge_A <- function() {
   # clear any existing graphs and plot your graph within the R window
-  graphics.off()
+ # graphics.off()
   rm(list=ls()) 
-  
-  #oc<-matrix(nrow=200,ncol=10)
- #max<-init_community_max(100)
-  richnessmin<-matrix(ncol=1000,nrow=100)
-  for (i in 1:100){
-  richnessmin[i,]<-neutral_time_series_speciation(init_community_min(100),speciation_rate = 0.1,duration =1000)
-  }
-  for (k in 1:1000){
-    ####now need to print
-  }
-  
-  richnessmax<-matrix(ncol=1000,nrow=100)
-  for (i in 1:100){
-    richnessmax[i,]<-neutral_time_series_speciation(init_community_max(100),speciation_rate = 0.1,duration =1000)
-  }
-#ab<-species_abundance(max)
-  #oc<-octaves(ab)
-  #o<-1
-  #oc[1,1:length(octaves(ab))]<-octaves(ab)
-  
-  #dont need to do both
-  #gens<-seq(20,2000,20)
-  #nint<-1:19
-  
-  #for (d in gens){
-  #  for (q in nint){
-   #   max<-neutral_generation_speciation(community=max,speciation_rate = 0.1)}
-    #max<-neutral_generation_speciation(community=max,speciation_rate = 0.1)
-    #ab<-species_abundance(max)
-    #o<-o+1
-    #oc[o,1:length(octaves(ab))]<-octaves(ab)
-   # oc<-sum_vect(oc,octaves(ab))
-  #}
-  #oc<-oc/o
-}
 
+#  +geom_errorbar(aes(ymin=richnessmin[101,], ymax=richnessmin[102,]), width=.1)
+
+
+  plotcommunity<-function(community){
+  graphics.off()
+  matrix<-calc(200,community)
+  ggplot(data=matrix,aes(x=time,y=mean), colour="black") +
+      geom_point()+theme_bw()+geom_line()+
+      geom_errorbar(aes(ymin=low, ymax=high, width=.1),color="blue")
+  }
+  community<-init_community_max(100)
+  plotcommunity(community)
+  community<-init_community_min(100)
+  plotcommunity(community)
+  
+
+}
 # Challenge question B
 Challenge_B <- function() {
   # clear any existing graphs and plot your graph within the R window
-}
+  graphics.off()
+  means<-matrix(nrow=10,ncol=200)
+  colnames(means)<-1:200
+  makecommunitymatrix<-function(communitylength){
+    listfact<-vector()
+    for (i in (1:communitylength)){
+      if (communitylength%%i==0){
+        listfact<-c(listfact,i)
+      }
+    }
+    communitymatrix<-matrix(nrow=length(listfact),ncol=communitylength)
+   k=1
+    for(j in listfact){
+     #print(1:j)
+       fill<-1:j
+      communitymatrix[k,]<-fill
+      k=k+1
+    }
+   return(communitymatrix)
+  }
 
+communitymatrix<-makecommunitymatrix(100)
+gen<-200
+plotting<-function(communitymatrix,gen){
+toplot<-as.data.frame(matrix(nrow=nrow(communitymatrix)*gen,ncol=3))
+q=0
+  for (row in (1:nrow(communitymatrix))){
+#while (q<ncol(toplot)){ 
+ community<-communitymatrix[row,]
+    matrix<-calc(gen,community)
+    toplot[(q+1):(gen+q),1]<-matrix[,2]
+    toplot[(q+1):(gen+q),3]<-max(community)
+    q<-gen+q
+    #rownames(means[row])<-row
+  }
+#toplot[nrow(toplot),]<-1:nrow(toplot)
+toplot[,2]<-rep(1:gen,nrow(communitymatrix))
+colnames(toplot)<-c("mean","time","initial_species_number")
+toplot$initial_species_number<-as.factor(toplot$initial_species_number)
+ggplot(data=toplot,aes(x=time,y=mean,colour=initial_species_number))+geom_point()
+}
+plotting(communitymatrix,gen)
+##add lines for best on chLLENGE A
+
+}
 # Challenge question C
 Challenge_C <- function() {
   # clear any existing graphs and plot your graph within the R window
@@ -494,5 +545,9 @@ Challenge_F <- function() {
 
 # Challenge question G should be written in a separate file that has no dependencies on any functions here.
 
+##question: population or sample sd
+##question: how many gen? 200 or 2200
+#question:functions outside ok? or define twice
+#how many initial communities is ok
 
 ###go over richness , to see if my method worked
