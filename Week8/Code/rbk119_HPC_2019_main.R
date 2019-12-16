@@ -21,58 +21,74 @@ personal_speciation_rate <- 0.004345
 require(ggplot2)
 # Question 1
 species_richness <- function(community){
+  #calculate number of unique species in the community
   richness<-length(unique(community))
   return(richness)
 }
 
 # Question 2
 init_community_max <- function(size){
-   imax<-as.vector(seq(1,size,1))
+   #make a vector from one to the size of the community
+  imax<-as.vector(seq(1,size,1))
   return(imax)
 }
 
 # Question 3
 init_community_min <- function(size){
+  #make a vector of ones the size of the community
   imin<-rep(1,length=size)
   return(imin)
 }
 
 # Question 4
 choose_two <- function(max_value){
+  #make a vector with values between 1 and max value
   imax<-as.vector(seq(1,max_value,1))
+  #randomly sample two from this vector
   two<-as.vector(sample(imax,2,replace=FALSE))
   return(two)
 }
 
 # Question 5
 neutral_step <- function(community){
+  #get two random values from the length of community
   indexes<-choose_two(length(community))
- community2<-community[-indexes[1]]
- community2<-c((community[indexes[2]]),community2)
+  #remove one of these indexes in community
+  community2<-community[-indexes[1]]
+  #replace this with the second index of community
+  community2<-c((community[indexes[2]]),community2)
   return(community2)
 }
 
 
 # Question 6
 neutral_generation <- function(community){
+  #sample 1 or 2
   a<-sample(1:2,1)
+  #number of generations
   generations<-length(community)/2 
+  #half the time round down generations
   if(a==1){
     generations<-floor(generations)
   }else{
+  #half the time round up generations
     generations<-ceiling(generations)
   }
   for (i in 1:generations){
-      community<-neutral_step(community)
+    #do neutral step generations number of time
+    community<-neutral_step(community)
   }
  return(community)
 }
 
 # Question 7
 neutral_time_series <- function(community,duration)  {
+  #richness is an empty vector with length duration
   richness<-vector(length=duration)
   for(j in (1:duration)){
+    #neutral generations for duration number of times
     community<-neutral_generation(community)
+    #species richness at each timepoint
     richness[j]<-species_richness(community)
   }
   return(richness)
@@ -88,12 +104,17 @@ question_8 <- function() {
 
 # Question 9
 neutral_step_speciation <- function(community,speciation_rate)  {
+  #choose two indexes for community
   indexes<-choose_two(length(community))
+  #remove first index
   community2<-community[-indexes[1]]
+  #random number between 0 and 1
   rand<-runif(1,0,1)
   if(rand>speciation_rate){
+    #if random number is > speciation rate replace the deleted index with a second index
     community2<-c((community[indexes[2]]),community2) 
   }else{
+    # if random number < speciation rate, add a new species by finding the maximum in community and adding 1
     community2<-c(community2,max(community)+1)
   }
   return(community2)
@@ -102,6 +123,7 @@ neutral_step_speciation <- function(community,speciation_rate)  {
 # Question 10
 neutral_generation_speciation <- function(community,speciation_rate)  {
   a<-sample(1:2,1)
+  #find number of generations 
   generations<-length(community)/2 
   if(a==1){
     generations<-floor(generations)
@@ -109,17 +131,20 @@ neutral_generation_speciation <- function(community,speciation_rate)  {
     generations<-ceiling(generations)
   }
   for (i in 1:generations){
+    #neutral steps generation times
     community<-neutral_step_speciation(community,speciation_rate =speciation_rate)
   }
   return(community)
 }
 
-
+  
 # Question 11
 neutral_time_series_speciation <- function(community,speciation_rate,duration)  {
   richness<-vector(length=duration)
   for(j in (1:duration)){
+    #neutral generations with speciation for each in duration
     community<-neutral_generation_speciation(community=community, speciation_rate = speciation_rate)
+    #find richess at this point and add to the vector
     richness[j]<-species_richness(community)
   }
   return(richness)
@@ -133,12 +158,7 @@ question_12 <- function()  {
   min<-neutral_time_series_speciation(community=init_community_min(100),speciation_rate = 0.1, duration=200)
   max<-neutral_time_series_speciation(community=init_community_max(100),speciation_rate = 0.1, duration=200)
   time<-seq(1,200,1)
-#  mat[1:200,2]<-min
- # mat[201:400,2]<-max
-#  mat[,1]<-time
- # mat[1:200,3]<-"min"
-#  mat[201:400,3]<-"max"
-#  colnames(mat)<-c("time","rich","which")
+
   graphics.off()
   plot(time,min,col="blue",ylab="Species richness")
   points(time,max,col="red")
@@ -152,65 +172,63 @@ question_12 <- function()  {
 # Question 13
 species_abundance <- function(community)  {
   
- # for (i in (1:range(max(community)))){
-  t<-table(community)
-  t<-sort(t,decreasing = TRUE)
- # t<-as.data.frame(t)
-  f<-vector()
-  j=0
-  for (i in t){
-    j=j+1
-    f[j]<-i
+  community_table<-table(community)
+  community_table<-sort(community_table,decreasing = TRUE)
+  abundancevec<-vector()
+  index=0
+  for (i in community_table){
+    index=index+1
+    abundancevec[index]<-i
   }
-   return(f)
+   return(abundancevec)
   }
 
 # Question 14
 octaves <- function(abundance_vector) {
   #to find n
   m<-max(abundance_vector)
-  nm<-log(m)/log(2)
-  nm<-ceiling(nm)
-  t<-tabulate(abundance_vector)
-  v<-vector(length=nm)
-  for (n in (1:nm)){
+  number_of_octaves<-log(m)/log(2)
+  number_of_octaves<-ceiling(number_of_octaves)
+  abundance_table<-tabulate(abundance_vector)
+  octave_vector<-vector(length=number_of_octaves)
+  for (n in (1:number_of_octaves)){
     a<-2^(n-1)
     b<-(2^n)-1
-    v[n]<-sum(t[a:b],na.rm = TRUE)
+    octave_vector[n]<-sum(abundance_table[a:b],na.rm = TRUE)
   }
-  return(v)
+  return(octave_vector)
   }
   
 # Question 15
 sum_vect <- function(x, y) {
-  lx<-length(x)
-  ly<-length(y)
-  if (lx>ly){
-    yn<-rep(0,lx)
-    yn[1:ly]<-y
-    y<-yn
+  len_x<-length(x)
+  len_y<-length(y)
+  if (len_x>len_y){
+    y_new<-rep(0,len_x)
+    y_new[1:len_y]<-y
+    y<-y_new
     }else{
-      xn<-rep(0,ly)
-      xn[1:lx]<-x
-      x<-xn
+      x_new<-rep(0,len_y)
+      x_new[1:len_x]<-x
+      x<-x_new
     }
-  s<-x+y
-  return(s)
+  sum<-x+y
+  return(sum)
 }
 
 # Question 16 
 question_16 <- function()  {
   # clear any existing graphs and plot your graph within the R window
   graphics.off()
-  oc<-matrix(nrow=200,ncol=10)
-  max<-init_community_max(100)
+  octaves_matrix<-matrix(nrow=200,ncol=10)
+  community_max<-init_community_max(100)
   for (p in 1:200){
-  max<-neutral_generation_speciation(community=max,speciation_rate = 0.1)
+  community_max<-neutral_generation_speciation(community=community_max,speciation_rate = 0.1)
   }
-  ab<-species_abundance(max)
-  oc<-octaves(ab)
+  abundance<-species_abundance(community_max)
+  octaves_matrix<-octaves(abundance)
   o<-1
-  #oc[1,1:length(octaves(ab))]<-octaves(ab)
+  #oc[1,1:length(octaves(abundance))]<-octaves(abundance)
   
   #dont need to do both
   gens<-seq(20,2000,20)
@@ -218,17 +236,17 @@ question_16 <- function()  {
   
   for (d in gens){
     for (q in nint){
-      max<-neutral_generation_speciation(community=max,speciation_rate = 0.1)}
-    max<-neutral_generation_speciation(community=max,speciation_rate = 0.1)
-    ab<-species_abundance(max)
+      community_max<-neutral_generation_speciation(community=community_max,speciation_rate = 0.1)}
+    community_max<-neutral_generation_speciation(community=community_max,speciation_rate = 0.1)
+    abundance<-species_abundance(community_max)
     o<-o+1
-    #oc[o,1:length(octaves(ab))]<-octaves(ab)
-    oc<-sum_vect(oc,octaves(ab))
+    #octaves_matrix[o,1:length(octaves(abundance))]<-octaves(abundance)
+    octaves_matrix<-sum_vect(octaves_matrix,octaves(abundance))
   }
-  oc<-oc/o
-  barplot(oc)
+  octaves_matrix<-octaves_matrix/o
+  barplot(octaves_matrix)
   #return(oc)
-  return("type your written answer here")
+  return("The initial community size is not important as the bar chart is the same shape for both init_community_min and init_community_max")
 }
 
 # Question 17
@@ -267,7 +285,7 @@ cluster_run <- function(speciation_rate, size, wall_time, interval_rich, interva
 process_cluster_results <- function()  {
   # clear any existing graphs and plot your graph within the R window
   graphics.off()
-    a<-list(vect500=c(0),vect1000=c(0),vect2500=c(0),vect5000=c(0))
+    octaves_list<-list(vect500=c(0),vect1000=c(0),vect2500=c(0),vect5000=c(0))
    count<-list(vect500=0,vect1000=0,vect2500=0,vect5000=0)
   for (i in 1:100){
     file<-paste0("output2_",i,".rda")
@@ -275,13 +293,13 @@ process_cluster_results <- function()  {
     v<-paste0("vect",size)
     which<-(burn_in_generations/interval_oct)+1
     for (j in (which:length(oct))){
-      a[[v]]<-sum_vect(a[[v]],oct[[j]])
+      octaves_list[[v]]<-sum_vect(octaves_list[[v]],oct[[j]])
       count[[v]]<-count[[v]]+1
     }
   }
   combined_results<-list(0,0,0,0)
-  for (k in (1:length(a))){
-        combined_results[[k]]<-a[[k]]/count[[k]]
+  for (k in (1:length(octaves_list))){
+        combined_results[[k]]<-octaves_list[[k]]/count[[k]]
       } 
   par(mfrow=c(2,2))
   #sizes<-list(graph500=500,graph1000=1000,graph2500=2500,graph5000=5000)
@@ -338,30 +356,30 @@ chaos_game <- function()  {
 }
 
 # Question 24
-turtle <- function(start_position, direction, length)  {
-  A<-cos(direction)*length
-  O<-sin(direction)*length
-  B<-c(A,O)
-  end<-start_position+B
-  segments(start_position[1],start_position[2],end[1],end[2],col="blue")
+turtle <- function(start_position, direction, length,colour)  {
+  adjacent<-cos(direction)*length
+  opposite<-sin(direction)*length
+  movement<-c(adjacent,opposite)
+  end<-start_position+movement
+  segments(start_position[1],start_position[2],end[1],end[2],col=colour)
   return(end) # you should return your endpoint here.
 }
 
 # Question 25
 elbow <- function(start_position, direction, length)  {
- end<-turtle(start_position,direction,length) 
- turtle(start_position=end,direction=direction-pi/4,length=0.95*length)
+ end<-turtle(start_position,direction,length,"blue") 
+ turtle(start_position=end,direction=direction-pi/4,length=0.95*length,"blue")
 }
 
 # Question 26
 spiral <- function(start_position, direction, length)  {
-  start_position<-turtle(start_position,direction,length) 
+  start_position<-turtle(start_position,direction,length,"green") 
   if (length>0.01){
   start_position<-spiral(start_position=start_position,direction=direction-pi/4,length=length*0.95)
   }
   return("calling a function from a function in this way produces and infinite loop, causing an error message")
 }
-
+  
 # Question 27
 draw_spiral <- function()  {
   # clear any existing graphs and plot your graph within the R window
@@ -373,7 +391,7 @@ draw_spiral <- function()  {
 
 # Question 28
 tree <- function(start_position, direction, length)  {
-  start_position<-turtle(start_position,direction,length) 
+  start_position<-turtle(start_position,direction,length,"green") 
   if (length>0.01){
     tree(start_position=start_position,direction=direction-pi/4,length=length*0.65)
     tree(start_position=start_position,direction=direction+pi/4,length=length*0.65)
@@ -388,7 +406,7 @@ draw_tree <- function()  {
 
 # Question 29
 fern <- function(start_position, direction, length)  {
-  start_position<-turtle(start_position,direction,length) 
+  start_position<-turtle(start_position,direction,length,"red") 
   if (length>0.01){
     fern(start_position=start_position,direction=direction-pi/4,length=length*0.38)
     fern(start_position=start_position,direction=direction,length=length*0.87)
@@ -403,7 +421,7 @@ draw_fern <- function()  {
 
 # Question 30
 fern2 <- function(start_position, direction, length,dir)  {
-  start_position<-turtle(start_position,direction,length) 
+  start_position<-turtle(start_position,direction,length,"purple") 
   if (length>0.01){
     #dir=-1*dir
     fern2(start_position=start_position,direction=direction+(dir*(pi/4)),length=length*0.38,dir=dir)
@@ -415,7 +433,7 @@ fern2 <- function(start_position, direction, length,dir)  {
     }
 }
 draw_fern2 <- function()  {
-  # clear any existing graphs and plot your graph within the R window
+  # clear any exist ing graphs and plot your graph within the R window
   graphics.off()
   plot(c(-2,2),c(0,8),xlab=" ", ylab=" ","n")
   fern2(start_position = c(0,0), direction=pi/2, length=1,dir=1)
@@ -453,7 +471,7 @@ calc<-function(gen,community){
 Challenge_A <- function() {
   # clear any existing graphs and plot your graph within the R window
  # graphics.off()
-  rm(list=ls()) 
+  #rm(list=ls()) 
 
 #  +geom_errorbar(aes(ymin=richnessmin[101,], ymax=richnessmin[102,]), width=.1)
 
@@ -463,7 +481,8 @@ Challenge_A <- function() {
   matrix<-calc(200,community)
   ggplot(data=matrix,aes(x=time,y=mean), colour="black") +
       geom_point()+theme_bw()+geom_line()+
-      geom_errorbar(aes(ymin=low, ymax=high, width=.1),color="blue")
+      geom_errorbar(aes(ymin=low, ymax=high, width=.1),color="blue")+
+      geom_vline(xintercept=50,color="red")
   }
   community<-init_community_max(100)
   plotcommunity(community)
@@ -520,34 +539,186 @@ plotting(communitymatrix,gen)
 ##add lines for best on chLLENGE A
 
 }
-# Challenge question C
+# Challenge question C  
 Challenge_C <- function() {
   # clear any existing graphs and plot your graph within the R window
-}
+  graphics.off()
+  richness_matrix<-matrix(ncol=3,nrow =(3999*25+7999*25+19999*25+39999*25))
+  r=0
+  for (i in 1:100){
+    file<-paste0("mean_dataframwput2_",i,".rda")
+    load(file)
+    richness_matrix[(r+1):(r+length(richness)),1]<-richness
+    richness_matrix[(r+1):(r+length(richness)),2]<-1:length(richness)
+    richness_matrix[(r+1):(r+length(richness)),3]<-size
+    r=r+length(richness)
+  }
+    richness_matrix=as.data.frame(richness_matrix)
+    colnames(richness_matrix)=c("richness","generation","size")
+    size_vector<-c(500,1000,2500,5000)
+    mean_dataframe<-matrix(ncol=3,nrow=3999+7999+19999+39999)
+    p=0
+    for (s in 1:4){
+       sub<- subset(richness_matrix, size==size_vector[s])
+       mean_dataframe[(p+1):(p+(length(unique(sub$generation)))),2]<-tapply(sub$richness, sub$generation,mean)
+       mean_dataframe[(p+1):(p+(length(unique(sub$generation)))),1]<-1:(length(unique(sub$generation)))
+       mean_dataframe[(p+1):(p+(length(unique(sub$generation)))),3]<-size_vector[s]
+       p<-p+(length(unique(sub$generation)))
+       }
+    
+    mean_dataframe=as.data.frame(mean_dataframe)
+    colnames(mean_dataframe)=c("generation","mean_species_richness","size")
+    mean_dataframe$size<-as.factor(mean_dataframe$size)
+    
+    graph<-ggplot(data=mean_dataframe,aes(x=generation,y=mean_species_richness,color=size))+theme_bw()+geom_point(size=0.1)
+    
+return(graph)
+  }
 
 # Challenge question D
 Challenge_D <- function() {
-  # clear any existing graphs and plot your graph within the R window
-  return("type your written answer here")
+    
+    graphics.off()
+    initialising<-function(J,speciation_rate){
+    lineages<-rep(1,J)
+    abundances<-c()
+    N<-J
+    theta<-speciation_rate*((J-1)/(1-speciation_rate))
+    while(N>1){
+    poss<-1:length(lineages)
+    j<-sample(x=poss,size=1)
+    randnum<-runif(1,0,1)
+    if ((randnum)<(theta/(theta+N-1))){
+      abundances<-append(abundances,lineages[j])
+      }else{
+        poss2<-poss[-j]
+        i<-sample(x=poss2,size=1)
+        lineages[i]<-lineages[i]+lineages[j]
+      }
+      lineages<-lineages[-j]
+      N<-N-1
+    }
+    abundances<-append(abundances,lineages)
+        return(abundances)
+    }
+      
+  octaves_list<-list(vect500=c(0),vect1000=c(0),vect2500=c(0),vect5000=c(0))
+  count<-list(vect500=0,vect1000=0,vect2500=0,vect5000=0)
+  sizes<-c(500,1000,2500,5000)
+  octave_number<-c(942522, 202368, 21226, 1975)
+  #octave_number<-c(50, 50, 50, 50)
+  
+  for (j in 1:4){
+    for (k in 1:octave_number[j]){
+    abundances<-initialising(J=sizes[j],speciation_rate = personal_speciation_rate)
+  oct<-octaves(abundances)
+  octaves_list[[j]]<-sum_vect(octaves_list[[j]],oct)
+  count[[j]]<-count[[j]]+1
+    }
+  }
+  combined_results<-list(0,0,0,0)
+  for (k in (1:length(octaves_list))){
+    combined_results[[k]]<-octaves_list[[k]]/count[[k]]
+  } 
+  par(mfrow=c(2,2))
+  #sizes<-list(graph500=500,graph1000=1000,graph2500=2500,graph5000=5000)
+  barplot(combined_results[[1]],main="Size=500",xlab="Species Abundance Octave",ylab="Mean frequency") 
+  barplot(combined_results[[2]],main="Size=1000",xlab="Species Abundance Octave",ylab="Mean frequency")
+  barplot(combined_results[[3]],main="Size=2500",xlab="Species Abundance Octave",ylab="Mean frequency")
+  barplot(combined_results[[4]],main="Size=5000",xlab="Species Abundance Octave",ylab="Mean frequency")
+
+    return("1200 CPU hours were used intially. An equivalent number of simulations took 15 seconds using the coalescence method.")
 }
 
 # Challenge question E
 Challenge_E <- function() {
+  graphics.off()
   # clear any existing graphs and plot your graph within the R window
-  return("type your written answer here")
+  # coordinates
+  #x<-c(0,3,4)
+  #y<-c(0,4,1)
+  x<-c(0,0)
+  #A<-c(0,0)
+  #B<-c(3,4)
+  #C<-c(4,1)
+  A<-c(2,0)
+  B<-c(-2,0)
+  C<-c(0,sqrt(12))
+  options<-list(A,B,C)
+  plot(x[1],x[2],cex=0.0001,xlim=c(-2,2),ylim = c(0,4))
+  for (i in 1:50){
+    
+    s<-sample(options,1)
+    s<-(s[[1]])
+    x<-(x+s)/2    
+    points(x[1],x[2],cex=0.5,col="dark green")
+  }
+    for (i in 1:50000){
+      s<-sample(options,1)
+      s<-(s[[1]])
+      x<-(x+s)/2    
+      points(x[1],x[2],cex=0.0001,col="red")
+  }
+  
+  
+  return("changing the initial value has no effect on the final shape. changing the colour of the first few values showed that values jumped around the points of the triangle and initial results were different each time")
 }
 
 # Challenge question F
 Challenge_F <- function() {
   # clear any existing graphs and plot your graph within the R window
+  par(mfrow=c(2,2))
+  #need better
+  fernA <- function(start_position, direction, length)  {
+    start_position<-turtle(start_position,direction,length,"orange") 
+    if (length>0.01){
+      fernA(start_position=start_position,direction=direction-pi/4,length=length*0.38)
+      fernA(start_position=start_position,direction=direction,length=length*0.87)
+    }
+  }
+  plot(c(0,2),c(-1,8),xlab=" ", ylab=" ","n")
+  fernA(start_position = c(0,0), direction=pi/2, length=1)
+  
+  fern2B <- function(start_position, direction, length,dir)  {
+    start_position<-turtle(start_position,direction,length,"blue") 
+    if (length>0.01){
+      fern2B(start_position=start_position,direction=direction+(dir*(pi/4)),length=length*0.38,dir=-1)
+      fern2B(start_position=start_position,direction=direction+(dir*(pi/4)),length=length*0.87,dir==1)
+    }
+  }
+  plot(c(-4,1),c(-1,5),xlab=" ", ylab=" ","n")
+  fern2B(start_position = c(0,0), direction=pi/2, length=1,dir=1)
+  
+  
+  fern2C <- function(start_position, direction, length,dir)  {
+    start_position<-turtle(start_position,direction,length,"purple") 
+    if (length>0.01){
+      fern2C(start_position=start_position,direction=direction+(dir*(pi/4)),length=length*0.38,dir==-1)
+      fern2C(start_position=start_position,direction=direction+(dir*(pi/4)),length=length*0.87,dir==1)
+    }
+  }
+  plot(c(-1,3),c(-1,4),xlab=" ", ylab=" ","n")
+  fern2C(start_position = c(0,0), direction=0, length=1,dir=1)
+  
+  fern2D <- function(start_position, direction, length,dir)  {
+    start_position<-turtle(start_position,direction,length,"brown") 
+    if (length>0.01){
+      fern2D(start_position=start_position,direction=direction+(dir*(pi/4)),length=length*0.38,dir=1)
+      fern2D(start_position=start_position,direction=direction+(dir*(pi/4)),length=length*0.87,dir=-1)
+    }
+  }
+  plot(c(-1,1),c(0,4),xlab=" ", ylab=" ","n")
+  fern2D(start_position = c(0,0), direction=pi/2, length=1,dir=1)
+  ##first bit, change a and maybe c,
   return("type your written answer here")
 }
 
 # Challenge question G should be written in a separate file that has no dependencies on any functions here.
 
-##question: population or sample sd
-##question: how many gen? 200 or 2200
-#question:functions outside ok? or define twice
-#how many initial communities is ok
-
+##question: population or sample sd-ssample
+#question:functions outside ok? or define twice - no , ok out of thing
+#how many initial communities is ok- 9 good
+#sample ok for D , buut not continous! ok 
 ###go over richness , to see if my method worked
+##not dir comparable but both or longer better- every octave after burn in
+##what does line size threshold mean
