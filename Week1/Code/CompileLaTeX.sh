@@ -11,6 +11,7 @@ then
 echo "No file inputted.Please input file."
 else
 f=`basename $1 |cut -f 1 -d "."`
+
 pdflatex $f
 pdflatex $f
 bibtex $f

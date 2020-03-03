@@ -1,0 +1,712 @@
+ R is about to run
+
+R version 3.6.1 (2019-07-05) -- "Action of the Toes"
+Copyright (C) 2019 The R Foundation for Statistical Computing
+Platform: x86_64-conda_cos6-linux-gnu (64-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+  Natural language support but running in an English locale
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+> rm(list=ls())
+> graphics.off()
+> 
+> # CMEE 2019 HPC excercises R code main proforma
+> # you don't HAVE to use this but it will be very helpful.  If you opt to write everything yourself from scratch please ensure you use EXACTLY the same function and parameter names and beware that you may loose marks if it doesn't work properly because of not using the proforma.
+> 
+> name <- "Ruth Keane"
+> preferred_name <- "Ruth"
+> email <- "ruth.keane19@imperial.ac.uk"
+> username <- "rbk119"
+> personal_speciation_rate <- 0.004345 
+> #only for hpc # will be assigned to each person individually in class and should be between 0.002 and 0.007
+> 
+> # Question 1
+> species_richness <- function(community){
++   richness<-length(unique(community))
++   return(richness)
++ }
+> 
+> # Question 2
+> init_community_max <- function(size){
++   imax<-as.vector(seq(1,size,1))
++   return(imax)
++ }
+> 
+> # Question 3
+> init_community_min <- function(size){
++   imin<-rep(1,length=size)
++   return(imin)
++ }
+> 
+> # Question 4
+> choose_two <- function(max_value){
++   imax<-as.vector(seq(1,max_value,1))
++   two<-as.vector(sample(imax,2,replace=FALSE))
++   return(two)
++ }
+> 
+> # Question 5
+> neutral_step <- function(community){
++   indexes<-choose_two(length(community))
++   community2<-community[-indexes[1]]
++   community2<-c((community[indexes[2]]),community2)
++   return(community2)
++ }
+> 
+> 
+> # Question 6
+> neutral_generation <- function(community){
++   a<-sample(1:2,1)
++   generations<-length(community)/2 
++   if(a==1){
++     generations<-floor(generations)
++   }else{
++     generations<-ceiling(generations)
++   }
++   for (i in 1:generations){
++     community<-neutral_step(community)
++   }
++   return(community)
++ }
+> 
+> # Question 7
+> neutral_time_series <- function(community,duration)  {
++   richness<-vector(length=duration)
++   for(j in (1:duration)){
++     community<-neutral_generation(community)
++     richness[j]<-species_richness(community)
++   }
++   return(richness)
++ }
+> 
+> # Question 8
+> question_8 <- function() {
++   # clear any existing graphs and plot your graph within the R window
++   graphics.off()
++   plot(neutral_time_series(init_community_max(100),duration=200),xlab="Generation",ylab="Species Richness")
++   return("Species richness of 1 ")
++ }
+> 
+> # Question 9
+> neutral_step_speciation <- function(community,speciation_rate)  {
++   indexes<-choose_two(length(community))
++   community2<-community[-indexes[1]]
++   rand<-runif(1,0,1)
++   if(rand>speciation_rate){
++     community2<-c((community[indexes[2]]),community2) 
++   }else{
++     community2<-c(community2,max(community)+1)
++   }
++   return(community2)
++ }
+> 
+> # Question 10
+> neutral_generation_speciation <- function(community,speciation_rate)  {
++   a<-sample(1:2,1)
++   generations<-length(community)/2 
++   if(a==1){
++     generations<-floor(generations)
++   }else{
++     generations<-ceiling(generations)
++   }
++   for (i in 1:generations){
++     community<-neutral_step_speciation(community,speciation_rate =speciation_rate)
++   }
++   return(community)
++ }
+> 
+> 
+> # Question 11
+> neutral_time_series_speciation <- function(community,speciation_rate,duration)  {
++   richness<-vector(length=duration)
++   for(j in (1:duration)){
++     community<-neutral_generation_speciation(community=community, speciation_rate = speciation_rate)
++     richness[j]<-species_richness(community)
++   }
++   return(richness)
++ }
+> 
+> # Question 12
+> question_12 <- function()  {
++   graphics.off()
++   #plot(neutral_time_series(init_community_max(100),duration=200),xlab="Generation",ylab="Species Richness")
++   mat<-as.data.frame(matrix(ncol=3, nrow=400))
++   min<-neutral_time_series_speciation(community=init_community_min(100),speciation_rate = 0.1, duration=200)
++   max<-neutral_time_series_speciation(community=init_community_max(100),speciation_rate = 0.1, duration=200)
++   time<-seq(1,200,1)
++   #  mat[1:200,2]<-min
++   # mat[201:400,2]<-max
++   #  mat[,1]<-time
++   # mat[1:200,3]<-"min"
++   #  mat[201:400,3]<-"max"
++   #  colnames(mat)<-c("time","rich","which")
++   graphics.off()
++   plot(time,min,col="blue",ylab="Species richness")
++   points(time,max,col="red")
++   #matrix<-matrix(c(a,b),nrow=200)
++   #  require(ggplot2)
++   #  ggplot(aes(mat[,1],mat[,2],colour=which), data=mat)+geom_point()+xlab("Generation")+ylab("Species Richness")
++   return("They converge to similar species richnesses. The neutral model gives these results because new species are being added and the when there are many species, there is a higher chance of a population going extinct")
++ }
+> 
+> 
+> # Question 13
+> species_abundance <- function(community)  {
++   
++   # for (i in (1:range(max(community)))){
++   t<-table(community)
++   t<-sort(t,decreasing = TRUE)
++   # t<-as.data.frame(t)
++   f<-vector()
++   j=0
++   for (i in t){
++     j=j+1
++     f[j]<-i
++   }
++   return(f)
++ }
+> 
+> # Question 14
+> octaves <- function(abundance_vector) {
++   #to find n
++   m<-max(abundance_vector)
++   nm<-log(m)/log(2)
++   nm<-ceiling(nm)
++   t<-tabulate(abundance_vector)
++   v<-vector(length=nm)
++   for (n in (1:nm)){
++     a<-2^(n-1)
++     b<-(2^n)-1
++     v[n]<-sum(t[a:b],na.rm = TRUE)
++   }
++   return(v)
++ }
+> 
+> # Question 15
+> sum_vect <- function(x, y) {
++   lx<-length(x)
++   ly<-length(y)
++   if (lx>ly){
++     yn<-rep(0,lx)
++     yn[1:ly]<-y
++     y<-yn
++   }else{
++     xn<-rep(0,ly)
++     xn[1:lx]<-x
++     x<-xn
++   }
++   s<-x+y
++   return(s)
++ }
+> 
+> # Question 16 
+> question_16 <- function()  {
++   # clear any existing graphs and plot your graph within the R window
++   graphics.off()
++   oc<-matrix(nrow=200,ncol=10)
++   max<-init_community_max(100)
++   for (p in 1:200){
++     max<-neutral_generation_speciation(community=max,speciation_rate = 0.1)
++   }
++   ab<-species_abundance(max)
++   oc<-octaves(ab)
++   o<-1
++   #oc[1,1:length(octaves(ab))]<-octaves(ab)
++   
++   #dont need to do both
++   gens<-seq(20,2000,20)
++   nint<-1:19
++   
++   for (d in gens){
++     for (q in nint){
++       max<-neutral_generation_speciation(community=max,speciation_rate = 0.1)}
++     max<-neutral_generation_speciation(community=max,speciation_rate = 0.1)
++     ab<-species_abundance(max)
++     o<-o+1
++     #oc[o,1:length(octaves(ab))]<-octaves(ab)
++     oc<-sum_vect(oc,octaves(ab))
++   }
++   oc<-oc/o
++   barplot(oc)
++   #return(oc)
++   return("type your written answer here")
++ }
+> 
+> # Question 17
+> cluster_run <- function(speciation_rate, size, wall_time, interval_rich, interval_oct, burn_in_generations, output_file_name)  {
++   community<-init_community_min(size=size)
++   a<-proc.time()
++   b<-proc.time()-a
++   nruns=0
++   richrows=0
++   richness<-c()
++   oct<-list()
++   #octrows=0
++   while (((b[3])/60)<wall_time){
++     community=neutral_generation_speciation(community=community,speciation_rate =speciation_rate )
++     nruns=nruns+1
++     b<-proc.time()-a
++     #richness<-matrix(nrow=burn_in_generations)
++     #richness<-list()
++     #richness<-c()
++     if (nruns<burn_in_generations){
++       if (nruns%%interval_rich==0){
++         #richrows=richrows+1
++         #richness[richrows]<-species_richness(community)
++         # richness[richrows]<-list(species_richness(community))
++         richness<-c(richness,species_richness(community))
++       }
++     }
++     #oct<-list()
++     if (nruns%%interval_oct==1){
++       octrows=length(oct)+1
++       #index<-length(oct) + 1
++       oct[[octrows]]<-(octaves(species_abundance(community)))
++       print(b)
++     }
++     # if (nruns%%interval_oct==0){
++     ##octrows=octrows+1
++     #  index<-length(oct) + 1
++     # oct[index]<-list(octaves(species_abundance(community)))
++     #}
++   }
++   c<-proc.time()-a
++   c<-c[3]
++   filename<-paste0(output_file_name,".rda")
++   save(oct,community,speciation_rate,richness,wall_time,interval_rich,interval_oct,burn_in_generations,size,c,file=filename)
++   
++ }
+> 
+> # Questions 18 and 19 involve writing code elsewhere to run your simulations on the cluster
+> 
+> # Question 20 
+> process_cluster_results <- function()  {
++   # clear any existing graphs and plot your graph within the R window
++   combined_results <- list() #create your list output here to return
++   return(combined_results)
++ }
+> 
+> # Question 21
+> question_21 <- function()  {
++   return("type your written answer here")
++ }
+> 
+> # Question 22
+> question_22 <- function()  {
++   return("type your written answer here")
++ }
+> 
+> # Question 23
+> chaos_game <- function()  {
++   # clear any existing graphs and plot your graph within the R window
++   return("type your written answer here")
++ }
+> 
+> # Question 24
+> turtle <- function(start_position, direction, length)  {
++   
++   return() # you should return your endpoint here.
++ }
+> 
+> # Question 25
+> elbow <- function(start_position, direction, length)  {
++   
++ }
+> 
+> # Question 26
+> spiral <- function(start_position, direction, length)  {
++   return("type your written answer here")
++ }
+> 
+> # Question 27
+> draw_spiral <- function()  {
++   # clear any existing graphs and plot your graph within the R window
++   
++ }
+> 
+> # Question 28
+> tree <- function(start_position, direction, length)  {
++   
++ }
+> draw_tree <- function()  {
++   # clear any existing graphs and plot your graph within the R window
++ }
+> 
+> # Question 29
+> fern <- function(start_position, direction, length)  {
++   
++ }
+> draw_fern <- function()  {
++   # clear any existing graphs and plot your graph within the R window
++ }
+> 
+> # Question 30
+> fern2 <- function(start_position, direction, length)  {
++   
++ }
+> draw_fern2 <- function()  {
++   # clear any existing graphs and plot your graph within the R window
++ }
+> 
+> # Challenge questions - these are optional, substantially harder, and a maximum of 16% is available for doing them.  
+> 
+> # Challenge question A
+> Challenge_A <- function() {
++   # clear any existing graphs and plot your graph within the R window
++ }
+> 
+> # Challenge question B
+> Challenge_B <- function() {
++   # clear any existing graphs and plot your graph within the R window
++ }
+> 
+> # Challenge question C
+> Challenge_C <- function() {
++   # clear any existing graphs and plot your graph within the R window
++ }
+> 
+> # Challenge question D
+> Challenge_D <- function() {
++   # clear any existing graphs and plot your graph within the R window
++   return("type your written answer here")
++ }
+> 
+> # Challenge question E
+> Challenge_E <- function() {
++   # clear any existing graphs and plot your graph within the R window
++   return("type your written answer here")
++ }
+> 
+> # Challenge question F
+> Challenge_F <- function() {
++   # clear any existing graphs and plot your graph within the R window
++   return("type your written answer here")
++ }
+> 
+> # Challenge question G should be written in a separate file that has no dependencies on any functions here.
+> 
+> 
+> ###go over richness , to see if my method worked
+> #source("rbk119_HPC_2019_main.R")
+> 
+> iter<-as.numeric(Sys.getenv("PBS_ARRAY_INDEX"))
+> #   iter<-3
+> #last thing- undo above
+> set.seed(iter)
+> #if iter<25
+> if (iter%%4==0){
++   popsize<-500
++ }else if (iter%%4==1){
++     popsize<-1000
++ }else if (iter%%4==2){
++     popsize<-2500
++ }else if (iter%%4==3){
++   popsize<-5000
++ }
+> 
+> filename<-paste0("output2_",iter)
+> #timeinhours<-0.01
+> timeinhours<-11.5
+> timeinmins<-timeinhours*60
+> cluster_run(speciation_rate = personal_speciation_rate,size=popsize,wall_time=timeinmins,interval_rich = 1,interval_oct = popsize/10,burn_in_generations = 8*popsize,output_file_name = filename)
+   user  system elapsed 
+  0.620   0.023   0.645 
+   user  system elapsed 
+262.859   2.308 265.715 
+   user  system elapsed 
+527.288   4.549 533.030 
+   user  system elapsed 
+798.336   6.774 806.921 
+    user   system  elapsed 
+1081.014    9.242 1092.742 
+    user   system  elapsed 
+1357.499   11.892 1372.554 
+    user   system  elapsed 
+1621.237   14.432 1639.414 
+    user   system  elapsed 
+1871.348   16.928 1892.553 
+    user   system  elapsed 
+2121.371   19.364 2145.538 
+    user   system  elapsed 
+2393.986   21.960 2421.450 
+    user   system  elapsed 
+2658.948   24.418 2689.547 
+    user   system  elapsed 
+2938.827   27.000 2972.809 
+    user   system  elapsed 
+3231.042   29.149 3268.121 
+    user   system  elapsed 
+3512.230   31.184 3552.159 
+    user   system  elapsed 
+3792.167   33.295 3834.899 
+    user   system  elapsed 
+4083.980   35.614 4129.808 
+    user   system  elapsed 
+4380.147   37.583 4428.749 
+    user   system  elapsed 
+4678.992   39.950 4730.898 
+    user   system  elapsed 
+4977.152   42.152 5032.115 
+    user   system  elapsed 
+5282.115   44.133 5340.458 
+    user   system  elapsed 
+5576.337   46.547 5637.991 
+    user   system  elapsed 
+5874.207   49.051 5939.346 
+    user   system  elapsed 
+6175.123   51.539 6243.922 
+    user   system  elapsed 
+6469.843   53.743 6541.858 
+    user   system  elapsed 
+6757.020   55.720 6831.791 
+    user   system  elapsed 
+7046.031   57.965 7123.850 
+    user   system  elapsed 
+7339.831   59.946 7420.437 
+    user   system  elapsed 
+7640.520   62.424 7724.655 
+    user   system  elapsed 
+7932.723   64.776 8020.021 
+    user   system  elapsed 
+8230.161   67.026 8320.512 
+    user   system  elapsed 
+8533.364   69.304 8626.897 
+    user   system  elapsed 
+8830.911   71.418 8927.294 
+    user   system  elapsed 
+9119.087   73.655 9218.371 
+    user   system  elapsed 
+9405.803   76.050 9508.282 
+    user   system  elapsed 
+9698.725   78.500 9804.380 
+     user    system   elapsed 
+ 9984.402    80.889 10093.150 
+     user    system   elapsed 
+10279.113    83.127 10390.811 
+    user   system  elapsed 
+10576.01    85.47 10690.80 
+     user    system   elapsed 
+10875.920    87.656 10993.639 
+    user   system  elapsed 
+11180.06    89.68 11300.51 
+     user    system   elapsed 
+11506.322    92.095 11630.026 
+     user    system   elapsed 
+11821.228    94.538 11948.155 
+     user    system   elapsed 
+12138.820    96.834 12268.808 
+     user    system   elapsed 
+12462.695    99.393 12596.101 
+     user    system   elapsed 
+12781.047   101.808 12917.733 
+     user    system   elapsed 
+13103.441   104.174 13243.267 
+     user    system   elapsed 
+13413.516   106.794 13556.715 
+     user    system   elapsed 
+13737.524   109.096 13883.858 
+     user    system   elapsed 
+14043.565   111.017 14192.557 
+     user    system   elapsed 
+14362.270   113.423 14514.462 
+     user    system   elapsed 
+14680.856   115.989 14836.471 
+     user    system   elapsed 
+14995.540   118.444 15154.398 
+     user    system   elapsed 
+15313.970   120.742 15475.927 
+     user    system   elapsed 
+15631.491   122.941 15796.434 
+     user    system   elapsed 
+15954.099   125.193 16122.093 
+     user    system   elapsed 
+16279.266   127.515 16450.389 
+     user    system   elapsed 
+16594.805   129.864 16769.062 
+     user    system   elapsed 
+16909.211   132.442 17087.429 
+     user    system   elapsed 
+17214.691   134.775 17396.005 
+     user    system   elapsed 
+17521.996   137.491 17706.789 
+     user    system   elapsed 
+17835.620   140.196 18024.620 
+     user    system   elapsed 
+18153.575   143.123 18346.392 
+     user    system   elapsed 
+18465.325   145.143 18660.894 
+     user    system   elapsed 
+18787.055   147.475 18985.794 
+     user    system   elapsed 
+19095.981   149.644 19297.678 
+     user    system   elapsed 
+19410.510   152.306 19615.623 
+     user    system   elapsed 
+19715.325   154.592 19923.451 
+    user   system  elapsed 
+20036.74   156.84 20247.96 
+     user    system   elapsed 
+20348.437   159.056 20562.614 
+     user    system   elapsed 
+20661.127   161.466 20878.487 
+     user    system   elapsed 
+20984.363   163.988 21205.056 
+     user    system   elapsed 
+21301.392   166.078 21524.956 
+     user    system   elapsed 
+21617.091   168.578 21843.973 
+     user    system   elapsed 
+21931.924   170.704 22161.717 
+     user    system   elapsed 
+22233.594   172.405 22465.780 
+    user   system  elapsed 
+22536.78   174.53 22771.86 
+     user    system   elapsed 
+22835.902   176.479 23073.903 
+     user    system   elapsed 
+23125.064   178.434 23365.634 
+     user    system   elapsed 
+23422.023   180.772 23665.596 
+    user   system  elapsed 
+23717.72   183.35 23964.53 
+     user    system   elapsed 
+24013.054   185.766 24262.908 
+    user   system  elapsed 
+24297.80   185.88 24548.32 
+     user    system   elapsed 
+24586.686   186.013 24837.896 
+     user    system   elapsed 
+24870.718   186.139 25122.622 
+     user    system   elapsed 
+25162.947   186.243 25415.543 
+     user    system   elapsed 
+25445.586   186.339 25698.799 
+     user    system   elapsed 
+25731.355   186.468 25985.234 
+     user    system   elapsed 
+26023.185   186.593 26277.762 
+     user    system   elapsed 
+26313.472   186.726 26568.756 
+     user    system   elapsed 
+26601.404   186.831 26857.349 
+     user    system   elapsed 
+26894.041   186.936 27150.674 
+     user    system   elapsed 
+27197.400   187.181 27454.938 
+     user    system   elapsed 
+27487.478   187.333 27745.790 
+     user    system   elapsed 
+27780.096   187.441 28039.130 
+     user    system   elapsed 
+28073.987   187.589 28333.797 
+     user    system   elapsed 
+28364.281   187.722 28624.840 
+     user    system   elapsed 
+28653.912   187.847 28915.194 
+     user    system   elapsed 
+28936.119   187.945 29198.084 
+     user    system   elapsed 
+29227.179   188.085 29489.891 
+     user    system   elapsed 
+29520.011   188.227 29783.503 
+     user    system   elapsed 
+29826.956   188.576 30091.453 
+    user   system  elapsed 
+30132.36   188.74 30397.77 
+     user    system   elapsed 
+30427.554   188.886 30693.816 
+     user    system   elapsed 
+30726.941   189.038 30994.104 
+     user    system   elapsed 
+31021.705   189.169 31289.647 
+    user   system  elapsed 
+31318.82   189.30 31587.61 
+     user    system   elapsed 
+31609.963   189.477 31879.911 
+     user    system   elapsed 
+31903.784   189.865 32175.374 
+     user    system   elapsed 
+32190.808   189.998 32463.229 
+     user    system   elapsed 
+32478.161   190.107 32751.356 
+     user    system   elapsed 
+32769.824   190.237 33043.817 
+     user    system   elapsed 
+33059.656   190.437 33334.738 
+     user    system   elapsed 
+33378.278   190.694 33654.754 
+     user    system   elapsed 
+33672.932   190.834 33950.219 
+     user    system   elapsed 
+33965.843   190.923 34243.889 
+     user    system   elapsed 
+34255.089   191.086 34533.942 
+     user    system   elapsed 
+34553.731   191.382 34833.942 
+     user    system   elapsed 
+34858.199   191.622 35139.920 
+     user    system   elapsed 
+35156.100   191.747 35438.650 
+    user   system  elapsed 
+35455.40   191.91 35738.79 
+     user    system   elapsed 
+35746.393   192.055 36030.613 
+     user    system   elapsed 
+36042.103   192.413 36327.788 
+     user    system   elapsed 
+36341.138   192.692 36628.161 
+     user    system   elapsed 
+36635.733   192.818 36923.504 
+     user    system   elapsed 
+36934.380   192.964 37222.977 
+     user    system   elapsed 
+37222.221   193.141 37511.698 
+     user    system   elapsed 
+37510.833   193.454 37801.584 
+     user    system   elapsed 
+37803.360   193.792 38095.590 
+     user    system   elapsed 
+38096.435   193.938 38389.458 
+     user    system   elapsed 
+38397.436   194.085 38691.334 
+     user    system   elapsed 
+38685.821   194.275 38980.623 
+     user    system   elapsed 
+38975.909   194.581 39272.142 
+     user    system   elapsed 
+39276.810   194.907 39574.488 
+     user    system   elapsed 
+39575.495   195.178 39874.496 
+     user    system   elapsed 
+39867.619   195.311 40167.430 
+     user    system   elapsed 
+40159.145   195.448 40459.777 
+     user    system   elapsed 
+40454.839   195.555 40756.353 
+     user    system   elapsed 
+40755.921   195.705 41058.756 
+     user    system   elapsed 
+41062.905   195.879 41366.769 
+> 
+R has finished running
+
+============================================
+
+        Job resource usage summary 
+
+                 Memory (GB)    NCPUs
+ Requested  :         1             1
+ Used       :         0 (peak)   0.98 (ave)
+
+============================================

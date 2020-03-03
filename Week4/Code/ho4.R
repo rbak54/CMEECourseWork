@@ -130,7 +130,7 @@ tidy(t.test3)
 #think bout measurement error
 #statistical power - mean, N(what we want to find out) ,sd, powe level(usually 80% is ok)
 #pwr.t.test
-#install.packages("pwr")
+install.packages("pwr")
 
 pwr.t.test(d=(0-0.16)/0.96,power=.8, sig.level=0.05,type="two.sample",alternative = "two.sided")
 #not sure what d is foing

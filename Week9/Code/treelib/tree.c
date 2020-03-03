@@ -12,7 +12,7 @@ tree_t* new_tree(int num_taxa)
     //getting memory for tree
     int i = 0;
     tree_t *newt=NULL;
-    newt = (tree_t*)calloc(1,sizeof(tree_t));
+    newt = (tree_t*)calloc(1,sizeof(tree_t)); //confused
     if(newt !=NULL){
         newt->num_taxa  = num_taxa;
         newt->num_nodes = 2*num_taxa-1;

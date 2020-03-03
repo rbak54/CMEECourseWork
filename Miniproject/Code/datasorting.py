@@ -10,16 +10,18 @@ import pandas as pd
 import numpy as np
 data=pd.read_csv("../Data/CRat.csv")
 #data<-read.csv("../Data/CRat.csv")
-data= data.reindex( columns=data.columns.tolist() + ['a0','h0'])
+data= data.reindex( columns=data.columns.tolist() + ['a0','h0','a0_gen','h0_gen', 'q0_gen',"HollingI_AIC","HollingII_AIC","HollingIII_AIC","Poly2_AIC","Poly3_AIC","N","FailHolI","FailHolII","FailHolIII","FailPol2","FailPol3","aI","aII","hII","aIII","hIII","qIII"])
 listID=np.unique(data[['ID']])
 l=0
 i=3
 for i in listID:
     datas=data[data.ID==i]
-    if len(datas)<4:
+    if len(datas)<6:
         #l=l+1
-        data=data[data.ID !=i]
-    # if len((data[['ID']]==i)==True) <4:
+        data=data[data.ID !=i]	
+data.to_csv(r'../Data/CRatsort.csv')
+
+# if len((data[['ID']]==i)==True) <4:
     #     l=l+1
     #     #####havent tested below
     # else:
@@ -34,7 +36,6 @@ for i in listID:
         #     data = data[pd.notnull(data['ResDensity'])]
         # if "NA" in uN:
         #     data = data[pd.notnull(data['N_TraitValue'])]
-data.to_csv(r'../Data/CRatsort.csv')
 #l=0 so all are at least length 4
 
 # Holling<- function(xR,a,h){

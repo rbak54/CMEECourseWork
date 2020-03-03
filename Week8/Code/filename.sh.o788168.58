@@ -1,0 +1,2250 @@
+ R is about to run
+
+R version 3.6.1 (2019-07-05) -- "Action of the Toes"
+Copyright (C) 2019 The R Foundation for Statistical Computing
+Platform: x86_64-conda_cos6-linux-gnu (64-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+  Natural language support but running in an English locale
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+> rm(list=ls())
+> graphics.off()
+> 
+> # CMEE 2019 HPC excercises R code main proforma
+> # you don't HAVE to use this but it will be very helpful.  If you opt to write everything yourself from scratch please ensure you use EXACTLY the same function and parameter names and beware that you may loose marks if it doesn't work properly because of not using the proforma.
+> 
+> name <- "Ruth Keane"
+> preferred_name <- "Ruth"
+> email <- "ruth.keane19@imperial.ac.uk"
+> username <- "rbk119"
+> personal_speciation_rate <- 0.004345 
+> #only for hpc # will be assigned to each person individually in class and should be between 0.002 and 0.007
+> 
+> # Question 1
+> species_richness <- function(community){
++   richness<-length(unique(community))
++   return(richness)
++ }
+> 
+> # Question 2
+> init_community_max <- function(size){
++   imax<-as.vector(seq(1,size,1))
++   return(imax)
++ }
+> 
+> # Question 3
+> init_community_min <- function(size){
++   imin<-rep(1,length=size)
++   return(imin)
++ }
+> 
+> # Question 4
+> choose_two <- function(max_value){
++   imax<-as.vector(seq(1,max_value,1))
++   two<-as.vector(sample(imax,2,replace=FALSE))
++   return(two)
++ }
+> 
+> # Question 5
+> neutral_step <- function(community){
++   indexes<-choose_two(length(community))
++   community2<-community[-indexes[1]]
++   community2<-c((community[indexes[2]]),community2)
++   return(community2)
++ }
+> 
+> 
+> # Question 6
+> neutral_generation <- function(community){
++   a<-sample(1:2,1)
++   generations<-length(community)/2 
++   if(a==1){
++     generations<-floor(generations)
++   }else{
++     generations<-ceiling(generations)
++   }
++   for (i in 1:generations){
++     community<-neutral_step(community)
++   }
++   return(community)
++ }
+> 
+> # Question 7
+> neutral_time_series <- function(community,duration)  {
++   richness<-vector(length=duration)
++   for(j in (1:duration)){
++     community<-neutral_generation(community)
++     richness[j]<-species_richness(community)
++   }
++   return(richness)
++ }
+> 
+> # Question 8
+> question_8 <- function() {
++   # clear any existing graphs and plot your graph within the R window
++   graphics.off()
++   plot(neutral_time_series(init_community_max(100),duration=200),xlab="Generation",ylab="Species Richness")
++   return("Species richness of 1 ")
++ }
+> 
+> # Question 9
+> neutral_step_speciation <- function(community,speciation_rate)  {
++   indexes<-choose_two(length(community))
++   community2<-community[-indexes[1]]
++   rand<-runif(1,0,1)
++   if(rand>speciation_rate){
++     community2<-c((community[indexes[2]]),community2) 
++   }else{
++     community2<-c(community2,max(community)+1)
++   }
++   return(community2)
++ }
+> 
+> # Question 10
+> neutral_generation_speciation <- function(community,speciation_rate)  {
++   a<-sample(1:2,1)
++   generations<-length(community)/2 
++   if(a==1){
++     generations<-floor(generations)
++   }else{
++     generations<-ceiling(generations)
++   }
++   for (i in 1:generations){
++     community<-neutral_step_speciation(community,speciation_rate =speciation_rate)
++   }
++   return(community)
++ }
+> 
+> 
+> # Question 11
+> neutral_time_series_speciation <- function(community,speciation_rate,duration)  {
++   richness<-vector(length=duration)
++   for(j in (1:duration)){
++     community<-neutral_generation_speciation(community=community, speciation_rate = speciation_rate)
++     richness[j]<-species_richness(community)
++   }
++   return(richness)
++ }
+> 
+> # Question 12
+> question_12 <- function()  {
++   graphics.off()
++   #plot(neutral_time_series(init_community_max(100),duration=200),xlab="Generation",ylab="Species Richness")
++   mat<-as.data.frame(matrix(ncol=3, nrow=400))
++   min<-neutral_time_series_speciation(community=init_community_min(100),speciation_rate = 0.1, duration=200)
++   max<-neutral_time_series_speciation(community=init_community_max(100),speciation_rate = 0.1, duration=200)
++   time<-seq(1,200,1)
++   #  mat[1:200,2]<-min
++   # mat[201:400,2]<-max
++   #  mat[,1]<-time
++   # mat[1:200,3]<-"min"
++   #  mat[201:400,3]<-"max"
++   #  colnames(mat)<-c("time","rich","which")
++   graphics.off()
++   plot(time,min,col="blue",ylab="Species richness")
++   points(time,max,col="red")
++   #matrix<-matrix(c(a,b),nrow=200)
++   #  require(ggplot2)
++   #  ggplot(aes(mat[,1],mat[,2],colour=which), data=mat)+geom_point()+xlab("Generation")+ylab("Species Richness")
++   return("They converge to similar species richnesses. The neutral model gives these results because new species are being added and the when there are many species, there is a higher chance of a population going extinct")
++ }
+> 
+> 
+> # Question 13
+> species_abundance <- function(community)  {
++   
++   # for (i in (1:range(max(community)))){
++   t<-table(community)
++   t<-sort(t,decreasing = TRUE)
++   # t<-as.data.frame(t)
++   f<-vector()
++   j=0
++   for (i in t){
++     j=j+1
++     f[j]<-i
++   }
++   return(f)
++ }
+> 
+> # Question 14
+> octaves <- function(abundance_vector) {
++   #to find n
++   m<-max(abundance_vector)
++   nm<-log(m)/log(2)
++   nm<-ceiling(nm)
++   t<-tabulate(abundance_vector)
++   v<-vector(length=nm)
++   for (n in (1:nm)){
++     a<-2^(n-1)
++     b<-(2^n)-1
++     v[n]<-sum(t[a:b],na.rm = TRUE)
++   }
++   return(v)
++ }
+> 
+> # Question 15
+> sum_vect <- function(x, y) {
++   lx<-length(x)
++   ly<-length(y)
++   if (lx>ly){
++     yn<-rep(0,lx)
++     yn[1:ly]<-y
++     y<-yn
++   }else{
++     xn<-rep(0,ly)
++     xn[1:lx]<-x
++     x<-xn
++   }
++   s<-x+y
++   return(s)
++ }
+> 
+> # Question 16 
+> question_16 <- function()  {
++   # clear any existing graphs and plot your graph within the R window
++   graphics.off()
++   oc<-matrix(nrow=200,ncol=10)
++   max<-init_community_max(100)
++   for (p in 1:200){
++     max<-neutral_generation_speciation(community=max,speciation_rate = 0.1)
++   }
++   ab<-species_abundance(max)
++   oc<-octaves(ab)
++   o<-1
++   #oc[1,1:length(octaves(ab))]<-octaves(ab)
++   
++   #dont need to do both
++   gens<-seq(20,2000,20)
++   nint<-1:19
++   
++   for (d in gens){
++     for (q in nint){
++       max<-neutral_generation_speciation(community=max,speciation_rate = 0.1)}
++     max<-neutral_generation_speciation(community=max,speciation_rate = 0.1)
++     ab<-species_abundance(max)
++     o<-o+1
++     #oc[o,1:length(octaves(ab))]<-octaves(ab)
++     oc<-sum_vect(oc,octaves(ab))
++   }
++   oc<-oc/o
++   barplot(oc)
++   #return(oc)
++   return("type your written answer here")
++ }
+> 
+> # Question 17
+> cluster_run <- function(speciation_rate, size, wall_time, interval_rich, interval_oct, burn_in_generations, output_file_name)  {
++   community<-init_community_min(size=size)
++   a<-proc.time()
++   b<-proc.time()-a
++   nruns=0
++   richrows=0
++   richness<-c()
++   oct<-list()
++   #octrows=0
++   while (((b[3])/60)<wall_time){
++     community=neutral_generation_speciation(community=community,speciation_rate =speciation_rate )
++     nruns=nruns+1
++     b<-proc.time()-a
++     #richness<-matrix(nrow=burn_in_generations)
++     #richness<-list()
++     #richness<-c()
++     if (nruns<burn_in_generations){
++       if (nruns%%interval_rich==0){
++         #richrows=richrows+1
++         #richness[richrows]<-species_richness(community)
++         # richness[richrows]<-list(species_richness(community))
++         richness<-c(richness,species_richness(community))
++       }
++     }
++     #oct<-list()
++     if (nruns%%interval_oct==1){
++       octrows=length(oct)+1
++       #index<-length(oct) + 1
++       oct[[octrows]]<-(octaves(species_abundance(community)))
++       print(b)
++     }
++     # if (nruns%%interval_oct==0){
++     ##octrows=octrows+1
++     #  index<-length(oct) + 1
++     # oct[index]<-list(octaves(species_abundance(community)))
++     #}
++   }
++   c<-proc.time()-a
++   c<-c[3]
++   filename<-paste0(output_file_name,".rda")
++   save(oct,community,speciation_rate,richness,wall_time,interval_rich,interval_oct,burn_in_generations,size,c,file=filename)
++   
++ }
+> 
+> # Questions 18 and 19 involve writing code elsewhere to run your simulations on the cluster
+> 
+> # Question 20 
+> process_cluster_results <- function()  {
++   # clear any existing graphs and plot your graph within the R window
++   combined_results <- list() #create your list output here to return
++   return(combined_results)
++ }
+> 
+> # Question 21
+> question_21 <- function()  {
++   return("type your written answer here")
++ }
+> 
+> # Question 22
+> question_22 <- function()  {
++   return("type your written answer here")
++ }
+> 
+> # Question 23
+> chaos_game <- function()  {
++   # clear any existing graphs and plot your graph within the R window
++   return("type your written answer here")
++ }
+> 
+> # Question 24
+> turtle <- function(start_position, direction, length)  {
++   
++   return() # you should return your endpoint here.
++ }
+> 
+> # Question 25
+> elbow <- function(start_position, direction, length)  {
++   
++ }
+> 
+> # Question 26
+> spiral <- function(start_position, direction, length)  {
++   return("type your written answer here")
++ }
+> 
+> # Question 27
+> draw_spiral <- function()  {
++   # clear any existing graphs and plot your graph within the R window
++   
++ }
+> 
+> # Question 28
+> tree <- function(start_position, direction, length)  {
++   
++ }
+> draw_tree <- function()  {
++   # clear any existing graphs and plot your graph within the R window
++ }
+> 
+> # Question 29
+> fern <- function(start_position, direction, length)  {
++   
++ }
+> draw_fern <- function()  {
++   # clear any existing graphs and plot your graph within the R window
++ }
+> 
+> # Question 30
+> fern2 <- function(start_position, direction, length)  {
++   
++ }
+> draw_fern2 <- function()  {
++   # clear any existing graphs and plot your graph within the R window
++ }
+> 
+> # Challenge questions - these are optional, substantially harder, and a maximum of 16% is available for doing them.  
+> 
+> # Challenge question A
+> Challenge_A <- function() {
++   # clear any existing graphs and plot your graph within the R window
++ }
+> 
+> # Challenge question B
+> Challenge_B <- function() {
++   # clear any existing graphs and plot your graph within the R window
++ }
+> 
+> # Challenge question C
+> Challenge_C <- function() {
++   # clear any existing graphs and plot your graph within the R window
++ }
+> 
+> # Challenge question D
+> Challenge_D <- function() {
++   # clear any existing graphs and plot your graph within the R window
++   return("type your written answer here")
++ }
+> 
+> # Challenge question E
+> Challenge_E <- function() {
++   # clear any existing graphs and plot your graph within the R window
++   return("type your written answer here")
++ }
+> 
+> # Challenge question F
+> Challenge_F <- function() {
++   # clear any existing graphs and plot your graph within the R window
++   return("type your written answer here")
++ }
+> 
+> # Challenge question G should be written in a separate file that has no dependencies on any functions here.
+> 
+> 
+> ###go over richness , to see if my method worked
+> #source("rbk119_HPC_2019_main.R")
+> 
+> iter<-as.numeric(Sys.getenv("PBS_ARRAY_INDEX"))
+> #   iter<-3
+> #last thing- undo above
+> set.seed(iter)
+> #if iter<25
+> if (iter%%4==0){
++   popsize<-500
++ }else if (iter%%4==1){
++     popsize<-1000
++ }else if (iter%%4==2){
++     popsize<-2500
++ }else if (iter%%4==3){
++   popsize<-5000
++ }
+> 
+> filename<-paste0("output2_",iter)
+> #timeinhours<-0.01
+> timeinhours<-11.5
+> timeinmins<-timeinhours*60
+> cluster_run(speciation_rate = personal_speciation_rate,size=popsize,wall_time=timeinmins,interval_rich = 1,interval_oct = popsize/10,burn_in_generations = 8*popsize,output_file_name = filename)
+   user  system elapsed 
+  0.249   0.025   0.274 
+   user  system elapsed 
+ 51.089   0.290  51.674 
+   user  system elapsed 
+103.807   0.536 104.772 
+   user  system elapsed 
+157.442   0.820 158.810 
+   user  system elapsed 
+206.427   0.904 208.007 
+   user  system elapsed 
+254.413   1.153 256.365 
+   user  system elapsed 
+307.079   1.358 309.407 
+   user  system elapsed 
+357.931   1.543 360.580 
+   user  system elapsed 
+409.214   1.789 412.238 
+   user  system elapsed 
+460.646   1.914 463.937 
+   user  system elapsed 
+512.062   2.087 515.681 
+   user  system elapsed 
+564.529   2.274 568.494 
+   user  system elapsed 
+614.993   2.474 619.318 
+   user  system elapsed 
+665.755   2.613 670.351 
+   user  system elapsed 
+714.421   2.755 719.270 
+   user  system elapsed 
+765.653   2.867 770.751 
+   user  system elapsed 
+816.696   2.970 822.036 
+   user  system elapsed 
+870.368   3.099 875.971 
+   user  system elapsed 
+921.546   3.282 927.456 
+   user  system elapsed 
+969.531   3.441 975.711 
+    user   system  elapsed 
+1020.935    3.633 1027.438 
+    user   system  elapsed 
+1070.141    3.880 1077.010 
+    user   system  elapsed 
+1117.783    4.045 1124.926 
+    user   system  elapsed 
+1168.906    4.306 1176.436 
+    user   system  elapsed 
+1222.897    4.523 1230.778 
+    user   system  elapsed 
+1274.772    4.705 1282.965 
+    user   system  elapsed 
+1325.663    4.936 1334.222 
+    user   system  elapsed 
+1377.175    5.248 1386.182 
+    user   system  elapsed 
+1429.561    5.460 1438.917 
+    user   system  elapsed 
+1477.988    5.655 1487.662 
+    user   system  elapsed 
+1530.524    5.827 1540.512 
+    user   system  elapsed 
+1581.665    5.990 1591.955 
+    user   system  elapsed 
+1632.674    6.176 1643.321 
+    user   system  elapsed 
+1683.305    6.256 1694.168 
+    user   system  elapsed 
+1733.942    6.420 1745.098 
+    user   system  elapsed 
+1782.771    6.496 1794.122 
+    user   system  elapsed 
+1835.029    6.615 1846.635 
+    user   system  elapsed 
+1885.783    6.709 1897.620 
+    user   system  elapsed 
+1936.355    6.806 1948.426 
+    user   system  elapsed 
+1986.348    6.888 1998.633 
+    user   system  elapsed 
+2036.741    6.979 2049.251 
+    user   system  elapsed 
+2087.898    7.170 2100.732 
+    user   system  elapsed 
+2141.411    7.324 2154.619 
+    user   system  elapsed 
+2190.600    7.470 2204.072 
+    user   system  elapsed 
+2241.639    7.589 2255.364 
+    user   system  elapsed 
+2292.384    7.695 2306.342 
+    user   system  elapsed 
+2343.496    7.787 2357.669 
+    user   system  elapsed 
+2397.959    7.999 2412.485 
+    user   system  elapsed 
+2449.525    8.231 2464.424 
+    user   system  elapsed 
+2501.748    8.390 2516.947 
+    user   system  elapsed 
+2553.122    8.576 2568.641 
+    user   system  elapsed 
+2603.360    8.735 2619.164 
+    user   system  elapsed 
+2653.697    8.896 2669.787 
+    user   system  elapsed 
+2704.672    9.047 2721.044 
+    user   system  elapsed 
+2756.582    9.153 2773.193 
+    user   system  elapsed 
+2807.152    9.325 2824.073 
+    user   system  elapsed 
+2857.805    9.497 2875.036 
+    user   system  elapsed 
+2909.326    9.751 2926.941 
+    user   system  elapsed 
+2962.420    9.977 2980.400 
+    user   system  elapsed 
+3013.408   10.251 3031.802 
+    user   system  elapsed 
+3066.560   10.447 3085.300 
+    user   system  elapsed 
+3119.381   10.629 3138.443 
+    user   system  elapsed 
+3170.975   10.812 3190.372 
+    user   system  elapsed 
+3221.627   10.997 3241.346 
+    user   system  elapsed 
+3271.743   11.235 3291.837 
+    user   system  elapsed 
+3321.458   11.464 3341.908 
+    user   system  elapsed 
+3371.121   11.648 3391.880 
+    user   system  elapsed 
+3422.273   11.821 3443.346 
+    user   system  elapsed 
+3473.218   11.953 3494.555 
+    user   system  elapsed 
+3525.714   12.101 3547.333 
+    user   system  elapsed 
+3576.979   12.199 3598.829 
+    user   system  elapsed 
+3628.483   12.303 3650.577 
+    user   system  elapsed 
+3682.807   12.384 3705.127 
+    user   system  elapsed 
+3736.730   12.525 3759.336 
+    user   system  elapsed 
+3787.007   12.679 3809.907 
+    user   system  elapsed 
+3837.229   12.756 3860.344 
+    user   system  elapsed 
+3888.715   12.902 3912.112 
+    user   system  elapsed 
+3938.847   12.998 3962.468 
+    user   system  elapsed 
+3989.575   13.149 4013.487 
+    user   system  elapsed 
+4042.664   13.298 4066.868 
+    user   system  elapsed 
+4094.355   13.458 4118.863 
+    user   system  elapsed 
+4145.387   13.604 4170.179 
+    user   system  elapsed 
+4198.286   13.845 4223.465 
+    user   system  elapsed 
+4250.036   14.049 4275.581 
+    user   system  elapsed 
+4301.265   14.174 4327.083 
+    user   system  elapsed 
+4351.744   14.336 4377.861 
+    user   system  elapsed 
+4402.505   14.581 4428.999 
+    user   system  elapsed 
+4453.273   14.777 4480.106 
+    user   system  elapsed 
+4503.382   14.961 4530.541 
+    user   system  elapsed 
+4553.651   15.200 4581.189 
+    user   system  elapsed 
+4604.816   15.332 4632.621 
+    user   system  elapsed 
+4655.782   15.410 4683.801 
+    user   system  elapsed 
+4706.259   15.628 4734.634 
+    user   system  elapsed 
+4759.229   15.754 4787.871 
+    user   system  elapsed 
+4811.789   15.945 4840.762 
+    user   system  elapsed 
+4862.129   16.114 4891.423 
+    user   system  elapsed 
+4913.453   16.257 4943.038 
+    user   system  elapsed 
+4964.197   16.461 4994.119 
+    user   system  elapsed 
+5014.108   16.629 5044.329 
+    user   system  elapsed 
+5062.525   16.830 5093.066 
+    user   system  elapsed 
+5112.533   17.004 5143.373 
+    user   system  elapsed 
+5163.954   17.174 5195.100 
+    user   system  elapsed 
+5215.323   17.361 5246.788 
+    user   system  elapsed 
+5266.462   17.505 5298.210 
+    user   system  elapsed 
+5318.254   17.712 5350.350 
+    user   system  elapsed 
+5369.416   17.833 5401.770 
+    user   system  elapsed 
+5420.373   17.966 5453.004 
+    user   system  elapsed 
+5468.351   18.188 5501.325 
+    user   system  elapsed 
+5518.775   18.301 5551.999 
+    user   system  elapsed 
+5570.517   18.514 5604.096 
+    user   system  elapsed 
+5618.376   18.750 5652.306 
+    user   system  elapsed 
+5668.175   19.019 5702.509 
+    user   system  elapsed 
+5716.728   19.177 5751.338 
+    user   system  elapsed 
+5768.297   19.356 5803.219 
+    user   system  elapsed 
+5821.629   19.518 5856.851 
+    user   system  elapsed 
+5872.931   19.736 5908.568 
+    user   system  elapsed 
+5925.997   19.944 5961.987 
+    user   system  elapsed 
+5979.932   20.135 6016.257 
+    user   system  elapsed 
+6032.319   20.279 6068.927 
+    user   system  elapsed 
+6084.718   20.487 6121.675 
+    user   system  elapsed 
+6137.852   20.667 6175.133 
+    user   system  elapsed 
+6190.348   20.856 6227.960 
+    user   system  elapsed 
+6241.113   20.995 6279.004 
+    user   system  elapsed 
+6291.420   21.204 6329.659 
+    user   system  elapsed 
+6341.911   21.342 6380.425 
+    user   system  elapsed 
+6392.290   21.470 6431.059 
+    user   system  elapsed 
+6443.399   21.635 6482.457 
+    user   system  elapsed 
+6494.182   21.875 6533.607 
+    user   system  elapsed 
+6544.212   22.062 6583.945 
+    user   system  elapsed 
+6595.676   22.195 6635.679 
+    user   system  elapsed 
+6647.477   22.402 6687.862 
+    user   system  elapsed 
+6700.657   22.597 6741.394 
+    user   system  elapsed 
+6754.576   22.797 6795.653 
+    user   system  elapsed 
+6807.087   22.923 6848.427 
+    user   system  elapsed 
+6859.567   23.067 6901.189 
+    user   system  elapsed 
+6910.952   23.285 6952.926 
+    user   system  elapsed 
+6961.456   23.434 7003.708 
+    user   system  elapsed 
+7011.674   23.651 7054.282 
+    user   system  elapsed 
+7062.007   23.781 7104.884 
+    user   system  elapsed 
+7112.359   23.949 7155.543 
+    user   system  elapsed 
+7157.116   24.156 7200.597 
+    user   system  elapsed 
+7205.077   24.388 7248.897 
+    user   system  elapsed 
+7251.582   24.534 7295.648 
+    user   system  elapsed 
+7297.524   24.701 7341.855 
+    user   system  elapsed 
+7341.444   24.872 7386.030 
+    user   system  elapsed 
+7380.678   25.057 7425.513 
+    user   system  elapsed 
+7418.804   25.249 7463.889 
+    user   system  elapsed 
+7462.593   25.408 7507.966 
+    user   system  elapsed 
+7503.959   25.556 7549.555 
+    user   system  elapsed 
+7544.389   25.700 7590.203 
+    user   system  elapsed 
+7585.238   25.834 7631.260 
+    user   system  elapsed 
+7629.526   25.925 7675.731 
+    user   system  elapsed 
+7673.936   26.054 7720.356 
+    user   system  elapsed 
+7720.077   26.181 7766.717 
+    user   system  elapsed 
+7768.849   26.283 7815.697 
+    user   system  elapsed 
+7817.579   26.443 7864.695 
+    user   system  elapsed 
+7864.206   26.635 7911.609 
+    user   system  elapsed 
+7902.860   26.753 7950.444 
+    user   system  elapsed 
+7941.446   26.887 7989.229 
+    user   system  elapsed 
+7979.493   27.032 8027.482 
+    user   system  elapsed 
+8018.571   27.147 8066.740 
+    user   system  elapsed 
+8057.786   27.249 8106.118 
+    user   system  elapsed 
+8096.961   27.370 8145.483 
+    user   system  elapsed 
+8137.866   27.494 8186.583 
+    user   system  elapsed 
+8177.294   27.572 8226.155 
+    user   system  elapsed 
+8217.832   27.730 8266.926 
+    user   system  elapsed 
+8255.691   27.858 8304.974 
+    user   system  elapsed 
+8292.533   27.956 8341.967 
+    user   system  elapsed 
+8330.334   28.096 8379.968 
+    user   system  elapsed 
+8372.241   28.253 8422.115 
+    user   system  elapsed 
+8410.394   28.325 8460.400 
+    user   system  elapsed 
+8449.603   28.455 8499.803 
+    user   system  elapsed 
+8492.922   28.615 8543.361 
+    user   system  elapsed 
+8538.500   28.784 8589.199 
+    user   system  elapsed 
+8581.754   28.972 8632.713 
+    user   system  elapsed 
+8630.376   29.150 8681.613 
+    user   system  elapsed 
+8673.827   29.312 8725.298 
+    user   system  elapsed 
+8720.374   29.516 8772.137 
+    user   system  elapsed 
+8765.085   29.722 8817.137 
+    user   system  elapsed 
+8813.549   29.863 8865.863 
+    user   system  elapsed 
+8859.749   29.984 8912.276 
+    user   system  elapsed 
+8906.822   30.101 8959.564 
+    user   system  elapsed 
+8954.590   30.255 9007.589 
+    user   system  elapsed 
+9004.596   30.472 9057.955 
+    user   system  elapsed 
+9054.748   30.626 9108.380 
+    user   system  elapsed 
+9101.379   30.743 9155.233 
+    user   system  elapsed 
+9147.919   30.912 9202.045 
+    user   system  elapsed 
+9195.598   31.143 9250.056 
+    user   system  elapsed 
+9242.420   31.285 9297.114 
+    user   system  elapsed 
+9288.481   31.393 9343.374 
+    user   system  elapsed 
+9337.558   31.572 9392.740 
+    user   system  elapsed 
+9386.529   31.656 9441.902 
+    user   system  elapsed 
+9432.586   31.843 9488.240 
+    user   system  elapsed 
+9482.141   32.000 9538.064 
+    user   system  elapsed 
+9528.856   32.160 9585.035 
+    user   system  elapsed 
+9578.056   32.333 9634.512 
+    user   system  elapsed 
+9627.247   32.585 9684.065 
+    user   system  elapsed 
+9677.631   32.725 9734.704 
+    user   system  elapsed 
+9723.915   32.910 9781.265 
+    user   system  elapsed 
+9768.278   33.035 9825.833 
+    user   system  elapsed 
+9813.215   33.137 9870.957 
+    user   system  elapsed 
+9861.264   33.282 9919.255 
+    user   system  elapsed 
+9906.813   33.475 9965.083 
+     user    system   elapsed 
+ 9957.748    33.608 10016.269 
+     user    system   elapsed 
+10002.871    33.782 10061.655 
+     user    system   elapsed 
+10049.152    33.921 10108.169 
+     user    system   elapsed 
+10095.832    34.097 10155.121 
+     user    system   elapsed 
+10143.752    34.286 10203.337 
+     user    system   elapsed 
+10190.529    34.453 10250.378 
+     user    system   elapsed 
+10236.924    34.625 10297.040 
+     user    system   elapsed 
+10284.217    34.764 10344.573 
+    user   system  elapsed 
+10332.71    34.98 10393.39 
+     user    system   elapsed 
+10379.720    35.155 10440.672 
+     user    system   elapsed 
+10426.783    35.313 10487.988 
+     user    system   elapsed 
+10472.749    35.462 10534.192 
+     user    system   elapsed 
+10520.212    35.595 10581.884 
+     user    system   elapsed 
+10565.057    35.687 10626.905 
+     user    system   elapsed 
+10612.048    35.779 10674.087 
+     user    system   elapsed 
+10657.094    35.863 10719.302 
+     user    system   elapsed 
+10704.641    36.054 10767.140 
+     user    system   elapsed 
+10753.731    36.182 10816.471 
+     user    system   elapsed 
+10800.276    36.287 10863.214 
+     user    system   elapsed 
+10845.175    36.401 10908.315 
+     user    system   elapsed 
+10891.953    36.524 10955.310 
+     user    system   elapsed 
+10936.356    36.606 10999.878 
+     user    system   elapsed 
+10983.187    36.741 11046.945 
+     user    system   elapsed 
+11028.025    36.928 11092.056 
+    user   system  elapsed 
+11073.74    37.09 11138.03 
+     user    system   elapsed 
+11119.120    37.225 11183.632 
+     user    system   elapsed 
+11167.776    37.405 11232.573 
+    user   system  elapsed 
+11215.30    37.53 11280.32 
+     user    system   elapsed 
+11264.195    37.698 11329.500 
+     user    system   elapsed 
+11312.258    37.837 11377.810 
+     user    system   elapsed 
+11357.465    37.905 11423.175 
+     user    system   elapsed 
+11406.222    38.105 11472.239 
+     user    system   elapsed 
+11453.644    38.239 11519.894 
+     user    system   elapsed 
+11501.060    38.349 11567.515 
+     user    system   elapsed 
+11550.254    38.504 11616.971 
+     user    system   elapsed 
+11598.017    38.606 11664.936 
+     user    system   elapsed 
+11648.840    38.826 11716.101 
+     user    system   elapsed 
+11696.719    39.012 11764.266 
+    user   system  elapsed 
+11747.26    39.15 11815.06 
+     user    system   elapsed 
+11800.263    39.338 11868.355 
+     user    system   elapsed 
+11849.928    39.535 11918.318 
+     user    system   elapsed 
+11897.391    39.712 11966.058 
+     user    system   elapsed 
+11943.875    39.911 12012.832 
+     user    system   elapsed 
+11994.058    40.139 12063.361 
+     user    system   elapsed 
+12039.725    40.313 12109.291 
+     user    system   elapsed 
+12088.043    40.418 12157.817 
+     user    system   elapsed 
+12134.761    40.531 12204.740 
+     user    system   elapsed 
+12183.440    40.644 12253.640 
+    user   system  elapsed 
+12229.63    40.80 12300.08 
+     user    system   elapsed 
+12276.882    40.924 12347.552 
+     user    system   elapsed 
+12324.114    41.082 12395.044 
+     user    system   elapsed 
+12371.123    41.209 12442.276 
+     user    system   elapsed 
+12418.942    41.443 12490.429 
+     user    system   elapsed 
+12466.074    41.642 12537.861 
+     user    system   elapsed 
+12515.127    41.727 12587.107 
+     user    system   elapsed 
+12562.707    41.856 12634.916 
+     user    system   elapsed 
+12609.538    41.967 12681.953 
+     user    system   elapsed 
+12656.673    42.124 12729.340 
+     user    system   elapsed 
+12704.852    42.257 12777.754 
+     user    system   elapsed 
+12752.365    42.338 12825.448 
+    user   system  elapsed 
+12799.60    42.49 12872.94 
+     user    system   elapsed 
+12844.546    42.674 12918.150 
+     user    system   elapsed 
+12892.615    42.831 12966.479 
+     user    system   elapsed 
+12939.491    42.933 13013.556 
+     user    system   elapsed 
+12989.157    43.096 13063.497 
+     user    system   elapsed 
+13039.259    43.328 13113.947 
+     user    system   elapsed 
+13086.982    43.459 13161.901 
+     user    system   elapsed 
+13132.005    43.584 13207.139 
+     user    system   elapsed 
+13179.516    43.703 13254.869 
+     user    system   elapsed 
+13227.516    43.942 13303.209 
+     user    system   elapsed 
+13273.316    44.035 13349.194 
+     user    system   elapsed 
+13322.270    44.204 13398.429 
+     user    system   elapsed 
+13369.675    44.355 13446.089 
+     user    system   elapsed 
+13415.073    44.511 13491.733 
+     user    system   elapsed 
+13460.753    44.633 13537.622 
+     user    system   elapsed 
+13505.648    44.816 13582.789 
+     user    system   elapsed 
+13550.324    44.971 13627.706 
+     user    system   elapsed 
+13597.840    45.109 13675.462 
+     user    system   elapsed 
+13643.679    45.325 13721.614 
+     user    system   elapsed 
+13690.892    45.483 13769.082 
+    user   system  elapsed 
+13737.91    45.66 13816.38 
+     user    system   elapsed 
+13784.913    45.862 13863.678 
+     user    system   elapsed 
+13832.600    46.017 13911.622 
+     user    system   elapsed 
+13881.571    46.193 13960.877 
+     user    system   elapsed 
+13927.245    46.335 14006.786 
+     user    system   elapsed 
+13974.941    46.491 14054.742 
+     user    system   elapsed 
+14021.824    46.653 14101.886 
+    user   system  elapsed 
+14070.22    46.80 14150.53 
+     user    system   elapsed 
+14118.523    46.962 14199.110 
+     user    system   elapsed 
+14164.416    47.168 14245.299 
+     user    system   elapsed 
+14212.043    47.385 14293.245 
+     user    system   elapsed 
+14258.116    47.483 14339.511 
+     user    system   elapsed 
+14306.720    47.644 14388.384 
+     user    system   elapsed 
+14351.218    47.834 14433.157 
+     user    system   elapsed 
+14397.982    47.981 14480.167 
+     user    system   elapsed 
+14441.839    48.129 14524.255 
+     user    system   elapsed 
+14490.450    48.279 14573.121 
+     user    system   elapsed 
+14537.167    48.463 14620.123 
+    user   system  elapsed 
+14583.44    48.68 14666.71 
+     user    system   elapsed 
+14628.855    48.849 14712.382 
+     user    system   elapsed 
+14674.320    48.992 14758.079 
+     user    system   elapsed 
+14725.688    49.165 14809.745 
+     user    system   elapsed 
+14770.836    49.265 14855.086 
+     user    system   elapsed 
+14816.337    49.382 14900.790 
+     user    system   elapsed 
+14865.366    49.485 14950.031 
+     user    system   elapsed 
+14912.577    49.591 14997.449 
+     user    system   elapsed 
+14960.554    49.768 15045.704 
+     user    system   elapsed 
+15007.355    49.878 15092.712 
+     user    system   elapsed 
+15055.199    50.042 15140.822 
+     user    system   elapsed 
+15101.664    50.172 15187.512 
+     user    system   elapsed 
+15146.535    50.332 15232.629 
+    user   system  elapsed 
+15194.89    50.51 15281.26 
+     user    system   elapsed 
+15244.723    50.605 15331.304 
+     user    system   elapsed 
+15291.323    50.845 15378.241 
+     user    system   elapsed 
+15337.189    50.916 15424.270 
+     user    system   elapsed 
+15383.147    51.059 15470.464 
+     user    system   elapsed 
+15429.163    51.257 15516.770 
+     user    system   elapsed 
+15476.337    51.453 15564.240 
+     user    system   elapsed 
+15526.042    51.583 15614.186 
+     user    system   elapsed 
+15572.994    51.658 15661.309 
+     user    system   elapsed 
+15619.922    51.786 15708.462 
+     user    system   elapsed 
+15667.556    51.965 15756.376 
+     user    system   elapsed 
+15713.561    52.144 15802.652 
+     user    system   elapsed 
+15758.028    52.302 15847.361 
+    user   system  elapsed 
+15803.69    52.38 15893.19 
+     user    system   elapsed 
+15849.435    52.491 15939.145 
+     user    system   elapsed 
+15896.174    52.669 15986.161 
+     user    system   elapsed 
+15941.783    52.844 16032.037 
+     user    system   elapsed 
+15989.162    52.987 16079.661 
+     user    system   elapsed 
+16034.875    53.132 16125.612 
+     user    system   elapsed 
+16080.656    53.208 16171.559 
+     user    system   elapsed 
+16125.424    53.384 16216.585 
+     user    system   elapsed 
+16172.927    53.488 16264.293 
+     user    system   elapsed 
+16219.917    53.598 16311.491 
+     user    system   elapsed 
+16267.073    53.745 16358.889 
+     user    system   elapsed 
+16312.132    53.854 16404.144 
+     user    system   elapsed 
+16359.050    54.014 16451.321 
+     user    system   elapsed 
+16409.722    54.213 16502.311 
+     user    system   elapsed 
+16456.543    54.329 16549.345 
+     user    system   elapsed 
+16502.777    54.491 16595.837 
+     user    system   elapsed 
+16549.275    54.682 16642.617 
+     user    system   elapsed 
+16595.749    54.855 16689.358 
+     user    system   elapsed 
+16641.778    54.969 16735.595 
+     user    system   elapsed 
+16687.567    55.109 16781.618 
+     user    system   elapsed 
+16735.837    55.293 16830.178 
+     user    system   elapsed 
+16781.389    55.412 16875.939 
+     user    system   elapsed 
+16826.527    55.559 16921.312 
+     user    system   elapsed 
+16874.599    55.735 16969.665 
+     user    system   elapsed 
+16921.606    55.896 17016.934 
+     user    system   elapsed 
+16969.424    56.025 17064.983 
+     user    system   elapsed 
+17016.224    56.169 17112.023 
+     user    system   elapsed 
+17067.615    56.321 17163.680 
+    user   system  elapsed 
+17118.82    56.48 17215.15 
+     user    system   elapsed 
+17167.464    56.687 17264.092 
+     user    system   elapsed 
+17215.660    56.853 17312.558 
+     user    system   elapsed 
+17262.528    56.948 17359.611 
+     user    system   elapsed 
+17309.172    57.089 17406.487 
+     user    system   elapsed 
+17355.379    57.199 17452.899 
+    user   system  elapsed 
+17402.58    57.40 17500.40 
+    user   system  elapsed 
+17447.13    57.52 17545.16 
+     user    system   elapsed 
+17493.894    57.679 17592.183 
+     user    system   elapsed 
+17539.955    57.772 17638.427 
+     user    system   elapsed 
+17587.878    57.893 17686.580 
+     user    system   elapsed 
+17634.133    58.035 17733.087 
+     user    system   elapsed 
+17680.178    58.139 17779.331 
+    user   system  elapsed 
+17725.42    58.26 17824.78 
+     user    system   elapsed 
+17773.577    58.344 17873.134 
+     user    system   elapsed 
+17821.805    58.443 17921.560 
+     user    system   elapsed 
+17868.635    58.633 17968.676 
+     user    system   elapsed 
+17915.190    58.796 18015.488 
+     user    system   elapsed 
+17960.117    58.923 18060.633 
+     user    system   elapsed 
+18006.389    59.008 18107.085 
+    user   system  elapsed 
+18050.88    59.17 18151.82 
+     user    system   elapsed 
+18095.431    59.276 18196.586 
+     user    system   elapsed 
+18141.399    59.391 18242.758 
+     user    system   elapsed 
+18189.954    59.553 18291.588 
+     user    system   elapsed 
+18235.804    59.704 18337.686 
+     user    system   elapsed 
+18283.967    59.895 18386.151 
+     user    system   elapsed 
+18333.197    59.994 18435.589 
+     user    system   elapsed 
+18378.764    60.089 18481.349 
+     user    system   elapsed 
+18424.818    60.291 18527.713 
+     user    system   elapsed 
+18472.630    60.453 18575.786 
+     user    system   elapsed 
+18524.853    60.622 18628.291 
+     user    system   elapsed 
+18572.839    60.793 18676.543 
+     user    system   elapsed 
+18621.021    60.884 18724.923 
+     user    system   elapsed 
+18665.732    61.043 18769.874 
+     user    system   elapsed 
+18713.847    61.168 18818.219 
+    user   system  elapsed 
+18759.56    61.24 18864.08 
+     user    system   elapsed 
+18809.295    61.435 18914.129 
+     user    system   elapsed 
+18855.674    61.598 18960.761 
+     user    system   elapsed 
+18904.650    61.824 19010.073 
+     user    system   elapsed 
+18952.704    61.982 19058.396 
+     user    system   elapsed 
+18999.087    62.167 19105.063 
+     user    system   elapsed 
+19048.282    62.337 19154.535 
+     user    system   elapsed 
+19096.414    62.479 19202.908 
+     user    system   elapsed 
+19145.209    62.656 19251.985 
+     user    system   elapsed 
+19191.712    62.785 19298.706 
+     user    system   elapsed 
+19239.306    62.933 19346.546 
+     user    system   elapsed 
+19286.010    63.074 19393.484 
+     user    system   elapsed 
+19335.879    63.207 19443.596 
+     user    system   elapsed 
+19381.517    63.331 19489.443 
+     user    system   elapsed 
+19429.293    63.518 19537.506 
+     user    system   elapsed 
+19477.428    63.668 19585.891 
+    user   system  elapsed 
+19525.27    63.88 19634.04 
+     user    system   elapsed 
+19575.068    64.138 19684.205 
+     user    system   elapsed 
+19625.115    64.353 19734.592 
+     user    system   elapsed 
+19672.147    64.484 19781.854 
+     user    system   elapsed 
+19720.729    64.605 19830.661 
+     user    system   elapsed 
+19767.535    64.758 19877.719 
+     user    system   elapsed 
+19817.149    64.953 19927.643 
+     user    system   elapsed 
+19863.605    65.142 19974.378 
+     user    system   elapsed 
+19912.176    65.312 20023.217 
+     user    system   elapsed 
+19959.930    65.405 20071.168 
+     user    system   elapsed 
+20008.892    65.541 20120.369 
+     user    system   elapsed 
+20057.113    65.768 20168.913 
+     user    system   elapsed 
+20103.857    65.985 20215.966 
+     user    system   elapsed 
+20151.291    66.153 20263.664 
+    user   system  elapsed 
+20199.57    66.24 20312.13 
+     user    system   elapsed 
+20249.742    66.362 20362.545 
+     user    system   elapsed 
+20298.219    66.521 20411.281 
+     user    system   elapsed 
+20346.100    66.703 20459.442 
+     user    system   elapsed 
+20395.901    66.835 20509.482 
+     user    system   elapsed 
+20447.316    66.996 20561.155 
+    user   system  elapsed 
+20498.16    67.09 20612.19 
+     user    system   elapsed 
+20550.421    67.258 20664.740 
+     user    system   elapsed 
+20599.203    67.414 20713.778 
+     user    system   elapsed 
+20645.824    67.659 20760.734 
+     user    system   elapsed 
+20692.678    67.793 20807.818 
+     user    system   elapsed 
+20740.647    67.997 20856.094 
+     user    system   elapsed 
+20786.844    68.154 20902.540 
+    user   system  elapsed 
+20833.31    68.24 20949.19 
+     user    system   elapsed 
+20883.665    68.381 20999.795 
+     user    system   elapsed 
+20933.363    68.548 21049.777 
+     user    system   elapsed 
+20981.257    68.746 21097.973 
+     user    system   elapsed 
+21027.431    68.913 21144.405 
+     user    system   elapsed 
+21077.066    69.077 21194.320 
+     user    system   elapsed 
+21127.344    69.188 21244.825 
+     user    system   elapsed 
+21172.817    69.362 21290.552 
+     user    system   elapsed 
+21211.948    69.505 21329.890 
+     user    system   elapsed 
+21255.389    69.657 21373.557 
+     user    system   elapsed 
+21300.131    69.859 21418.585 
+     user    system   elapsed 
+21340.770    70.111 21459.564 
+     user    system   elapsed 
+21381.923    70.355 21501.034 
+     user    system   elapsed 
+21423.621    70.544 21542.994 
+    user   system  elapsed 
+21464.17    70.67 21583.74 
+     user    system   elapsed 
+21507.578    70.848 21627.405 
+     user    system   elapsed 
+21548.250    71.004 21668.301 
+     user    system   elapsed 
+21592.235    71.183 21712.550 
+     user    system   elapsed 
+21636.247    71.348 21756.814 
+     user    system   elapsed 
+21676.510    71.467 21797.268 
+     user    system   elapsed 
+21717.185    71.663 21838.208 
+     user    system   elapsed 
+21759.954    71.807 21881.198 
+    user   system  elapsed 
+21798.58    71.94 21920.02 
+     user    system   elapsed 
+21839.143    72.022 21960.735 
+     user    system   elapsed 
+21881.641    72.214 22003.501 
+     user    system   elapsed 
+21924.463    72.316 22046.504 
+     user    system   elapsed 
+21966.514    72.439 22088.753 
+     user    system   elapsed 
+22009.325    72.577 22131.777 
+     user    system   elapsed 
+22049.648    72.723 22172.313 
+     user    system   elapsed 
+22090.352    72.819 22213.184 
+     user    system   elapsed 
+22132.537    72.914 22255.543 
+     user    system   elapsed 
+22176.563    73.064 22299.814 
+     user    system   elapsed 
+22220.507    73.216 22343.996 
+     user    system   elapsed 
+22264.683    73.294 22388.324 
+     user    system   elapsed 
+22310.391    73.447 22434.270 
+     user    system   elapsed 
+22354.264    73.675 22478.454 
+     user    system   elapsed 
+22400.634    73.785 22525.015 
+     user    system   elapsed 
+22445.121    73.896 22569.697 
+     user    system   elapsed 
+22491.788    74.079 22616.634 
+     user    system   elapsed 
+22532.574    74.227 22657.639 
+     user    system   elapsed 
+22575.338    74.394 22700.651 
+     user    system   elapsed 
+22619.194    74.532 22744.731 
+     user    system   elapsed 
+22662.682    74.723 22788.499 
+     user    system   elapsed 
+22705.507    74.862 22831.547 
+     user    system   elapsed 
+22748.131    75.041 22874.430 
+     user    system   elapsed 
+22789.613    75.187 22916.141 
+     user    system   elapsed 
+22832.459    75.364 22959.245 
+    user   system  elapsed 
+22877.56    75.45 23004.53 
+     user    system   elapsed 
+22919.461    75.557 23046.617 
+     user    system   elapsed 
+22962.004    75.669 23089.355 
+    user   system  elapsed 
+23004.00    75.81 23131.57 
+     user    system   elapsed 
+23046.514    75.971 23174.320 
+     user    system   elapsed 
+23088.579    76.124 23216.614 
+     user    system   elapsed 
+23130.350    76.238 23258.575 
+     user    system   elapsed 
+23174.449    76.348 23302.875 
+     user    system   elapsed 
+23214.753    76.482 23343.377 
+     user    system   elapsed 
+23257.044    76.586 23385.849 
+     user    system   elapsed 
+23299.539    76.706 23428.542 
+     user    system   elapsed 
+23341.921    76.817 23471.117 
+     user    system   elapsed 
+23385.081    76.961 23514.512 
+     user    system   elapsed 
+23429.367    77.104 23559.038 
+     user    system   elapsed 
+23470.940    77.217 23600.799 
+     user    system   elapsed 
+23515.054    77.351 23645.131 
+     user    system   elapsed 
+23560.641    77.427 23690.887 
+     user    system   elapsed 
+23608.181    77.627 23738.725 
+     user    system   elapsed 
+23648.396    77.792 23779.171 
+     user    system   elapsed 
+23688.434    77.968 23819.456 
+     user    system   elapsed 
+23727.661    78.059 23858.840 
+     user    system   elapsed 
+23768.203    78.291 23899.683 
+     user    system   elapsed 
+23810.185    78.427 23941.876 
+     user    system   elapsed 
+23850.671    78.583 23982.587 
+     user    system   elapsed 
+23894.246    78.702 24026.365 
+     user    system   elapsed 
+23936.037    78.859 24068.389 
+     user    system   elapsed 
+23976.867    79.011 24109.454 
+     user    system   elapsed 
+24021.402    79.092 24154.162 
+     user    system   elapsed 
+24062.564    79.253 24195.564 
+    user   system  elapsed 
+24102.78    79.36 24235.96 
+     user    system   elapsed 
+24143.837    79.415 24277.141 
+    user   system  elapsed 
+24185.72    79.59 24319.28 
+     user    system   elapsed 
+24228.788    79.726 24362.561 
+     user    system   elapsed 
+24276.194    79.933 24410.270 
+     user    system   elapsed 
+24321.169    80.081 24455.481 
+     user    system   elapsed 
+24361.914    80.221 24496.436 
+     user    system   elapsed 
+24402.423    80.331 24537.148 
+     user    system   elapsed 
+24445.874    80.491 24580.849 
+     user    system   elapsed 
+24486.682    80.668 24621.902 
+     user    system   elapsed 
+24527.732    80.779 24663.138 
+     user    system   elapsed 
+24568.353    80.875 24703.926 
+     user    system   elapsed 
+24609.949    81.031 24745.759 
+     user    system   elapsed 
+24650.798    81.168 24786.826 
+     user    system   elapsed 
+24691.626    81.275 24827.834 
+     user    system   elapsed 
+24736.152    81.407 24872.584 
+     user    system   elapsed 
+24777.054    81.499 24913.648 
+     user    system   elapsed 
+24820.232    81.604 24957.023 
+     user    system   elapsed 
+24861.644    81.742 24998.652 
+     user    system   elapsed 
+24900.844    81.879 25038.060 
+     user    system   elapsed 
+24943.469    82.036 25080.922 
+     user    system   elapsed 
+24985.766    82.248 25123.510 
+     user    system   elapsed 
+25026.697    82.375 25164.643 
+     user    system   elapsed 
+25066.366    82.507 25204.509 
+     user    system   elapsed 
+25105.623    82.611 25243.929 
+     user    system   elapsed 
+25148.845    82.801 25287.421 
+     user    system   elapsed 
+25191.070    82.934 25329.857 
+     user    system   elapsed 
+25232.172    83.082 25371.184 
+     user    system   elapsed 
+25272.575    83.188 25411.761 
+     user    system   elapsed 
+25316.097    83.286 25455.469 
+     user    system   elapsed 
+25358.374    83.418 25497.954 
+     user    system   elapsed 
+25400.047    83.567 25539.849 
+     user    system   elapsed 
+25442.778    83.666 25582.761 
+     user    system   elapsed 
+25484.281    83.713 25624.385 
+     user    system   elapsed 
+25524.685    83.837 25664.992 
+     user    system   elapsed 
+25564.656    83.974 25705.169 
+     user    system   elapsed 
+25606.669    84.115 25747.397 
+     user    system   elapsed 
+25645.605    84.227 25786.500 
+     user    system   elapsed 
+25686.612    84.368 25827.719 
+     user    system   elapsed 
+25728.522    84.437 25869.776 
+     user    system   elapsed 
+25769.861    84.614 25911.365 
+     user    system   elapsed 
+25811.667    84.788 25953.421 
+     user    system   elapsed 
+25854.644    84.897 25996.593 
+    user   system  elapsed 
+25895.78    85.04 26037.94 
+     user    system   elapsed 
+25939.297    85.153 26081.666 
+     user    system   elapsed 
+25978.497    85.309 26121.087 
+     user    system   elapsed 
+26019.570    85.471 26162.393 
+     user    system   elapsed 
+26062.181    85.646 26205.254 
+     user    system   elapsed 
+26104.298    85.836 26247.639 
+     user    system   elapsed 
+26148.351    85.956 26291.893 
+    user   system  elapsed 
+26196.76    86.08 26340.51 
+     user    system   elapsed 
+26237.547    86.159 26381.442 
+     user    system   elapsed 
+26278.859    86.275 26422.941 
+     user    system   elapsed 
+26319.131    86.386 26463.393 
+     user    system   elapsed 
+26360.238    86.511 26504.703 
+     user    system   elapsed 
+26400.290    86.673 26544.986 
+     user    system   elapsed 
+26444.165    86.824 26589.111 
+     user    system   elapsed 
+26484.572    86.952 26629.715 
+     user    system   elapsed 
+26527.772    87.068 26673.111 
+     user    system   elapsed 
+26572.204    87.226 26717.781 
+     user    system   elapsed 
+26613.101    87.355 26758.879 
+     user    system   elapsed 
+26654.310    87.475 26800.284 
+     user    system   elapsed 
+26697.182    87.666 26843.436 
+     user    system   elapsed 
+26740.206    87.804 26886.679 
+     user    system   elapsed 
+26782.958    87.935 26929.648 
+     user    system   elapsed 
+26826.833    88.122 26973.821 
+     user    system   elapsed 
+26870.511    88.259 27017.726 
+     user    system   elapsed 
+26913.648    88.379 27061.067 
+     user    system   elapsed 
+26956.977    88.501 27104.597 
+     user    system   elapsed 
+27000.618    88.686 27148.510 
+     user    system   elapsed 
+27042.214    88.849 27190.346 
+     user    system   elapsed 
+27085.372    88.933 27233.673 
+     user    system   elapsed 
+27126.824    89.046 27275.310 
+     user    system   elapsed 
+27171.611    89.188 27320.330 
+     user    system   elapsed 
+27213.247    89.319 27362.169 
+     user    system   elapsed 
+27254.606    89.471 27403.757 
+     user    system   elapsed 
+27294.231    89.635 27443.610 
+     user    system   elapsed 
+27337.448    89.732 27487.005 
+    user   system  elapsed 
+27377.90    89.83 27527.62 
+     user    system   elapsed 
+27421.476    89.983 27571.428 
+     user    system   elapsed 
+27460.417    90.126 27610.577 
+     user    system   elapsed 
+27501.907    90.209 27652.228 
+     user    system   elapsed 
+27542.567    90.381 27693.140 
+     user    system   elapsed 
+27584.835    90.502 27735.607 
+     user    system   elapsed 
+27629.632    90.603 27780.583 
+    user   system  elapsed 
+27668.89    90.71 27820.01 
+     user    system   elapsed 
+27711.344    90.851 27862.682 
+     user    system   elapsed 
+27754.156    91.014 27905.743 
+    user   system  elapsed 
+27794.79    91.16 27946.59 
+     user    system   elapsed 
+27834.811    91.276 27986.791 
+    user   system  elapsed 
+27875.99    91.42 28028.19 
+     user    system   elapsed 
+27919.564    91.549 28071.975 
+     user    system   elapsed 
+27964.747    91.729 28117.431 
+     user    system   elapsed 
+28008.336    91.851 28161.231 
+     user    system   elapsed 
+28050.958    92.007 28204.093 
+     user    system   elapsed 
+28091.011    92.159 28244.370 
+     user    system   elapsed 
+28134.903    92.265 28288.469 
+     user    system   elapsed 
+28175.974    92.371 28329.722 
+     user    system   elapsed 
+28216.577    92.499 28370.526 
+     user    system   elapsed 
+28257.466    92.642 28411.630 
+     user    system   elapsed 
+28298.079    92.752 28452.423 
+    user   system  elapsed 
+28342.15    92.89 28496.72 
+     user    system   elapsed 
+28385.764    93.048 28540.585 
+     user    system   elapsed 
+28424.591    93.196 28579.623 
+    user   system  elapsed 
+28463.88    93.31 28619.10 
+     user    system   elapsed 
+28506.654    93.508 28662.149 
+     user    system   elapsed 
+28548.838    93.684 28704.598 
+     user    system   elapsed 
+28587.278    93.767 28743.183 
+     user    system   elapsed 
+28629.811    93.913 28785.944 
+     user    system   elapsed 
+28673.461    94.053 28829.823 
+     user    system   elapsed 
+28716.967    94.195 28873.557 
+     user    system   elapsed 
+28759.329    94.331 28916.137 
+     user    system   elapsed 
+28801.155    94.526 28958.231 
+     user    system   elapsed 
+28844.577    94.687 29001.898 
+     user    system   elapsed 
+28884.513    94.844 29042.059 
+     user    system   elapsed 
+28926.328    94.943 29084.047 
+     user    system   elapsed 
+28966.778    95.086 29124.708 
+     user    system   elapsed 
+29006.174    95.198 29164.281 
+     user    system   elapsed 
+29046.203    95.319 29204.495 
+     user    system   elapsed 
+29087.852    95.467 29246.367 
+     user    system   elapsed 
+29129.997    95.654 29288.775 
+     user    system   elapsed 
+29170.653    95.807 29329.658 
+     user    system   elapsed 
+29211.011    95.879 29370.155 
+     user    system   elapsed 
+29251.946    96.017 29411.299 
+     user    system   elapsed 
+29293.997    96.204 29453.610 
+     user    system   elapsed 
+29333.529    96.289 29493.289 
+     user    system   elapsed 
+29375.362    96.452 29535.358 
+    user   system  elapsed 
+29416.07    96.60 29576.29 
+     user    system   elapsed 
+29456.452    96.717 29616.856 
+     user    system   elapsed 
+29495.036    96.816 29655.598 
+     user    system   elapsed 
+29533.431    96.949 29694.187 
+     user    system   elapsed 
+29577.946    97.125 29738.970 
+     user    system   elapsed 
+29618.273    97.269 29779.508 
+     user    system   elapsed 
+29658.233    97.433 29819.701 
+     user    system   elapsed 
+29699.209    97.605 29860.917 
+     user    system   elapsed 
+29741.393    97.745 29903.329 
+     user    system   elapsed 
+29785.217    97.881 29947.379 
+     user    system   elapsed 
+29830.122    98.042 29992.536 
+     user    system   elapsed 
+29874.937    98.176 30037.616 
+     user    system   elapsed 
+29921.462    98.317 30084.404 
+     user    system   elapsed 
+29965.479    98.446 30128.644 
+     user    system   elapsed 
+30010.912    98.633 30174.377 
+     user    system   elapsed 
+30056.314    98.878 30220.159 
+     user    system   elapsed 
+30100.430    99.002 30264.498 
+     user    system   elapsed 
+30146.331    99.118 30310.637 
+    user   system  elapsed 
+30191.14    99.27 30355.69 
+    user   system  elapsed 
+30237.20    99.43 30402.01 
+     user    system   elapsed 
+30284.416    99.611 30449.518 
+     user    system   elapsed 
+30334.661    99.808 30500.083 
+     user    system   elapsed 
+30381.190    99.943 30546.845 
+     user    system   elapsed 
+30427.298   100.109 30593.235 
+     user    system   elapsed 
+30473.370   100.206 30639.547 
+    user   system  elapsed 
+30519.10   100.35 30685.51 
+     user    system   elapsed 
+30563.877   100.451 30730.482 
+     user    system   elapsed 
+30610.711   100.595 30777.564 
+     user    system   elapsed 
+30656.460   100.809 30823.640 
+     user    system   elapsed 
+30701.493   101.007 30868.959 
+     user    system   elapsed 
+30745.786   101.208 30913.547 
+     user    system   elapsed 
+30789.186   101.329 30957.152 
+     user    system   elapsed 
+30834.839   101.458 31003.030 
+     user    system   elapsed 
+30880.011   101.678 31048.522 
+    user   system  elapsed 
+30925.78   101.90 31094.61 
+     user    system   elapsed 
+30968.969   102.014 31138.006 
+     user    system   elapsed 
+31015.563   102.183 31184.875 
+     user    system   elapsed 
+31061.131   102.351 31230.709 
+     user    system   elapsed 
+31104.298   102.496 31274.125 
+     user    system   elapsed 
+31149.938   102.685 31320.072 
+     user    system   elapsed 
+31193.681   102.831 31364.042 
+     user    system   elapsed 
+31237.337   103.004 31407.953 
+     user    system   elapsed 
+31282.876   103.153 31453.742 
+     user    system   elapsed 
+31326.669   103.296 31497.762 
+     user    system   elapsed 
+31371.428   103.492 31542.813 
+     user    system   elapsed 
+31414.588   103.589 31586.153 
+    user   system  elapsed 
+31459.48   103.76 31631.32 
+     user    system   elapsed 
+31503.709   103.988 31675.870 
+     user    system   elapsed 
+31549.778   104.115 31722.172 
+     user    system   elapsed 
+31593.921   104.265 31766.547 
+     user    system   elapsed 
+31639.134   104.423 31812.021 
+     user    system   elapsed 
+31682.961   104.579 31856.086 
+     user    system   elapsed 
+31728.342   104.782 31901.764 
+     user    system   elapsed 
+31774.363   104.885 31947.991 
+     user    system   elapsed 
+31818.732   105.055 31992.626 
+     user    system   elapsed 
+31865.891   105.238 32040.104 
+     user    system   elapsed 
+31910.797   105.508 32085.382 
+     user    system   elapsed 
+31956.786   105.639 32131.609 
+     user    system   elapsed 
+32001.260   105.768 32176.312 
+     user    system   elapsed 
+32046.575   105.921 32221.883 
+     user    system   elapsed 
+32090.444   106.042 32265.970 
+     user    system   elapsed 
+32135.219   106.173 32310.970 
+     user    system   elapsed 
+32180.064   106.288 32356.027 
+     user    system   elapsed 
+32223.950   106.466 32400.194 
+     user    system   elapsed 
+32269.348   106.627 32445.852 
+     user    system   elapsed 
+32314.914   106.794 32491.684 
+     user    system   elapsed 
+32361.141   106.988 32538.229 
+     user    system   elapsed 
+32405.609   107.095 32582.890 
+     user    system   elapsed 
+32449.756   107.219 32627.248 
+     user    system   elapsed 
+32494.821   107.386 32672.575 
+    user   system  elapsed 
+32539.96   107.54 32717.97 
+     user    system   elapsed 
+32584.669   107.693 32762.921 
+     user    system   elapsed 
+32629.156   107.864 32807.677 
+    user   system  elapsed 
+32676.56   108.05 32855.39 
+     user    system   elapsed 
+32720.760   108.186 32899.813 
+     user    system   elapsed 
+32764.079   108.363 32943.434 
+     user    system   elapsed 
+32808.120   108.499 32987.694 
+     user    system   elapsed 
+32852.741   108.607 33032.529 
+    user   system  elapsed 
+32897.17   108.78 33077.22 
+     user    system   elapsed 
+32940.975   108.905 33121.237 
+     user    system   elapsed 
+32984.667   109.088 33165.198 
+    user   system  elapsed 
+33029.48   109.20 33210.23 
+     user    system   elapsed 
+33075.069   109.397 33256.110 
+     user    system   elapsed 
+33119.279   109.576 33300.589 
+     user    system   elapsed 
+33163.840   109.738 33345.403 
+     user    system   elapsed 
+33209.520   109.876 33391.325 
+     user    system   elapsed 
+33255.577   110.012 33437.615 
+     user    system   elapsed 
+33306.599   110.196 33488.945 
+    user   system  elapsed 
+33351.50   110.41 33534.18 
+     user    system   elapsed 
+33395.779   110.534 33578.665 
+     user    system   elapsed 
+33440.827   110.686 33623.968 
+     user    system   elapsed 
+33483.586   110.845 33666.969 
+     user    system   elapsed 
+33527.952   110.952 33711.541 
+     user    system   elapsed 
+33571.713   111.158 33755.603 
+     user    system   elapsed 
+33614.905   111.329 33799.053 
+     user    system   elapsed 
+33658.867   111.481 33843.272 
+     user    system   elapsed 
+33703.358   111.586 33887.958 
+     user    system   elapsed 
+33747.961   111.738 33932.803 
+    user   system  elapsed 
+33791.27   111.93 33976.38 
+     user    system   elapsed 
+33836.653   112.066 34022.005 
+    user   system  elapsed 
+33880.50   112.18 34066.05 
+     user    system   elapsed 
+33925.725   112.385 34111.583 
+     user    system   elapsed 
+33968.522   112.537 34154.617 
+     user    system   elapsed 
+34014.404   112.633 34200.701 
+    user   system  elapsed 
+34057.23   112.81 34243.80 
+     user    system   elapsed 
+34100.250   112.923 34287.027 
+     user    system   elapsed 
+34146.221   113.031 34333.216 
+     user    system   elapsed 
+34191.737   113.175 34378.973 
+     user    system   elapsed 
+34235.639   113.331 34423.130 
+     user    system   elapsed 
+34279.082   113.453 34466.794 
+     user    system   elapsed 
+34323.837   113.666 34511.872 
+     user    system   elapsed 
+34367.928   113.782 34556.177 
+    user   system  elapsed 
+34411.28   113.89 34599.73 
+     user    system   elapsed 
+34458.555   114.109 34647.353 
+     user    system   elapsed 
+34504.263   114.242 34693.307 
+     user    system   elapsed 
+34549.487   114.372 34738.752 
+    user   system  elapsed 
+34593.16   114.49 34782.63 
+     user    system   elapsed 
+34637.797   114.651 34827.533 
+     user    system   elapsed 
+34685.665   114.874 34875.767 
+     user    system   elapsed 
+34729.907   115.025 34920.252 
+    user   system  elapsed 
+34776.25   115.18 34966.85 
+     user    system   elapsed 
+34819.671   115.337 35010.522 
+     user    system   elapsed 
+34866.035   115.476 35057.135 
+     user    system   elapsed 
+34914.229   115.649 35105.634 
+     user    system   elapsed 
+34959.840   115.768 35151.468 
+     user    system   elapsed 
+35003.401   115.923 35195.267 
+     user    system   elapsed 
+35049.587   116.038 35241.684 
+     user    system   elapsed 
+35092.612   116.209 35284.981 
+     user    system   elapsed 
+35136.073   116.342 35328.678 
+     user    system   elapsed 
+35183.055   116.463 35375.882 
+     user    system   elapsed 
+35227.623   116.658 35420.773 
+     user    system   elapsed 
+35271.876   116.828 35465.299 
+    user   system  elapsed 
+35315.78   116.96 35509.43 
+     user    system   elapsed 
+35361.388   117.087 35555.265 
+     user    system   elapsed 
+35407.446   117.233 35601.569 
+     user    system   elapsed 
+35452.420   117.379 35646.783 
+     user    system   elapsed 
+35496.978   117.536 35691.586 
+     user    system   elapsed 
+35541.795   117.608 35736.574 
+     user    system   elapsed 
+35585.630   117.725 35780.610 
+     user    system   elapsed 
+35628.569   117.894 35823.798 
+     user    system   elapsed 
+35672.671   118.044 35868.141 
+     user    system   elapsed 
+35718.136   118.165 35913.827 
+     user    system   elapsed 
+35762.928   118.318 35958.866 
+     user    system   elapsed 
+35811.097   118.449 36007.274 
+    user   system  elapsed 
+35856.41   118.59 36052.83 
+     user    system   elapsed 
+35900.991   118.684 36097.592 
+     user    system   elapsed 
+35944.256   118.856 36141.112 
+     user    system   elapsed 
+35987.486   119.027 36184.594 
+     user    system   elapsed 
+36033.200   119.176 36230.558 
+     user    system   elapsed 
+36077.374   119.346 36275.001 
+     user    system   elapsed 
+36121.416   119.492 36319.285 
+     user    system   elapsed 
+36163.621   119.646 36361.724 
+     user    system   elapsed 
+36206.464   119.823 36404.837 
+     user    system   elapsed 
+36249.512   120.002 36448.152 
+     user    system   elapsed 
+36293.059   120.119 36491.899 
+     user    system   elapsed 
+36335.166   120.249 36534.210 
+     user    system   elapsed 
+36375.565   120.357 36574.785 
+     user    system   elapsed 
+36418.214   120.499 36617.652 
+    user   system  elapsed 
+36460.83   120.61 36660.45 
+     user    system   elapsed 
+36503.288   120.671 36703.055 
+     user    system   elapsed 
+36540.786   120.822 36740.761 
+     user    system   elapsed 
+36579.769   120.987 36779.973 
+     user    system   elapsed 
+36620.217   121.105 36820.615 
+    user   system  elapsed 
+36660.73   121.22 36861.33 
+     user    system   elapsed 
+36700.360   121.371 36901.184 
+    user   system  elapsed 
+36738.47   121.44 36939.43 
+     user    system   elapsed 
+36777.019   121.585 36978.194 
+     user    system   elapsed 
+36817.811   121.726 37019.211 
+     user    system   elapsed 
+36855.332   121.861 37056.940 
+     user    system   elapsed 
+36895.567   122.032 37097.429 
+     user    system   elapsed 
+36934.730   122.176 37136.808 
+     user    system   elapsed 
+36973.826   122.274 37176.077 
+     user    system   elapsed 
+37011.867   122.424 37214.331 
+     user    system   elapsed 
+37053.206   122.593 37255.947 
+     user    system   elapsed 
+37094.454   122.705 37297.454 
+     user    system   elapsed 
+37134.399   122.842 37337.648 
+     user    system   elapsed 
+37173.640   122.983 37377.117 
+    user   system  elapsed 
+37212.09   123.12 37415.79 
+     user    system   elapsed 
+37253.734   123.314 37457.755 
+    user   system  elapsed 
+37296.08   123.46 37500.35 
+     user    system   elapsed 
+37335.809   123.645 37540.347 
+     user    system   elapsed 
+37376.449   123.767 37581.204 
+     user    system   elapsed 
+37416.704   123.891 37621.684 
+     user    system   elapsed 
+37457.101   124.088 37662.395 
+     user    system   elapsed 
+37497.972   124.224 37703.528 
+     user    system   elapsed 
+37544.072   124.391 37749.896 
+     user    system   elapsed 
+37582.373   124.523 37788.400 
+     user    system   elapsed 
+37621.190   124.647 37827.401 
+     user    system   elapsed 
+37659.347   124.759 37865.740 
+     user    system   elapsed 
+37698.785   124.952 37905.472 
+    user   system  elapsed 
+37739.37   125.12 37946.35 
+     user    system   elapsed 
+37775.526   125.218 37982.673 
+     user    system   elapsed 
+37813.987   125.387 38021.384 
+     user    system   elapsed 
+37853.210   125.499 38060.796 
+     user    system   elapsed 
+37892.232   125.779 38100.214 
+     user    system   elapsed 
+37932.551   125.873 38140.701 
+     user    system   elapsed 
+37973.080   125.997 38181.429 
+     user    system   elapsed 
+38015.268   126.158 38223.857 
+     user    system   elapsed 
+38059.982   126.276 38268.781 
+     user    system   elapsed 
+38101.724   126.379 38310.711 
+     user    system   elapsed 
+38144.216   126.534 38353.456 
+     user    system   elapsed 
+38187.810   126.711 38397.318 
+     user    system   elapsed 
+38230.489   126.838 38440.212 
+     user    system   elapsed 
+38276.146   127.029 38486.167 
+     user    system   elapsed 
+38319.075   127.169 38529.318 
+     user    system   elapsed 
+38363.261   127.373 38573.809 
+     user    system   elapsed 
+38404.065   127.482 38614.791 
+     user    system   elapsed 
+38444.285   127.602 38655.212 
+    user   system  elapsed 
+38485.94   127.76 38697.11 
+     user    system   elapsed 
+38528.105   127.896 38739.499 
+     user    system   elapsed 
+38569.469   128.025 38781.072 
+     user    system   elapsed 
+38611.739   128.161 38823.573 
+     user    system   elapsed 
+38652.470   128.291 38864.527 
+     user    system   elapsed 
+38693.461   128.502 38905.806 
+     user    system   elapsed 
+38733.658   128.714 38946.301 
+     user    system   elapsed 
+38774.881   128.843 38987.736 
+     user    system   elapsed 
+38814.166   128.953 39027.199 
+     user    system   elapsed 
+38854.808   129.074 39068.050 
+     user    system   elapsed 
+38894.134   129.237 39107.613 
+     user    system   elapsed 
+38934.469   129.353 39148.153 
+     user    system   elapsed 
+38976.398   129.554 39190.404 
+     user    system   elapsed 
+39015.087   129.757 39229.384 
+     user    system   elapsed 
+39054.281   129.893 39268.807 
+     user    system   elapsed 
+39098.069   130.089 39312.934 
+     user    system   elapsed 
+39138.859   130.298 39354.051 
+     user    system   elapsed 
+39183.618   130.439 39399.089 
+     user    system   elapsed 
+39225.927   130.595 39441.687 
+     user    system   elapsed 
+39265.253   130.757 39481.250 
+     user    system   elapsed 
+39304.871   130.939 39521.139 
+     user    system   elapsed 
+39347.167   131.116 39563.756 
+     user    system   elapsed 
+39387.296   131.258 39604.127 
+     user    system   elapsed 
+39429.461   131.469 39646.635 
+     user    system   elapsed 
+39471.636   131.586 39689.034 
+     user    system   elapsed 
+39512.566   131.778 39730.270 
+     user    system   elapsed 
+39553.728   131.973 39771.723 
+     user    system   elapsed 
+39592.713   132.106 39810.929 
+     user    system   elapsed 
+39633.486   132.254 39851.942 
+     user    system   elapsed 
+39674.648   132.445 39893.410 
+     user    system   elapsed 
+39717.985   132.686 39937.122 
+    user   system  elapsed 
+39761.49   132.83 39980.90 
+     user    system   elapsed 
+39805.349   133.073 40025.138 
+     user    system   elapsed 
+39849.695   133.224 40069.733 
+     user    system   elapsed 
+39891.642   133.412 40111.954 
+     user    system   elapsed 
+39934.585   133.559 40155.138 
+    user   system  elapsed 
+39977.87   133.79 40198.74 
+     user    system   elapsed 
+40020.248   134.038 40241.453 
+     user    system   elapsed 
+40060.194   134.134 40281.573 
+     user    system   elapsed 
+40103.420   134.334 40325.092 
+    user   system  elapsed 
+40148.27   134.50 40370.21 
+     user    system   elapsed 
+40190.076   134.691 40412.286 
+     user    system   elapsed 
+40233.711   134.839 40456.171 
+     user    system   elapsed 
+40275.803   135.013 40498.522 
+     user    system   elapsed 
+40316.585   135.164 40539.525 
+     user    system   elapsed 
+40358.835   135.311 40582.005 
+     user    system   elapsed 
+40397.194   135.453 40620.568 
+     user    system   elapsed 
+40440.339   135.571 40663.921 
+     user    system   elapsed 
+40479.517   135.676 40703.269 
+     user    system   elapsed 
+40522.925   135.841 40746.930 
+     user    system   elapsed 
+40565.504   136.017 40789.766 
+     user    system   elapsed 
+40607.298   136.131 40831.752 
+     user    system   elapsed 
+40653.423   136.302 40878.154 
+     user    system   elapsed 
+40701.056   136.416 40926.014 
+     user    system   elapsed 
+40745.588   136.594 40970.813 
+     user    system   elapsed 
+40791.328   136.743 41016.804 
+     user    system   elapsed 
+40833.515   136.951 41059.281 
+     user    system   elapsed 
+40875.351   137.076 41101.331 
+     user    system   elapsed 
+40917.841   137.228 41144.066 
+    user   system  elapsed 
+40961.64   137.40 41188.14 
+     user    system   elapsed 
+41006.306   137.615 41233.121 
+    user   system  elapsed 
+41051.37   137.74 41278.42 
+     user    system   elapsed 
+41092.640   137.868 41319.894 
+     user    system   elapsed 
+41134.872   138.025 41362.369 
+> 
+R has finished running
+
+============================================
+
+        Job resource usage summary 
+
+                 Memory (GB)    NCPUs
+ Requested  :         1             1
+ Used       :         0 (peak)   0.98 (ave)
+
+============================================
