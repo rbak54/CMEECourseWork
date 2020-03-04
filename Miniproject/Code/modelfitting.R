@@ -53,13 +53,17 @@ for (i in listID){
   #model fitting
   HolFitII<-try(nlsLM(N_TraitValue ~ HollingII(ResDensity,a,h), data=subsetT, start=list(a=outII[1],h=outII[2]),lower=c(0,0),control = list(maxiter=1000)),silent=TRUE)
   HolFitIII<-try(nlsLM(N_TraitValue ~ HollingIII(ResDensity,a,h,q), data=subsetT, start=list(a=outIII[1],h=outIII[2],q=outIII[3]),lower=c(0,0,-50),control = list(maxiter=1000)),silent=TRUE)
-  HolFitI<-try(lm(N_TraitValue ~ ResDensity, data=subsetT), silent=TRUE)
+  HolFitI<-try(lm(N_TraitValue ~ 0+ResDensity, data=subsetT), silent=TRUE)
+  #HolFitI<-try(lm(N_TraitValue ~ ResDensity, data=subsetT), silent=TRUE)
+  
   pol2<-try(lm(N_TraitValue ~ poly(ResDensity, degree=2), data=subsetT), silent=TRUE)
   pol3<-try(lm(N_TraitValue ~ poly(ResDensity, degree=3), data=subsetT),silent=TRUE)
   #x values for model plotting
   datashort[j,"N"]<-n
-  datashort[j,"a0_I"]<-HolFitI$coefficients[2]
-  datashort[j,"a0_II"]<-outII[1]
+  #datashort[j,"a0_I"]<-HolFitI$coefficients[2]
+  datashort[j,"a0_I"]<-HolFitI$coefficients[1]
+  
+    datashort[j,"a0_II"]<-outII[1]
   datashort[j,"h0_II"]<-outII[2]
   datashort[j,"a0_III"]<-outIII[1]
   datashort[j,"h0_III"]<-outIII[2]
@@ -97,8 +101,9 @@ for (i in listID){
       Predict_HolI<-predict.lm(HolFitI,data.frame(ResDensity=Lengths))
       datashort[j,"HollingI_AIC"]<-AIC(HolFitI)
       lines(Lengths,Predict_HolI,col=cbbPalette[3],lwd=2.5) 
-      datashort[j,"aI"]<-HolFitI$coefficients[2]  
-      datashort[j,"aIp"]<-summary(HolFitI)[[4]][[2,4]]
+      datashort[j,"aI"]<-HolFitI$coefficients[1]  
+      #datashort[j,"aI"]<-HolFitI$coefficients[2]
+           datashort[j,"aIp"]<-summary(HolFitI)[[4]][[1,4]]
     }
     if("try-error" %in% class(HolFitII)){        
       datashort[j,"FailHolII"]<-1

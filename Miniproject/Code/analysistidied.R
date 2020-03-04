@@ -123,8 +123,10 @@ for(i in 1:(nrow(table_observed)-1)){
 Expected
 df<-(nrow(Expected)-1)*(ncol(Expected)-1)
 chisquared<-sum(((Observed-Expected)^2)/Expected)
-chisquared
-    1-pchisq(chisquared,df)
+write(format(round(chisquared, 2), nsmall = 2),"../Results/Tables/chitemp")
+write(format(round(1-pchisq(chisquared,df), 2), nsmall = 2),"../Results/Tables/ptemp")
+df
+
     #so nothin significant but pl
 
 table_observed<-table(data$BestAICHolRECAL,data[,variable])
@@ -245,20 +247,19 @@ output_temp_con_table<-xtable(output_temp_con,label='Paramtemp',caption = 'Table
 print(output_temp_con_table,floating=FALSE,tabular.environment = 'longtable',file ="../Results/Tables/output_temp_con_latex.txt",caption.placement ="top")
 
 ##section 2 of results 
-sum(data$BestAIC=="HollingII_AIC")/length(data$BestAIC)
-sum(data$BestAIC_sec=="Poly3_AIC")/length(data$BestAIC_sec)
+write(format(round(sum(data$BestAIC=="HollingII_AIC")/length(data$BestAIC), 2), nsmall = 2),"../Results/Tables/holIIbest")
+write(format(round(sum(data$BestAIC_sec=="Poly3_AIC")/length(data$BestAIC_sec), 2), nsmall = 2),"../Results/Tables/poly32best")
 sum(data$BestAIC_sec=="Poly2_AIC")/length(data$BestAIC_sec)
-sum(data$best.model.type=="Mechanistic")/length(data$best.model.type)
+write(format(round(sum(data$best.model.type=="Mechanistic")/length(data$best.model.type), 2), nsmall = 2),"../Results/Tables/mechbest")
 
 
 ##section3?
-sum(data$BestAICHol=="HollingIII_AIC")-
-sum(data$BestAICHolRECAL=="HollingIII_AIC")
+write(sum(data$BestAICHol=="HollingIII_AIC")-sum(data$BestAICHolRECAL=="HollingIII_AIC"),"../Results/Tables/recaldiff")
 
 #senction 1 of results
-length(data$FailHolI)
-sum(data$FailHolII>0,na.rm = T)
-sum(data$FailHolIII>0,na.rm = T)
+sum(data$FailHolI>0,na.rm=T)
+write(sum(data$FailHolII>0,na.rm = T),"../Results/Tables/failII")
+write(sum(data$FailHolIII>0,na.rm = T),"../Results/Tables/failIII")
 sum(data$FailPol2>0,na.rm = T)
 sum(data$FailPol3>0,na.rm = T)
 sum(data$hIIIp<0.05,na.rm=T)
