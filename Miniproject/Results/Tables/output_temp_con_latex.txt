@@ -1,0 +1,15 @@
+% latex table generated in R 3.6.2 by xtable 1.8-4 package
+% Wed Mar  4 23:34:54 2020
+\begin{longtable}{rrrrr}
+\caption{Table of results for Kendall rank order correlation tests for consumer temperature and parameter values.} \\ 
+  \hline
+ & z & tau & p-value & n \\ 
+  \hline
+Search rate type I & -4.58 & -0.21 & 0.00 & 229.00 \\ 
+  Search rate type II & -3.09 & -0.18 & 0.00 & 137.00 \\ 
+  Handling time type II & 3.72 & 0.22 & 0.00 & 137.00 \\ 
+  Handling time type III & 2.39 & 0.15 & 0.02 & 130.00 \\ 
+   \hline
+\hline
+\label{Paramtemp}
+\end{longtable}

@@ -13,7 +13,7 @@ else
 f=`basename $1 |cut -f 1 -d "."`
 pdflatex $f
 pdflatex $f
-bibtex $f
+biber $f
 pdflatex $f
 pdflatex $f
 #move pdf to results folder

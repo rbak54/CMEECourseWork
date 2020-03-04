@@ -11,15 +11,16 @@
 \usepackage[caption = false]{subfig}
 \usepackage{amsmath}
 \usepackage{float}
-%\usepackage[style=authoryear,backend=biber]{biblatex}
+\usepackage[style=authoryear,backend=biber]{biblatex}
 \usepackage{lineno}
-\bibliographystyle{agsm}
-\usepackage{natbib}
+%\bibliographystyle{agsm}
+%\usepackage{natbib}
 \usepackage{csquotes}% Recommended
 \doublespacing
 \newcommand{\HRule}{\rule{\linewidth}{1mm}}
-%\addbibresource{references.bib}% Syntax for version >= 1.2
-%\bibliography{references.bib}
+%\bibliography{main.bib}
+\addbibresource{main.bib}% Syntax for version >= 1.2
+
 %
 \begin{document}
 % title
@@ -70,10 +71,8 @@ In addition, if values of $a$ or $h$ change with prey density, then the Holling 
 \subsection{Temperature and Functional Responses}
 
 \subsection{Models}
-Models can be phenomenological or mechanistic. In mechanistic models, all parameters have biological meaning and in phenomenological models they do not, instead a function is used that fits the data or processes %otto day ref  
-emodels are  %see becker paper and textbppl
-Phenomenological models may fit better to data and can be very useful fin the absence of mechanistic models. They can be easier to understand, however do not have as much biological meaning as mechanistic models. %%
-however mechanistic models can improve our understanding of biology and are useful for extrapolating more accurately because when the meanings of parameters of known, biological constraints to be included. %%?%??
+Models can be phenomenological or mechanistic. In mechanistic models, all parameters have biological meaning and in phenomenological models they do not, instead a function is used that fits the data or processes \cite{Otto2007AEvolution,Geritz2012MathematicalModels}.Phenomenological models may fit better to data and can be very useful in the absence of mechanistic models. They can be easier to understand, however do not have as much biological meaning as mechanistic models \cite{Otto2007AEvolution}. \cite{Geritz2012MathematicalModels} claim that this could stop them being valid for use in biological systems.  %%
+Mechanistic models can improve our understanding of biology and are useful for making predictions more accurately because when the meanings of parameters of known, biological constraints can be included. They can include as much information about the system as is available \cite{Otto2007AEvolution,Kendall1999WhyApproaches}. Mechanistic models are simplifications of systems and may have strong assumptions but they can still be very useful tools in understanding a biological system. How well a simplified model fits to data can give important insight into what aspects of a system are important in determining the dynamics \cite{Geritz2012MathematicalModels}.
 The Holling models described above are mechanistic to some extent however the type III model is more phenomenological due to the non-biological parameter $q$. Even the Holling type II model may be partially phenomenological because the values of $a$ and $h$ are a function of , multiple biological components \cite{Hassel1976TheDeath-Rate}.%maybe better in discussion. 
 
 
@@ -183,8 +182,8 @@ The search rate is smaller and less varied at intermediate temperatures, however
 
 \clearpage{}
 
-\bibliography{main.bib}
+%\bibliography{main.bib}
 %\bibliographystyle{plain}
-
+\printbibliography
 \end{document}
 
