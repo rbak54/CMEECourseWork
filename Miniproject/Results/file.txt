@@ -1,24 +1,26 @@
 File: main.tex
 Encoding: ascii
-Words in text: 835
-Words in headers: 34
-Words outside text (captions, etc.): 73
-Number of headers: 16
-Number of floats/tables/figures: 4
-Number of math inlines: 27
+Words in text: 1220
+Words in headers: 41
+Words outside text (captions, etc.): 118
+Number of headers: 18
+Number of floats/tables/figures: 6
+Number of math inlines: 42
 Number of math displayed: 3
 Subcounts:
   text+headers+captions (#headers/#floats/#inlines/#displayed)
-  14+7+0 (2/0/0/0) _top_
+  4+7+0 (2/0/0/0) _top_
   245+1+0 (1/0/12/3) Section: Introduction
   0+1+0 (1/0/0/0) Section: Methods
-  0+2+0 (1/0/0/0) Subsection: Computing Tools
+  133+2+0 (1/0/0/0) Subsection: Computing Tools
   77+3+0 (1/0/0/0) Subsection: Initial Data Sorting
   278+6+0 (3/0/12/0) Subsection: Model Fitting
-  84+2+0 (1/0/3/0) Subsection: Data Analysis
+  243+2+0 (1/0/5/0) Subsection: Data Analysis
   0+1+0 (1/0/0/0) Section: Results
-  10+3+6 (1/1/0/0) Subsection: Number of Fits
-  67+2+51 (1/2/0/0) Subsection: Best Model
+  35+3+10 (1/1/2/0) Subsection: Number of Fits
+  68+2+47 (1/2/5/0) Subsection: Best Model
+  63+3+25 (1/1/3/0) Subsection: Best Holling Model
+  14+4+20 (1/1/3/0) Subsection: Temperature and Best Model
   60+4+16 (1/1/0/0) Subsection: Temperature and Parameter Values
   0+1+0 (1/0/0/0) Section: Discussion
   0+1+0 (1/0/0/0) Section: Conclusion

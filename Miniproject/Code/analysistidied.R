@@ -101,19 +101,20 @@ chisquared<-sum(((Observed-Expected)^2)/Expected)
 #https://stattrek.com/chi-square-test/goodness-of-fit.aspx
 
 data$CUTCONTEMP<-NA
-data$CUTCONTEMP<-cut(data$ConTemp,c(0,15,25,40))
+data$CUTCONTEMP<-cut(data$ConTemp,c(0,15,20,25,40))
 variable<-"CUTCONTEMP" 
 
-data$CUTRESTEMP<-NA
-data$CUTRESTEMP<-cut(data$ResTemp,c(0,15,25,40))
+#data$CUTRESTEMP<-NA
+#data$CUTRESTEMP<-cut(data$ResTemp,c(0,15,25,40))
 
-variable<-"CUTRESTEMP" 
+#variable<-"CUTRESTEMP" 
 
 table_observed<-table(data$BestAIC,data[,variable])+table(data$BestAIC_sec,data[,variable]) 
 table_observed<-rbind(table_observed,colSums(table_observed))
 table_observed<-cbind(table_observed,rowSums(table_observed))
 Observed<-table(data$BestAIC,data[,variable])+table(data$BestAIC_sec,data[,variable]) 
 Expected<-matrix(nrow=nrow(Observed),ncol=ncol(Observed))
+
 for(i in 1:(nrow(table_observed)-1)){
   for (j in 1:(ncol(table_observed)-1)){
     Expected[i,j]<-(table_observed[nrow(table_observed),j]*table_observed[i,ncol(table_observed)])/table_observed[nrow(table_observed),ncol(table_observed)]
@@ -122,8 +123,9 @@ for(i in 1:(nrow(table_observed)-1)){
 Expected
 df<-(nrow(Expected)-1)*(ncol(Expected)-1)
 chisquared<-sum(((Observed-Expected)^2)/Expected)
-1-pchisq(chisquared,df)
-#so nothin significant but pl
+chisquared
+    1-pchisq(chisquared,df)
+    #so nothin significant but pl
 
 table_observed<-table(data$BestAICHolRECAL,data[,variable])
 table_observed<-rbind(table_observed,colSums(table_observed))
@@ -248,5 +250,18 @@ sum(data$BestAIC_sec=="Poly3_AIC")/length(data$BestAIC_sec)
 sum(data$BestAIC_sec=="Poly2_AIC")/length(data$BestAIC_sec)
 sum(data$best.model.type=="Mechanistic")/length(data$best.model.type)
 
+
+##section3?
+sum(data$BestAICHol=="HollingIII_AIC")-
+sum(data$BestAICHolRECAL=="HollingIII_AIC")
+
+#senction 1 of results
+length(data$FailHolI)
+sum(data$FailHolII>0,na.rm = T)
+sum(data$FailHolIII>0,na.rm = T)
+sum(data$FailPol2>0,na.rm = T)
+sum(data$FailPol3>0,na.rm = T)
+sum(data$hIIIp<0.05,na.rm=T)
 #caption
 write.csv(data,"../Results/dataanalysiscrat.csv")
+

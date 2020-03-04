@@ -81,18 +81,6 @@ plot1conA<-ggplot()+geom_point(aes(ConTemp,log(aI)),color=cbbPalette[4],data=dat
  
  
  
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
 printgraph<-function(name){
   png(paste0("../Results/Plots/",substitute(name),".png"))
   print(name)
@@ -124,26 +112,37 @@ plot(data1$ConTemp,a$residuals)
 
 
 #this graph shows that mechanistic is slightly better
-modelbesttype<-  ggplot(data=data,aes(x=best.model.type,fill=BestAIC))+geom_bar(stat="count")+
-  theme_bw()+theme(text = element_text(size = 15))+xlab("Best Model Type")+ylab("Number of models")+scale_fill_colorblind("Best Model")
+modelbesttype<-   ggplot(data=data,aes(x=best.model.type,fill=BestAIC))+geom_bar(stat="count")+
+  theme_bw()+theme(text = element_text(size = 15))+xlab("Best Model Type")+ylab("Number of models")+ylim(0,150)+scale_fill_colorblind("Best Model")
 
+  modelbesttyperecal<-ggplot(data=data,aes(x=best.model.type.recal,fill=BestAICRECAL))+geom_bar(stat="count")+
+  theme_bw()+theme(text = element_text(size = 15))+xlab("Best Model Type")+ylab("Number of models")+ylim(0,150)+scale_fill_colorblind("Best Model")
 
+#  modelbesttyperecal<-ggplot(data=data,aes(x=best.model.type.recal,fill=BestAICRECAL))+geom_bar(stat="count")+
+ #   theme_bw()+theme(text = element_text(size = 15))+xlab("Best Model Type")+ylab("Number of models")+ylim(0,150)+scale_fill_colorblind("Best Model")
+  
   
 #diff between holling and holling recal
-modelbestholl<-ggplot(data=data, aes(BestAICHol))+xlab("Best Holling Model")+ylab("Number of models")+theme_bw()+geom_bar()+scale_fill_colorblind()+theme(text = element_text(size = 20))
-modelbesthollrecal<-ggplot(data=data, aes(BestAICHolRECAL))+xlab("Best Holling Model")+ylab("Number of models")+theme_bw()+geom_bar()+theme(text = element_text(size = 20))
+modelbestholl<-ggplot(data=data, aes(BestAICHol))+xlab("Best Holling Model")+ylab("Number of models")+ylim(0,175)+theme_bw()+geom_bar()+scale_fill_colorblind()+theme(text = element_text(size = 20))
+modelbesthollrecal<-ggplot(data=data, aes(BestAICHolRECAL))+xlab("Best Holling Model")+ylab("Number of models")+ylim(0,175)+theme_bw()+geom_bar()+theme(text = element_text(size = 20))
 #type 2 most common then 1 then 3
 modelbest<-ggplot(data=data, aes(BestAIC))+geom_bar()+ylim(0,75)+theme_bw()+theme(text = element_text(size = 15))+xlab("Best Model")+ylab("Number of models")
 modelsecondbest<-ggplot(data=data, aes(BestAIC_sec))+geom_bar()+theme_bw()+theme(text = element_text(size = 15))+xlab("Best Model")+ylab("Number of models")
 
+
+
+
 printgraph(modelbesttype)
+
 printgraph(modelbestholl)
 printgraph(modelbesthollrecal)
 printgraph(modelbest)
 printgraph(modelsecondbest)
 
+printgraph(modelbesttyperecal)
 
 
   #working on temp mdel graph
-ggplot(data=data,aes(x=best.model.type,fill=BestAIC))+geom_bar(stat="count")+
-  theme_bw()+theme(text = element_text(size = 20))+xlab("Best Model Type")+ylab("Number of models")+scale_fill_colorblind("Best Model")
+tempmodel<-ggplot(data=data,aes(CUTCONTEMP,fill=BestAIC))+geom_bar(stat="count",position = position_dodge())+theme_bw()+theme(text = element_text(size = 20))+xlab("Temperature Interval (degrees C)")+ylab("Number of models")+scale_fill_colorblind("Best Model")
+printgraph(tempmodel)
+
