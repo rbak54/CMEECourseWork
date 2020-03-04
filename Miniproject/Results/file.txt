@@ -1,7 +1,7 @@
 File: main.tex
 Encoding: ascii
-Words in text: 893
-Words in headers: 32
+Words in text: 835
+Words in headers: 34
 Words outside text (captions, etc.): 73
 Number of headers: 16
 Number of floats/tables/figures: 4
@@ -9,17 +9,17 @@ Number of math inlines: 27
 Number of math displayed: 3
 Subcounts:
   text+headers+captions (#headers/#floats/#inlines/#displayed)
-  4+5+0 (2/0/0/0) _top_
-  254+1+0 (1/0/12/3) Section: Introduction
+  14+7+0 (2/0/0/0) _top_
+  245+1+0 (1/0/12/3) Section: Introduction
   0+1+0 (1/0/0/0) Section: Methods
   0+2+0 (1/0/0/0) Subsection: Computing Tools
-  78+3+0 (1/0/0/0) Subsection: Initial Data Sorting
-  281+6+0 (3/0/12/0) Subsection: Model Fitting
+  77+3+0 (1/0/0/0) Subsection: Initial Data Sorting
+  278+6+0 (3/0/12/0) Subsection: Model Fitting
   84+2+0 (1/0/3/0) Subsection: Data Analysis
   0+1+0 (1/0/0/0) Section: Results
   10+3+6 (1/1/0/0) Subsection: Number of Fits
   67+2+51 (1/2/0/0) Subsection: Best Model
   60+4+16 (1/1/0/0) Subsection: Temperature and Parameter Values
   0+1+0 (1/0/0/0) Section: Discussion
-  55+1+0 (1/0/0/0) Section: Conclusion
+  0+1+0 (1/0/0/0) Section: Conclusion
 
