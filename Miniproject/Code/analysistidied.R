@@ -31,7 +31,8 @@ data$qciu<-NA
 
 data$qcil<-data$qIII-2*data$qse
 data$qciu<-data$qIII+2*data$qse
-
+#data<-subset(data,Con_Thermy=="ectotherm")
+ #data<- data(data,Res_Thermy=="ectotherm")
 #data$Con_ForagingMovement<-tolower(data$Con_ForagingMovement)
 #best AIC
 ltHol<-as.vector(match("HollingI_AIC",names(data)):match("HollingIII_AIC",names(data)))

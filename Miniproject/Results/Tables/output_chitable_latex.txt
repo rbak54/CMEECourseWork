@@ -1,5 +1,5 @@
 % latex table generated in R 3.6.2 by xtable 1.8-4 package
-% Thu Mar  5 03:09:35 2020
+% Thu Mar  5 11:17:50 2020
 \begin{longtable}{rrr}
 \caption{Results of chi-squared tests for whether the best model and the best model type (i.e phenomenological or mechanistic) are uniformally distributed} \\ 
   \hline

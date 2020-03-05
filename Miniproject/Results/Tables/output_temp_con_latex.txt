@@ -1,5 +1,5 @@
 % latex table generated in R 3.6.2 by xtable 1.8-4 package
-% Thu Mar  5 03:09:35 2020
+% Thu Mar  5 11:17:50 2020
 \begin{longtable}{rrrrr}
 \caption{Table of results for Kendall rank order correlation tests for consumer temperature and parameter values.} \\ 
   \hline

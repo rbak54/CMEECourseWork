@@ -74,14 +74,11 @@ StartIII<- function(subsetT) {
   for (k in 1:(nrow(mat))){
     vala<-abs(rnorm(1,mean=a0, 1))
     valh<-abs(rnorm(1,mean=h0, 1))
-    #    valq<-abs(rnorm(1,mean=1, )
-    #valq<-1
     valq<-runif(1,-2,2)
     mat[k,1]<-vala
     mat[k,2]<-valh
     mat[k,3]<-valq
     HolFitIII_s<-try(nlsLM(N_TraitValue ~ HollingIII(ResDensity,a,h,q), data=subsetT, start=list(a=vala, h=valh, q=valq), lower=c(0,0,-50),control = list(maxiter=1000)), silent=TRUE)
-    #HolFit<-try(nlsLM(N_TraitValue ~ Holling(ResDensity,a,h), data=subsetT, start=list(a=vala, h=valh)),silent=TRUE)
     if("try-error" %in% class(HolFitIII_s)){        
       mat[k,4]<-NA  
       #calculate AIC for sucessful
