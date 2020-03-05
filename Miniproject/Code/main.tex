@@ -18,9 +18,8 @@
 \usepackage{csquotes}% Recommended
 \doublespacing
 \newcommand{\HRule}{\rule{\linewidth}{1mm}}
-%\bibliography{main.bib}
 \addbibresource{main.bib}% Syntax for version >= 1.2
-
+%\bibliography{main.bib}
 %
 \begin{document}
 % title
@@ -78,7 +77,8 @@ The Holling models described above are mechanistic to some extent however the ty
 
 \subsection{This work}
 In this paper, 5 models were fitted to experimental functional response data: Holling's type I, Holling's type II, Holling's type III, a polynomial model of degree two (to capture increasing and levelling out of the functional response) and a polynomial model of degree three (to capture a change in the rate of increase of the functional response.Then the best model for each experiment was determined. This was analysed and compared to temperatures. In addition the parameters of the Holling's models were compared to the consumer temperature.\\
-It was expected that the Holling type III model would be able to fit better to the data but may have a higher AIC value due the the extra parameter. %TEMPERATURE EXPECTATIONS
+It was expected that the Holling type III model would be able to fit better to the data but may have a higher AIC value due the the extra parameter. 
+%TEMPERATURE EXPECTATIONS
 %
 \section{Methods}
 \subsection{Computing Tools}
@@ -102,7 +102,7 @@ Data analysis was carried out in R 3.6.2\cite{RCoreTeam2017}.The models were com
 The confidence intervals for values of $q$ were calculated and (using two times the standard error). When the confidence interval for $q$ overlapped zero, the best AIC was recalculated for the remaining Holling models (because when the confidence interval for $q$ is zero, the type III model is the same as the type III model.  %%remove this?
 A chi-square ($\chi^2$) goodness of fit test was carried out on the best model and the best model type (phenomenological or mechanistic) to determine if the number of models in each category was significantly different.\\
 The p-value of each parameter was stored and if the model was not significant, the parameter was removed from analysis of that parameter. Shapiro-Wilk tests were used to test the log consumer temperatures and log parameter values and found that they were not normally distributed. In addition, there were ties in the data so Spearman's rank correlation could not be calculated.  Kendall rank order correlation tests were carried out on consumer temperatures and log search rate and consumer temperatures and log handling time for each of the Holling models. Log of the parameters was used because both search rate and the handling time values were mostly very low with  a few very large values. The search rate for type III models could not be tested due to a low number of models were search rate was significant. \\ 
-A chi-square ($\chi^2$) test carried out on resource temperature and best model. The temperature values were discretised by creating an expectation table with intervals of five degrees and combining these intervals until the expected values were all greater than five.
+Chi-square ($\chi^2$) tests were carried out on consumer temperature and best model type and consumer temperature and best Holling model (recalculated). The temperature values were discretised by creating an expectation table with intervals of five degrees and combining these intervals until the expected values were all greater than five.
 %talk about stats stuff- tests 
 \section{Results}
 %figs will need to be saved into code directory probs
@@ -143,13 +143,16 @@ Of the three Holling models, the type II model was the best (Figure\ref{fig:best
 \label{fig:bestholandrecalmodel}
 \end{figure}
 \subsection{Temperature and Best Model}
-For the most part, the shape of the distribution of the best model was the same at different temperatures however the at $20-25$ degree interval the polynomial of degree was a lot more successful than the  Holling II model (Figure \ref{fig:tempmodel}). The consumer temperature did not significantly effect which model fit the data the best ($\chi^2=\input{../Results/Tables/chitemp}$,$p=\input{../Results/Tables/ptemp}$,$df=12$). 
-\begin{figure}[h!] %h forces it to be at this location
-    \centering
-    \includegraphics[width=3.5in]{../Results/Plots/tempmodel.png}
-    \caption{Number of times that each model was the best model at each consumer temperature interval. Colour is the best model. $n=241$}
-    \label{fig:tempmodel}
+The best Holling model did not vary much with the temperature (Figure \ref{fig:tempholandmodel} and the temperature interval was not associated with the best Holling model.($\chi^2=\input{../Results/Tables/chiholrtemp}$,$p=\input{../Results/Tables/pholrtemp}$,$df=\input{../Results/Tables/dfholrtemp}$). At most temperatures ($<20$ degrees), more mechanistic models fit the best better . Below $10$ degrees this difference was extreme. However at the interval $20-25$ degrees, more phenomenological models fit the best (Figure \ref{fig:tempholandmodel}).  The temperature interval was associated with the best model type($\chi^2=\input{../Results/Tables/chitypetemp}$,$p=\input{../Results/Tables/ptypetemp}$,$df=\input{../Results/Tables/dftypetemp}$). This difference seemed to be due to the polynomial of degree three being particularly successful in the interval $20-25$ degrees.
+\begin{figure}[h!]
+\centering
+\subfloat[Number of times a mechanistic or a phenomenological model was the best model at each consumer temperature interval.]{\includegraphics[width = 3in]{../Results/Plots/temppmodeltype.png}}
+\subfloat[Number of times the recalculated Holling model was the best model at each consumer temperature interval. ]{\includegraphics[width =3in]{../Results/Plots/tempmodelrhol.png}}\\
+\subfloat[Number of times each model was the best model at each consumer temperature interval.]{\includegraphics[width = 5in]{../Results/Plots/tempmodel.png}}
+\caption{Best model is determined from the lowest AIC values.  Colour is the best model type. $n=241$}
+\label{fig:tempholandmodel}
 \end{figure}
+
 \subsection{Temperature and Parameter Values}
 The handling time was and the search rate was
 The consumer temperatures are associated with the search rate for type I and type II Holling models and handling time for type II and type III Holling models.(Figure \ref{fig:tempparam},Table \ref{Paramtemp}). % stats
@@ -169,6 +172,8 @@ The search rate is smaller and less varied at intermediate temperatures, however
 \section{Discussion}
 %go through each model and talk about how well it fit 
 %significance? 
+%list of components of holling model in Hassell the components of arthorpod predation- go thorough particularly search rate and look for evidence tht they are effected by temperature
+%problems with the kendall test esp thoughts handling time 
 \section{Conclusion}
 %answer question
 

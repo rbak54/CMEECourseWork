@@ -6,7 +6,7 @@
 echo "Running datasorting.py"
 python3 datasorting.py
 echo "Running runif"
-#Rscript modelfitting.R
+Rscript modelfitting.R
 echo "run analysistidied.R"
 Rscript analysistidied.R
 echo "Run plotting.R"

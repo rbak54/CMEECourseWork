@@ -23,10 +23,16 @@ data$BestAICHol<-NA
 data$qcil<-NA
 data$qciu<-NA
 data$qIIIci<-NA
+data$best.model.type<-NA
+data$CUTCONTEMPHOLLING<-NA
+data$CUTCONTEMPTYPE<-NA
+data$qcil<-NA
+data$qciu<-NA
+
 data$qcil<-data$qIII-2*data$qse
 data$qciu<-data$qIII+2*data$qse
-data$best.model.type<-NA
-data$Con_ForagingMovement<-tolower(data$Con_ForagingMovement)
+
+#data$Con_ForagingMovement<-tolower(data$Con_ForagingMovement)
 #best AIC
 ltHol<-as.vector(match("HollingI_AIC",names(data)):match("HollingIII_AIC",names(data)))
 ltHolR<-as.vector(match("HollingI_AIC",names(data)):match("HollingII_AIC",names(data)))
@@ -54,21 +60,21 @@ data$best.model.type.recal <- ifelse(data$BestAICRECAL == "HollingI_AIC" | data$
 #plots
 
 #this graph shows that mechanistic is slightly better
-ggplot(data=data,aes(x=best.model.type,fill=BestAIC))+geom_bar(stat="count")
+#ggplot(data=data,aes(x=best.model.type,fill=BestAIC))+geom_bar(stat="count")
 #but this changes if recal
-ggplot(data=data,aes(x=best.model.type.recal,fill=BestAICRECAL))+geom_bar(stat="count")
+#ggplot(data=data,aes(x=best.model.type.recal,fill=BestAICRECAL))+geom_bar(stat="count")
 # for formatting http://www.sthda.com/english/wiki/ggplot2-barplots-quick-start-guide-r-software-and-data-visualization 
 #hist(data$qIIIci,breaks = 30)
 #diff between holling and holling recal
-ggplot(data=data, aes(BestAICHol))+geom_bar()+ylim(0,200)
-ggplot(data=data, aes(BestAICHolRECAL))+geom_bar()+ylim(c(0,200))
+#ggplot(data=data, aes(BestAICHol))+geom_bar()+ylim(0,200)
+#ggplot(data=data, aes(BestAICHolRECAL))+geom_bar()+ylim(c(0,200))
 #type 2 most common then 1 then 3
-ggplot(data=data, aes(BestAIC))+geom_bar()+ylim(0,200)
+#ggplot(data=data, aes(BestAIC))+geom_bar()+ylim(0,200)
 
-ggplot(data=data,aes(x=BestAIC,fill=as.factor(Res_ForagingMovement)))+geom_bar(stat="count")
-ggplot(data=data,aes(x=BestAIC,fill=as.factor(Con_ForagingMovement)))+geom_bar(stat="count")
+#ggplot(data=data,aes(x=BestAIC,fill=as.factor(Res_ForagingMovement)))+geom_bar(stat="count")
+#ggplot(data=data,aes(x=BestAIC,fill=as.factor(Con_ForagingMovement)))+geom_bar(stat="count")
 
-#see messing for genus stuff
+#section 2
 chitable<-matrix(nrow=2,ncol=2)
 #chi squared goodness of fit
 ##stats to say different
@@ -92,48 +98,47 @@ print(output_chitable,floating=FALSE,tabular.environment = 'longtable',file ="..
 
 
 #TPYE NOT SIGNIFICANT DIFFERENCE not significantly better
-Expected<-rep((1/3)*sum(!is.na(data$BestAICHolRECAL)),3)
-Observed<-unname(table(data$BestAICHolRECAL))
-chisquared<-sum(((Observed-Expected)^2)/Expected)
-1-pchisq(chisquared,2)
+#Expected<-rep((1/3)*sum(!is.na(data$BestAICHolRECAL)),3)
+#Observed<-unname(table(data$BestAICHolRECAL))
+#chisquared<-sum(((Observed-Expected)^2)/Expected)
+#1-pchisq(chisquared,2)
 #There is not a flat distribution- for hol recal (i.e type 1 to III)
 
 #https://stattrek.com/chi-square-test/goodness-of-fit.aspx
 
-data$CUTCONTEMP<-NA
-data$CUTCONTEMP<-cut(data$ConTemp,c(0,15,20,25,40))
-variable<-"CUTCONTEMP" 
-
+#section 4
 #data$CUTRESTEMP<-NA
 #data$CUTRESTEMP<-cut(data$ResTemp,c(0,15,25,40))
 
 #variable<-"CUTRESTEMP" 
+#hol
+#table_observed<-table(data$BestAIC,data[,variable])+table(data$BestAIC_sec,data[,variable]) 
+#table_observed<-rbind(table_observed,colSums(table_observed))
+#table_observed<-cbind(table_observed,rowSums(table_observed))
+#Observed<-table(data$BestAIC,data[,variable])+table(data$BestAIC_sec,data[,variable]) 
+#Expected<-matrix(nrow=nrow(Observed),ncol=ncol(Observed))
 
-table_observed<-table(data$BestAIC,data[,variable])+table(data$BestAIC_sec,data[,variable]) 
-table_observed<-rbind(table_observed,colSums(table_observed))
-table_observed<-cbind(table_observed,rowSums(table_observed))
-Observed<-table(data$BestAIC,data[,variable])+table(data$BestAIC_sec,data[,variable]) 
-Expected<-matrix(nrow=nrow(Observed),ncol=ncol(Observed))
+#for(i in 1:(nrow(table_observed)-1)){
+ # for (j in 1:(ncol(table_observed)-1)){
+  #  Expected[i,j]<-(table_observed[nrow(table_observed),j]*table_observed[i,ncol(table_observed)])/table_observed[nrow(table_observed),ncol(table_observed)]
+  #}
+#}
+#Expected
+#df<-(nrow(Expected)-1)*(ncol(Expected)-1)
+#chisquared<-sum(((Observed-Expected)^2)/Expected)
+#write(format(round(chisquared, 2), nsmall = 2),"../Results/Tables/chitemp")
+#write(format(round(1-pchisq(chisquared,df), 2), nsmall = 2),"../Results/Tables/ptemp")
+#df
 
-for(i in 1:(nrow(table_observed)-1)){
-  for (j in 1:(ncol(table_observed)-1)){
-    Expected[i,j]<-(table_observed[nrow(table_observed),j]*table_observed[i,ncol(table_observed)])/table_observed[nrow(table_observed),ncol(table_observed)]
-  }
-}
-Expected
-df<-(nrow(Expected)-1)*(ncol(Expected)-1)
-chisquared<-sum(((Observed-Expected)^2)/Expected)
-write(format(round(chisquared, 2), nsmall = 2),"../Results/Tables/chitemp")
-write(format(round(1-pchisq(chisquared,df), 2), nsmall = 2),"../Results/Tables/ptemp")
-df
-
-    #so nothin significant but pl
-
+#holrecal
+variable<-"CUTCONTEMPHOLLING" 
+data$CUTCONTEMPHOLLING<-cut(data$ConTemp,c(0,15,20,40))
 table_observed<-table(data$BestAICHolRECAL,data[,variable])
 table_observed<-rbind(table_observed,colSums(table_observed))
 table_observed<-cbind(table_observed,rowSums(table_observed))
 Observed<-table(data$BestAICHolRECAL,data[,variable])
 Expected<-matrix(nrow=nrow(Observed),ncol=ncol(Observed))
+
 for(i in 1:(nrow(table_observed)-1)){
   for (j in 1:(ncol(table_observed)-1)){
     Expected[i,j]<-(table_observed[nrow(table_observed),j]*table_observed[i,ncol(table_observed)])/table_observed[nrow(table_observed),ncol(table_observed)]
@@ -142,10 +147,40 @@ for(i in 1:(nrow(table_observed)-1)){
 Expected
 df<-(nrow(Expected)-1)*(ncol(Expected)-1)
 chisquared<-sum(((Observed-Expected)^2)/Expected)
+chisquared
 1-pchisq(chisquared,df)
+write(format(round(chisquared, 2), nsmall = 2),"../Results/Tables/chiholrtemp")
+write(format(round(1-pchisq(chisquared,df), 2), nsmall = 2),"../Results/Tables/pholrtemp")
+write(df,"../Results/Tables/dfholrtemp")
 
+#model type
+variable<-"CUTCONTEMPTYPE" 
+
+data$CUTCONTEMPTYPE<-cut(data$ConTemp,c(0,10,15,20,25,40))
+
+table_observed<-table(data$best.model.type,data[,variable])
+table_observed<-rbind(table_observed,colSums(table_observed))
+table_observed<-cbind(table_observed,rowSums(table_observed))
+Observed<-table(data$best.model.type,data[,variable])
+Expected<-matrix(nrow=nrow(Observed),ncol=ncol(Observed))
+
+for(i in 1:(nrow(table_observed)-1)){
+  for (j in 1:(ncol(table_observed)-1)){
+    Expected[i,j]<-(table_observed[nrow(table_observed),j]*table_observed[i,ncol(table_observed)])/table_observed[nrow(table_observed),ncol(table_observed)]
+  }
+}
+Expected
+df<-(nrow(Expected)-1)*(ncol(Expected)-1)
+chisquared<-sum(((Observed-Expected)^2)/Expected)
+chisquared
+1-pchisq(chisquared,df)
+write(format(round(chisquared, 2), nsmall = 2),"../Results/Tables/chitypetemp")
+write(format(round(1-pchisq(chisquared,df), 2), nsmall = 2),"../Results/Tables/ptypetemp")
+write(df,"../Results/Tables/dftypetemp")
+
+
+#section 4
 #a and h stuff
-
 
 data2<-subset(data,hIIp<0.05 & aIIp<0.05)
 data1<-subset(data,aIp<0.05)
@@ -154,49 +189,41 @@ data1<-subset(data,aIp<0.05)
 data3<-subset(data,hIIIp<0.05 & aIIIp<0.05)
 data3h<-subset(data,hIIIp<0.05)
 
-
-
-
-
-
-
-
-
-
-
+#RESOURCE
 #summary(lm(data$ConTemp~log(data$aI)))     
 #aI has 3 negative values which is why log is upset
 #aII and aIII has NAs because model doesnt fit for all
 #sum(is.na(log(data$aIII)))
 #sum(is.na(data$aIII))
-shapiro.test(na.omit(data$ResTemp))
-dataset_aii<-subset(data2, !is.na(ResTemp) & !is.na(aII))
-a<-lm(dataset_aii$ConTemp~log(dataset_aii$aII))
-shapiro.test(a$residuals)
-dataset_aiii<-subset(data3, !is.na(ResTemp) & !is.na(aIII))
-a<-lm(dataset_aiii$ConTemp~log(dataset_aiii$aIII))
-shapiro.test(a$residuals)
-dataset_ai<-subset(data1, !is.na(ResTemp) & aI>0)
-a<-lm(dataset_ai$ConTemp~log(dataset_ai$aI))
-shapiro.test(a$residuals)
+#shapiro.test(na.omit(data$ResTemp))
+#dataset_aii<-subset(data2, !is.na(ResTemp) & !is.na(aII))
+#a<-lm(dataset_aii$ConTemp~log(dataset_aii$aII))
+#shapiro.test(a$residuals)
+#dataset_aiii<-subset(data3, !is.na(ResTemp) & !is.na(aIII))
+#a<-lm(dataset_aiii$ConTemp~log(dataset_aiii$aIII))
+#shapiro.test(a$residuals)
+#dataset_ai<-subset(data1, !is.na(ResTemp) & aI>0)
+#a<-lm(dataset_ai$ConTemp~log(dataset_ai$aI))
+#shapiro.test(a$residuals)
 
-dataset_hiii<-subset(data3h, !is.na(hIII))
-dataset_hii<-subset(data2, !is.na(hII))
+#dataset_hiii<-subset(data3h, !is.na(hIII))
+#dataset_hii<-subset(data2, !is.na(hII))
 
 #so not normally distributed . so lets do non parametric testing 
 #so best to use spearman
-cor.test(dataset_aii$ConTemp,dataset_aii$aII,method = "s")
+#cor.test(dataset_aii$ConTemp,dataset_aii$aII,method = "s")
 #spearman not working because of ties in temperature
-cor.test(dataset_aii$ConTemp,dataset_aii$aII,method = "k")
-cor.test(dataset_aiii$ConTemp,dataset_aiii$aIII,method = "k")
-cor.test(dataset_ai$ConTemp,dataset_ai$aI,method = "k")
+#cor.test(dataset_aii$ConTemp,dataset_aii$aII,method = "k")
+#cor.test(dataset_aiii$ConTemp,dataset_aiii$aIII,method = "k")
+#type III too small to work
+#cor.test(dataset_ai$ConTemp,dataset_ai$aI,method = "k")
 
-cor.test(dataset_hii$ConTemp,dataset_hii$hII,method = "k")
-cor.test(dataset_hiii$ConTemp,dataset_hiii$hIII,method = "k")
+#cor.test(dataset_hii$ConTemp,dataset_hii$hII,method = "k")
+#cor.test(dataset_hiii$ConTemp,dataset_hiii$hIII,method = "k")
 
 
 #now con
-shapiro.test(na.omit(data$ConTemp))
+#shapiro.test(na.omit(data$ConTemp))
 dataset_aii<-subset(data2, !is.na(ConTemp)& !is.na(aII))
 a<-lm(dataset_aii$ConTemp~log(dataset_aii$aII))
 shapiro.test(a$residuals)
@@ -213,7 +240,7 @@ dataset_hii<-subset(data2, !is.na(ConTemp) &!is.na(hII))
 #so not normally distributed . so lets do non parametric testing 
 #so best to use spearman
 
-cor.test(dataset_aii$ConTemp,dataset_aii$aII,method = "s")
+#cor.test(dataset_aii$ConTemp,dataset_aii$aII,method = "s")
 #spearman not working because of ties in temperature
 
 n<-vector(length=4)
@@ -246,7 +273,7 @@ for(i in 1:length(testlist)){
 output_temp_con_table<-xtable(output_temp_con,label='Paramtemp',caption = 'Table of results for Kendall rank order correlation tests for consumer temperature and parameter values.')
 print(output_temp_con_table,floating=FALSE,tabular.environment = 'longtable',file ="../Results/Tables/output_temp_con_latex.txt",caption.placement ="top")
 
-##section 2 of results 
+##section 2 of results- numbers 
 write(format(round(sum(data$BestAIC=="HollingII_AIC")/length(data$BestAIC), 2), nsmall = 2),"../Results/Tables/holIIbest")
 write(format(round(sum(data$BestAIC_sec=="Poly3_AIC")/length(data$BestAIC_sec), 2), nsmall = 2),"../Results/Tables/poly32best")
 sum(data$BestAIC_sec=="Poly2_AIC")/length(data$BestAIC_sec)
