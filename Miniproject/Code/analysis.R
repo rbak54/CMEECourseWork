@@ -169,10 +169,10 @@ output_temp_con_table<-xtable(output_temp_con,label='Paramtemp',caption = 'Table
 print(output_temp_con_table,floating=FALSE,tabular.environment = 'longtable',file ="../Results/Tables/output_temp_con_latex.txt",caption.placement ="top")
 
 ##section 2 of results- numbers 
-write(format(round(sum(data$BestAIC=="HollingII_AIC")/length(data$BestAIC), 2), nsmall = 2),"../Results/Tables/holIIbest")
-write(format(round(sum(data$BestAIC_sec=="Poly3_AIC")/length(data$BestAIC_sec), 2), nsmall = 2),"../Results/Tables/poly32best")
+write(format(round((sum(data$BestAIC=="HollingII_AIC")/length(data$BestAIC)*100), 2), nsmall = 2),"../Results/Tables/holIIbest")
+write(format(round((sum(data$BestAIC_sec=="Poly3_AIC")/length(data$BestAIC_sec)*100), 2), nsmall = 2),"../Results/Tables/poly32best")
 sum(data$BestAIC_sec=="Poly2_AIC")/length(data$BestAIC_sec)
-write(format(round(sum(data$best.model.type=="Mechanistic")/length(data$best.model.type), 2), nsmall = 2),"../Results/Tables/mechbest")
+write(format(round((sum(data$best.model.type=="Mechanistic")/length(data$best.model.type)*100), 2), nsmall = 2),"../Results/Tables/mechbest")
 
 
 ##section3
