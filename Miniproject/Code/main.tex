@@ -48,7 +48,7 @@ Ruth Keane \\[3cm] % Your name
 \newpage
 \linenumbers
 \begin{abstract}
-this is the abstract.
+Functional responses of predators are effected by temperature and these relationships can be complicated. The nature of these relationships can have important implications for understanding interactions, particularly due to climate change. Three Holling models and two polynomial models were successfully fit to $241$ datasets containing functional response data. The best model for each dataset was analysed and compared at different temperature ranges. The search rate and handling times were also copared with temperature. The mechanistic Holling type II model was the most successful model  and the number of times each model was the best was significantly different from a uniform distribution but there was not a significant difference between mechanistic and phenomenological models. Log of search rate was weakly negatively correlated  to consumer temperature. Log of handling time was weakly positively correlated with consumer temperature. Temperature did not affect which Holling model was most successful but did affect whether phenomenological or mechanistic models were more successful, mostly due a polynomial model of degree three being very successful at $20-25$ degrees. This response was contrary to existing literature. This is probably because existing literature looks at temperature change within predator prey systems but in this case systems with different consumer temperatures were compared. 
 \end{abstract}
 \section{Introduction}
 \subsection{Functional Responses and existing models}
@@ -64,13 +64,13 @@ c=\frac{ax_R}{1+hax_R}
 c=\frac{ax_R^{q+1}}{1+hax_R^{q+1}}
 \end{equation}
 
-It is important to note that both the search rate and handling times are functions of different aspects of attacking and eating prey \cite{Hassel1976TheDeath-Rate} The handling time is made up of the time predators spend pursuing, subduing, eating and digesting their prey. The search rate (or attack rate) combines the distance at which a predator will attack prey, the speed of both the prey and the predator and the success rate of attacks \cite{Holling1966}. In general, the Holling type II model is very successful, especially considering its simplicity however there are examples where data is better described by a more complex model, such as a type III Holling model \cite{Hassel1976TheDeath-Rate} . 
+It is important to note that both the search rate and handling times are functions of different aspects of attacking and eating prey \cite{Hassel1976TheDeath-Rate} The handling time is made up of the time predators spend pursuing, subduing, eating and digesting their prey. The search rate (or discovery rate) combines the distance at which a predator will attack prey, the speed of both the prey and the predator and the success rate of attacks \cite{Holling1966}. In general, the Holling type II model is very successful, especially considering its simplicity however there are examples where data is better described by a more complex model, such as a type III Holling model \cite{Hassel1976TheDeath-Rate} . 
 Many other models exist to describe the functional response, often based on variations of the Holling equation accounting for different behavioural aspects  \cite{Jeschke2002PredatorPrey}. \cite{Jeschke2002PredatorPrey} attempted to separate handling and digestion time from  $h$. The model curve is mostly similar to the Holling type II functional response curve, but is more flexible and when both handling time and digestion time are high, the curve is quite different. In addition, if values of $a$ or $h$ change with prey density, then the Holling II model may not fit well  (as $a$ and $h$ are constant in this model). In these examples, the type III Holling model can be a good model \cite{Hassel1976TheDeath-Rate}. 
 \subsection{Temperature and Functional Responses}
 Many biological traits are dependent on temperature. \cite{Dell2014TemperatureStrategy,Dell2011SystematicTraits}. The way in which traits vary with temperature can depend on many factors including life stage\cite{Cator2019MoreResearch}, habitat \cite{Dell2011SystematicTraits} and thermy \cite{Dell2014TemperatureStrategy}. In addition often there is asymmetry between predator and prey response to temperature\cite{Dell2014TemperatureStrategy}. This means that understanding how the functional response of predators changes with temperature can be very complicated. Information about both predator and prey responses to temperature is necessary to fully predict how functional responses might change with temperature. The functional response of predators has important applications in nature and agriculture (for example in biological control of agricultural pests \cite{Gilioli2005TemperatureIndividuals} ). The response of the functional response to changes in temperature is important in predicting the effect of climate change \cite{Ohlund2014TemperaturePrey}.  Temperature is important in determining body velocity so it is likely to be the main way in which temperature affects predator-prey interactions \cite{Dell2014TemperatureStrategy}.\\
-Search rate is predicted to increase with temperature according to the metabolic theory of ecology \cite{Brown2004TowardEcology}. The Arrhenius equation predicts a linear increase in log-linear space \cite{Englund2011TemperatureResponse}). Increases in search rate when temperature is changed have been found in multiple predator-prey systems both linearly \cite{Gilioli2005TemperatureIndividuals,Zamani2006Temperature-dependentAphid} and exponentially \cite{Lefebure2014TemperatureResource-limited}. Many studies have found that this increases reaches a plateau \cite{McCoull1998EffectNaucoridae,Thompson1978TowardsElegans} or  reaches a maximum and decreases\cite{Englund2011TemperatureResponse,Zamani2006Temperature-dependentAphid,Sentis2012UsingEfficiency}.
+Search rate is predicted to increase exponentially with temperature according to the metabolic theory of ecology and the Arrhenius equation \cite{Brown2004TowardEcology,Dell2014TemperatureStrategy,Englund2011TemperatureResponse}. Increases in search rate when temperature is increased have been found in multiple predator-prey systems both linearly \cite{Gilioli2005TemperatureIndividuals,Zamani2006Temperature-dependentAphid} and exponentially \cite{Lefebure2014TemperatureResource-limited}. Many studies have found that this increases reaches a plateau \cite{McCoull1998EffectNaucoridae,Thompson1978TowardsElegans} or reaches a maximum and decreases\cite{Englund2011TemperatureResponse,Zamani2006Temperature-dependentAphid,Sentis2012UsingEfficiency}.
 \\
-The metabolic theory of ecology \cite{Brown2004TowardEcology} also predicts that handling time reduces exponentially when temperature is increased. Experimentally changing the temperature in predator prey systems does reduce the handling time\cite{Thompson1978TowardsElegans,McCoull1998EffectNaucoridae,Jalali2010EffectPersicae,Zamani2006Temperature-dependentAphid}, sometimes exponentially \cite{Sentis2012UsingEfficiency,}. \\
+The metabolic theory of ecology \cite{Brown2004TowardEcology} also predicts that handling time reduces exponentially when temperature is increased \cite{Dell2014TemperatureStrategy}. Experimentally changing the temperature in predator prey systems does reduce the handling time\cite{Thompson1978TowardsElegans,McCoull1998EffectNaucoridae,Jalali2010EffectPersicae,Zamani2006Temperature-dependentAphid}, sometimes exponentially \cite{Sentis2012UsingEfficiency,}. \\
 The response between type of functional response and temperature is less clear. Some studies have found no effect of temperature on type of functional response  \cite{Sentis2012UsingEfficiency} but there are examples of the functional response changing with temperature \cite{Taylor2003EffectAmericanus}.
 \subsection{Models}
 Models can be phenomenological or mechanistic. In mechanistic models, all parameters have biological meaning and in phenomenological models they do not; instead a function is used that fits the data or processes \cite{Otto2007AEvolution,Geritz2012MathematicalModels}.Phenomenological models may fit better to data and can be very useful in the absence of mechanistic models. They can be easier to understand, however do not have as much biological meaning as mechanistic models \cite{Otto2007AEvolution}. \cite{Geritz2012MathematicalModels} claim that this could stop them being valid for use in biological systems.  
@@ -103,7 +103,7 @@ Chi-square ($\chi^2$) tests were carried out to determine the association betwee
 \section{Results}
 \subsection{Number of Fits}
 Many of the models fit well to the data, for example (Figure\ref{fig:2}). Most models successfully fit the data. Of the 241 datasets, only $\input{../Results/Tables/failII}$ Holling type II models and $\input{../Results/Tables/failIII}$ Holling type II models did not converge. 
-\begin{figure}[h!] 
+\begin{figure}[h!t] 
     \centering
     \includegraphics[width=4in]{../Results/Plots/39841.png}
     \caption{This is a graph for the experiment with ID 39841}
@@ -119,13 +119,14 @@ The mechanistic models were marginally more often the best model ($\%$)than the 
 \caption{Best and second best model from the lowest and second lowest AIC values. Models are Holling type I, Holling type II, Holling type II, polynomial of degree 2, polynomial of degree 3. $n=241$}
 \label{fig:bestmodel}
 \end{figure}
-\begin{figure}[h!] 
+\begin{figure}[h!t] 
     \centering
-    \includegraphics[width=3in]{../Results/Plots/modelbesttype.png}
+    \includegraphics[width=4in]{../Results/Plots/modelbesttype.png}
     \caption{Number of models where the best type was phenomenological or mechanistic. Colour is the model. $n=241$}
     \label{fig:modelbesttype}
 \end{figure}
 The distribution of the best model was not best described by a uniform distribution ($p<0.05$,Table\ref{chitable}).  The distribution of the best model type was best described by a uniform distribution (p>0.05,Table\ref{chitable}).
+\clearpage
 \input{../Results/Tables/output_chitable_latex.txt}
 \subsection{Best Holling Model}
 Of the three Holling models, the type II model was the best (Figure\ref{fig:bestholandrecalmodel}). The best Holling model was recalculated, removing the type III Holling model when the confidence interval for $q$ spanned $0$. This occured for $\input{../Results/Tables/recaldiff}$ models. The majority of these were best described by the Holling type II model of the other Holling models, but some were better described by the type I model (Figure \ref{fig:bestholandrecalmodel})
@@ -138,15 +139,15 @@ Of the three Holling models, the type II model was the best (Figure\ref{fig:best
 \end{figure}
 \subsection{Temperature and Best Model}
 The type of the best Holling model did not vary much with the temperature (Figure \ref{fig:tempholandmodel} and the temperature interval was not associated with the best Holling model.($\chi^2=\input{../Results/Tables/chiholrtemp}$,$p=\input{../Results/Tables/pholrtemp}$,$df=\input{../Results/Tables/dfholrtemp}$). At most temperatures ($<20$ degrees), more mechanistic models fit the best better . Below $10$ degrees this difference was extreme. However at the interval $20-25$ degrees, more phenomenological models fit the best (Figure \ref{fig:tempholandmodel}).  The temperature interval was associated with the best model type ($\chi^2=\input{../Results/Tables/chitypetemp}$,$p=\input{../Results/Tables/ptypetemp}$,$df=\input{../Results/Tables/dftypetemp}$). This difference seemed to be due to the polynomial of degree three being particularly successful in the interval $20-25$ degrees.
-\begin{figure}[ht!]
+\begin{figure}[h!]
 \centering
-\subfloat[Number of times a mechanistic or a phenomenological model was the best model at each consumer temperature interval.]{\includegraphics[width = 3in]{../Results/Plots/temppmodeltype.png}}
-\subfloat[Number of times the recalculated Holling model was the best model at each consumer temperature interval. ]{\includegraphics[width =3in]{../Results/Plots/tempmodelrhol.png}}\\
-\subfloat[Number of times each model was the best model at each consumer temperature interval.]{\includegraphics[width = 5in]{../Results/Plots/tempmodel.png}}
+\subfloat[Number of times a mechanistic or a phenomenological model was the best model at each consumer temperature interval.]{\includegraphics[width = 2in]{../Results/Plots/temppmodeltype.png}}
+\subfloat[Number of times the recalculated Holling model was the best model at each consumer temperature interval. ]{\includegraphics[width =2in]{../Results/Plots/tempmodelrhol.png}}\\
+\subfloat[Number of times each model was the best model at each consumer temperature interval.]{\includegraphics[width = 4in]{../Results/Plots/tempmodel.png}}
 \caption{Best model is determined from the lowest AIC values.  Colour is the best model type. $n=241$}
 \label{fig:tempholandmodel}
 \end{figure}
-
+\newpage
 \subsection{Temperature and Parameter Values}
 The handling time was and the search rate was
 The consumer temperatures are  weakly negatively correlated with the search rate for type I and type II Holling models (Figure \ref{fig:tempparam},Table \ref{Paramtemp}).The search rate is smaller and less varied at intermediate temperatures, however at very low and very high temperatures, the temperature is very varied and can be very high. The consumer temperatures are weakly positively correlated with handling time for type II and type III Holling models(Figure \ref{fig:tempparam},Table \ref{Paramtemp}).
@@ -161,52 +162,39 @@ The consumer temperatures are  weakly negatively correlated with the search rate
 \caption{Logged parameter values and Consumer temperature for Type I, Type II and Type II Holling Models.}
 \label{fig:tempparam}
 \end{figure}
+\clearpage
 \section{Discussion}
-Three Holling models were successfully fit to 
-\subsection{Type}
-%holling and mechanistic versions. maybe mechaistic tyoe III is just really rubbish. how well do each fit . compared to literature . at least one paper that evaluates which type differnt temp .
-%best model results-sig. chat about which did good 
+\subsection{Holling Model Recalculated}
+Initially the Holling type II model was the most successful model, followed by the Holling type III model, then the Holling type I model \ref{fig:bestholandrecalmodel}. This was expected from the literature as type II models are very common, type I responses are limited to filter feeders \cite{Jeschke2004Consumer-foodFeeders} and type III responses are frequently seen, for example in \textit{Daphnia} \cite{Sarnelle2008TypeDaphnia}. There was not sufficient time to explore what type of organisms had each type of functional response but it is likely given existing knoweldge that the systems showing type I responses are filter feeders. Recalculating the best model so that Holling type III was the best model only when $q$ was significantly different from $0$ meant that the type I Holling model became more successful than the Holling type III model. This response was contrary to existing knowledge about functional responses, for example \cite{Dunn2020PredatorHabitats} found a proportion of each model similar to the initial proportion of the best functioal response type. It is possible that the initial result overestimated the number of experiments showing type III responses because it doesn't take into account the value of $q$, which could be very close to $0$ (equivalent to a type II response). The method of recalculating the best model could be improved to ensure that datasets showing a true type III response are not removed. This could be achieved by taking the units of $x_R$ and $c$ into account. Alternatively, the dataset could be biased towards type I functional responses models because they include organisms that may be easier to study than non-filter feeders\cite{Jeschke2004Consumer-foodFeeders}.
+\\
+As for the phenomenological models, the polynomial of degree three best described the data almost as frequently as the type II models \ref{fig:bestmodel}. It is possible that this could indicate a type III functional response (fitting better to a phenomenological model than a mechanistic model). Alternatively the type III model could be capturing decreases in consumption at high prey densities, which is seen in some datasets. It was not possible to control where the point of inflection was, so this model is likely to capture patterns not caused by type III responses. The polynomial of degree two could capture the increase in resource consumption followed by plateau (where the plateau is the maximum of the peak of the polynomial). It was somewhat successful, however not as successful as the Holling type II model. It was most frequently the second best model which could be indicating that is successfully capturing the type II responses, albeit not as effectively a Holling's type II model. This could be because it has one more parameter than the Holling model, which is penalised by the AIC. Alternatively, the polynomial might fit less well to type II responses because the polynomial curve decreases after maximum instead of levelling out as is seen in Holling type II responses. 
 \subsection{Mechanistic and Phenomological }
-%about same but mech  bit better. was this expected
-%stats say same chat
-%significance? 
-\subsection{Recalculating Holling Model}
- %discussion- it was expected that would make just holling 2 larger,
+In general mechanistic models performed slightly better than phenomenological models but this difference was not significant. It is not unexpected that phenomenological models fit the data well but it may not be biologically useful. Phenomenological models can fit well to any dataset, so are more likely to fit to poor quality data or data, which may be the reason they were successful. Additionally, their flexibility may lead to graph shapes that are not biologically feasible. This means the examples where the polynomial phenomenological models fit better to data may have less biological meaning, and should not be interpreted as showing a type II or type III phenomenological responses unless the plot or coefficients are examined in more detail. Phenomenological models may fit better to data showing relationships not predicted by the mechanistic models. This may indicate a possibility for improving the mechanistic models and acquiring a more biological understanding of this aspect of the relationship, which could be scope for future study
 \subsection{Temperature}
-%what does temp mean discuss (metadata)
-%effect of changing temperure -- not manipulating just comparing species. species adapt to temp so not very meaninggul!!!!! papers are mostly about manipulating. can you find papers comparing? samraat model paper
-%what does temp mean- eactotherm body temp likely to be same as ambient temperature. not comparing temp acoss 1 organism here
-%%endotherms more effected
-\subsubsection{Functional Response}
-%discuss results (phen!)
+The origin of the temperatures is likely to have varied between datasets. If the consumer temperature was missing, the ambient temperature was used instead. Additionally, the dataset contained both ectotherms and endotherms which have very different body temperatures and respond very differently to temperature changes. ectotherms are more effected by changes in temperature \cite{Dell2014TemperatureStrategy}.
+In much of the literature, temperature changes within predator-prey systems are compared. However here, temperatures between vastly different predatory-prey systems were compared. Therefore it is not very surprising that different responses to temperature were found here. 
+%. can you find papers comparing? samraat model paper
+\subsubsection{Temperature and Model}
+% wtf happening at 20-25
+%why might this be happening 
+% that eg where tpye III at 19 degrees??? 
 \subsubsection{Handling Time and Search Rate}
-%discuss results
+Log search rate was negatively correlated with temperature, which is in contrast with what is seen in the literature %%% egs. 
+Log handling time was positively correlated with temperature which also contrasts with the literature.  
 %chat about whats seen in literature
-%unexpected handling time and search rate; could factor for only endotherms (but very few anyway)
-%significance problems with the kendall test esp thoughts handling time 
-
+It is possible that combining ectotherm-ectotherm, endotherm-ecotherm and endotherm-endotherm ecosystems is the reason for unexpected results. In future analysis could be repeated separately for these systems, however the dataset does not contain a large number of endotherms so this is unlikely to have a large effect. 
+Additionally Kendall's rank order correlation is prone to false positives when $n$ is large \cite{Dytham2011ChoosingEdition}.
+% why might this be seen. 
+It is clear that there is a relationship between temperature and handling time and search rate but this becomes very complicated when comparing vastly different systems. 
 %list of components of holling model in Hassell the components of arthorpod predation- go thorough particularly search rate and look for evidence tht they are effected by temperature
 
-
-%temp and models. couldnt pick up a relationship really bc akk very system dependent
-\subsection{Importance}
-%chat about climate change  . modelling effects of temp useful 
-
+%about 6 sentences
 \section{Conclusion}
 %answer question
-
-
-%\begin{enumerate}
-%\item A citation command in parentheses: \cite{hollingsawfly1959}.
-%\item A citation command for use in the flow of text: As \textcite{Holling1966} said \dots
-%\item A citation command which automatically switches style depending on location and the option setting in the package declaration (see line 12 in the LaTeX source code). In this case, it produces a citation in parentheses: \autocite{hollingsawfly1959}.
-%\end{enumerate}
-
-
+In conclusion, the Holling type II model fit most of the models best. The temperature affected the best model type and the search rate and handling time.  
+%+ 1 sentences
 \clearpage{}
 
-%\bibliography{main.bib}
-%\bibliographystyle{plain}
 \printbibliography
 \end{document}
 
