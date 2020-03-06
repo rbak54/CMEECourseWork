@@ -1,5 +1,5 @@
 #Author: Ruth Keane (ruth.keane19@imperial.ac.uk)
-#Script: analysistidied.R
+#Script: analysis.R
 #Desc: analysing model results
 #Arguments: none
 #Input: none 
