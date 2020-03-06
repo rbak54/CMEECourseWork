@@ -45,7 +45,7 @@ for (i in listID){
   HolFitI<-try(lm(N_TraitValue ~ 0+ResDensity, data=subsetT), silent=TRUE)
   pol2<-try(lm(N_TraitValue ~ poly(ResDensity, degree=2), data=subsetT), silent=TRUE)
   pol3<-try(lm(N_TraitValue ~ poly(ResDensity, degree=3), data=subsetT),silent=TRUE)
-
+  #adding model details
   datashort[j,"N"]<-n
   datashort[j,"a0_I"]<-HolFitI$coefficients[1]
   datashort[j,"a0_II"]<-outII[1]
@@ -57,18 +57,18 @@ for (i in listID){
   Lengths<- seq(min(subsetT$ResDensity), max(subsetT$ResDensity),len=200)  
   #make empty pdf for each ID
   png(paste0("../Results/Plots/",i,".png") )
+  #plot data 
   plot(subsetT$ResDensity,subsetT$N_TraitValue,type="p",main=paste("ID:",i), xlab="Resource Density",ylab="Resources Consumed") 
   legend("topleft", legend=c("Holling Type I", "Holling Type II","Holling Type III","Degree 2 Polynomial","Degree 3 Polynomial"),
   col=c(cbbPalette[3],cbbPalette[2],cbbPalette[5],cbbPalette[6], cbbPalette[4]), lty=1,cex=1)
   #if error in model-then NA in table, otherwise plot and put AIC and BIC in tables
-  #polc
-    
-    if(!("try-error" %in% class(pol3))){
-      Predict_pol3<- predict.lm(pol3, data.frame(ResDensity=Lengths) )
-      lines(Lengths,Predict_pol3,col=cbbPalette[4],lwd=2.5) 
-      #only use values that are finite
-      if (AIC(pol3)!=-Inf){
-        datashort[j,"Poly3_AIC"]<-AIC(pol3)}
+  #pol degree 3
+  if(!("try-error" %in% class(pol3))){
+    Predict_pol3<- predict.lm(pol3, data.frame(ResDensity=Lengths) )
+    lines(Lengths,Predict_pol3,col=cbbPalette[4],lwd=2.5) 
+    #only use values that are finite
+    if (AIC(pol3)!=-Inf){
+      datashort[j,"Poly3_AIC"]<-AIC(pol3)}
     }else{
       datashort[j,"FailPol3"]<-1
     }
@@ -79,7 +79,7 @@ for (i in listID){
       lines(Lengths,Predict_pol2,col=cbbPalette[6],lwd=2.5)
       datashort[j,"Poly2_AIC"]<-AIC(pol2)
     }
-    #hollin
+    #holling type I
     if("try-error" %in% class(HolFitI)){        
       datashort[j,"FailHolI"]<-1
     } else {
@@ -87,9 +87,9 @@ for (i in listID){
       datashort[j,"HollingI_AIC"]<-AIC(HolFitI)
       lines(Lengths,Predict_HolI,col=cbbPalette[3],lwd=2.5) 
       datashort[j,"aI"]<-HolFitI$coefficients[1]  
-      #datashort[j,"aI"]<-HolFitI$coefficients[2]
-           datashort[j,"aIp"]<-summary(HolFitI)[[4]][[1,4]]
-    }
+      datashort[j,"aIp"]<-summary(HolFitI)[[4]][[1,4]]
+      }
+    #holling type II
     if("try-error" %in% class(HolFitII)){        
       datashort[j,"FailHolII"]<-1
     } else {
@@ -119,14 +119,6 @@ for (i in listID){
     
     graphics.off()
   }
-  
-  #  firstAIC<- match("HollingI_AIC",names(datashort))
-  # lastAIC<-match("Poly3_AIC",names(datashort))
-  #datashort[j,"BestAIC"]<- which(datashort[j,firstAIC:lastAIC]==min(as.numeric(datashort[j,firstAIC:lastAIC]),na.rm = TRUE))
-
-#2 holling ,3 gen holling ,4 pol(polnomial degree2), 5,polc (polynomal degree3)
+#output to csv  
 write.csv(datashort,"../Results/CRatmodelfitting.csv")
 
-
-#no adj R for nlls
-#rss?

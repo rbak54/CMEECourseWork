@@ -47,21 +47,43 @@ plot3conA<-ggplot()+geom_point(aes(ConTemp,log(aIII)),color=cbbPalette[4],data=d
      theme_bw()+xlab("Consumer Temperature (degrees C)")+ylab("log Search Rate")+theme(text = element_text(size=20))
 
 #this graph shows that mechanistic is slightly better
-modelbesttype<-ggplot(data=data,aes(x=best.model.type,fill=BestAIC))+geom_bar(stat="count")+
-  theme_bw()+theme(text = element_text(size = 15))+xlab("Best Model Type")+ylab("Number of models")+ylim(0,125)+scale_fill_manual(values=c(cbbPalette[2:4],cbbPalette[7:8]),"Best Model")
+modelbesttype <-
+  ggplot(data = data, aes(x = best.model.type, fill = BestAIC)) + geom_bar(stat =
+                                                                             "count") +
+  theme_bw() + theme(text = element_text(size = 15)) + xlab("Best Model Type") +
+  ylab("Number of models") + ylim(0, 125) + scale_fill_manual(values = c(cbbPalette[2:4], cbbPalette[7:8]), "Best Model")
 
 #difference between holling and holling recal
-modelbestholl<-ggplot(data=data, aes(BestAICHol))+xlab("Best Holling Model")+ylab("Number of models")+ylim(0,175)+theme_bw()+geom_bar()+theme(text = element_text(size = 20))
-modelbesthollrecal<-ggplot(data=data, aes(BestAICHolRECAL))+xlab("Best Holling Model")+ylab("Number of models")+ylim(0,175)+theme_bw()+geom_bar()+theme(text = element_text(size = 20))
-modelbest<-ggplot(data=data, aes(BestAIC))+geom_bar()+ylim(0,75)+theme_bw()+theme(text = element_text(size = 15))+xlab("Best Model")+ylab("Number of models")
-modelsecondbest<-ggplot(data=data, aes(BestAIC_sec))+geom_bar()+theme_bw()+theme(text = element_text(size = 15))+xlab("Second Best Model")+ylab("Number of models")
+modelbestholl <-
+  ggplot(data = data, aes(BestAICHol)) + xlab("Best Holling Model") + ylab("Number of models") +
+  ylim(0, 175) + theme_bw() + geom_bar() + theme(text = element_text(size = 20))
+modelbesthollrecal <-
+  ggplot(data = data, aes(BestAICHolRECAL)) + xlab("Best Holling Model") +
+  ylab("Number of models") + ylim(0, 175) + theme_bw() + geom_bar() + theme(text = element_text(size = 20))
+modelbest <-
+  ggplot(data = data, aes(BestAIC)) + geom_bar() + ylim(0, 75) + theme_bw() +
+  theme(text = element_text(size = 15)) + xlab("Best Model") + ylab("Number of models")
+modelsecondbest <-
+  ggplot(data = data, aes(BestAIC_sec)) + geom_bar() + theme_bw() + theme(text = element_text(size = 15)) +
+  xlab("Second Best Model") + ylab("Number of models")
 #temperature model graph
-tempmodel<-ggplot(data=data,aes(CUTCONTEMPTYPE,fill=BestAIC))+geom_bar(stat="count",position = position_dodge())+theme_bw()+theme(text = element_text(size = 20))+xlab("Temperature Interval (degrees C)")+ylab("Number of models")+scale_fill_manual(values=c(cbbPalette[2:4],cbbPalette[7:8]),"Best Model")
-tempmodelrhol<-ggplot(data=data,aes(CUTCONTEMPHOLLING,fill=BestAICHolRECAL))+geom_bar(stat="count",position = position_dodge())+theme_bw()+theme(text = element_text(size = 20))+xlab("Temperature Interval (degrees C)")+ylab("Number of models")+scale_fill_manual(values=c(cbbPalette[2:4]),"Best Holling Model")
-temppmodeltype<-ggplot(data=data,aes(CUTCONTEMPTYPE,fill=best.model.type))+geom_bar(stat="count",position = position_dodge())+theme_bw()+theme(text = element_text(size = 20))+xlab("Temperature Interval (degrees C)")+ylab("Number of models")+scale_fill_manual("Best Model Type",values=c(cbbPalette[5:6]))
+tempmodel <-
+  ggplot(data = data, aes(CUTCONTEMPTYPE, fill = BestAIC)) + geom_bar(stat =
+                                                                        "count", position = position_dodge()) + theme_bw() + theme(text = element_text(size = 20)) +
+  xlab("Temperature Interval (degrees C)") + ylab("Number of models") + scale_fill_manual(values =
+                                                                                            c(cbbPalette[2:4], cbbPalette[7:8]), "Best Model")
+tempmodelrhol <-
+  ggplot(data = data, aes(CUTCONTEMPHOLLING, fill = BestAICHolRECAL)) + geom_bar(stat =
+                                                                                   "count", position = position_dodge()) + theme_bw() + theme(text = element_text(size = 20)) +
+  xlab("Temperature Interval (degrees C)") + ylab("Number of models") + scale_fill_manual(values =
+                                                                                            c(cbbPalette[2:4]), "Best Holling Model")
+temppmodeltype <-
+  ggplot(data = data, aes(CUTCONTEMPTYPE, fill = best.model.type)) + geom_bar(stat =
+                                                                                "count", position = position_dodge()) + theme_bw() + theme(text = element_text(size = 20)) +
+  xlab("Temperature Interval (degrees C)") + ylab("Number of models") + scale_fill_manual("Best Model Type", values =
+                                                                                            c(cbbPalette[5:6]))
 
-
-
+#save graphs
 printgraph(modelbesttype)
 printgraph(modelbestholl)
 printgraph(modelbesthollrecal)

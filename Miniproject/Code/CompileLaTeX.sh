@@ -23,6 +23,8 @@ evince ../Results/$f.pdf &
 ##Cleanup
 rm *~
 rm *.aux
+rm *.xml
+rm *.bcf
 rm *.dvi
 rm *.log
 rm *.nav

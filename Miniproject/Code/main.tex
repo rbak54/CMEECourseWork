@@ -25,6 +25,7 @@
 % title
 \title{Functional Response Models and Consumer Temperature}%
 \author{Ruth Keane}
+
 \begin{titlepage}
 \includegraphics[width=8cm]{logo.eps}\\[1cm] 
 \center 
@@ -43,15 +44,16 @@ Ruth Keane \\[3cm] % Your name
 \vfill % Fill the rest of the page with whitespace
 \clearpage
 \end{titlepage}
+\tableofcontents
+\newpage
 \linenumbers
 \begin{abstract}
 this is the abstract.
 \end{abstract}
 \section{Introduction}
 \subsection{Functional Responses and existing models}
-The functional response describes how predators respond to changes in prey density \cite{hollingsawfly1959,Solomon1949}. As prey numbers increase, the consumption rate of predators initially increases then levels out, however the specific shape of the period of increase can vary \cite{hollingsawfly1959}. Holling modelled the functional response and suggested three different forms which worked for different types of organisms \cite{hollingsawfly1959}. These are Type I, where the rate of increase in prey consumption with prey density is constant before the plateau, type II where the rate of increase in prey consumption with prey density is decreasing (i.e the curve is hyperbolic %jesche 2002
-and type III, where the  rate of increase in prey consumption with prey density increases then decreases \cite{hollingsawfly1959}. The type I model can be described by equation \ref{type1}, the type II model can be described by equation \ref{type3} where $x_R$ is the resource density, $c$ is the number of prey consumed per predator per unit time,$a$ is the discovery or search rate of the consumer and $h$ is the handling time \cite{Dawes2013,Holling1959}. The type III model can be described by a generalised version of equation \ref{type2}, equation \ref{type3} where $q$ changes the shape of the curve \cite{Dawes2013}. %explain how - dawes? or unnecessary
-When $q=0$, the model is type II and when $q>0$,the model is type III \cite{Dawes2013}. These equations are often written with $Y$, the number of prey consumed per predator, instead of $c$ and $T$, the time, on the right side of the equation, however these equations are equivalent as $c=\frac{Y}{T}$.%is this line helping?
+The functional response describes how predators respond to changes in prey density \cite{hollingsawfly1959,Solomon1949}. As prey numbers increase, the consumption rate of predators initially increases then levels out, however the specific shape of the period of increase can vary \cite{hollingsawfly1959}. Holling modelled the functional response and suggested three different forms which he proposed worked for different types of organisms \cite{hollingsawfly1959}. These are Type I, where the rate of increase in prey consumption with prey density is constant before a plateau, type I, where the rate of increase in prey consumption with prey density is decreasing (i.e the curve is hyperbolic \cite{Jeschke2002PredatorPrey}) and type III, where the  rate of increase in prey consumption with prey density increases then decreases \cite{hollingsawfly1959}. The type I model can be described by equation \ref{type1}, the type II model can be described by equation \ref{type3} where $x_R$ is the resource density, $c$ is the number of prey consumed per predator per unit time, $a$ is the discovery or search rate of the consumer (individual mortality of the resource at low densities\cite{Englund2011TemperatureResponse}) and $h$ is the handling time \cite{Dawes2013,Holling1959}. The type III model can be described by a generalised version of equation \ref{type2}, equation \ref{type3} where $q$ changes the shape of the curve \cite{Dawes2013}. This is due to reduced predator efficiency when predator densities are low, so at lower densities prey mortality is decreased \cite{Taylor2003EffectAmericanus,Hassell1978TheSystems.}. 
+When $q=0$, the model is type II and when $q>0$,the model is type III \cite{Dawes2013}. These equations are often written with $Y$, the number of prey consumed per predator, instead of $c$ and $T$, the time, on the right side of the equation, however these equations are equivalent as $c=\frac{Y}{T}$.
 \begin{equation}\label{type1}
     c=ax_R
 \end{equation}
@@ -62,79 +64,71 @@ c=\frac{ax_R}{1+hax_R}
 c=\frac{ax_R^{q+1}}{1+hax_R^{q+1}}
 \end{equation}
 
-It is important to note that both the search rate and handling times are functions of different aspects of attacking and eating prey \cite{Hassel1976TheDeath-Rate}. %best once synced/. 
-In general, the Holling type II model is very successful, especially considering its simplicity however there are examples where data is better described by a more complex model, such as a type III Holling model \cite{Hassel1976TheDeath-Rate} . 
-Many other models exist to describe the functional response, often based on variations of the Holling equation accounting for different behavioural aspects  \cite{Jeschke2002PredatorPrey}. \cite{Jeschke2002PredatorPrey} attempted to separate handling and digestion time from  $h$. In this example, the model curve tends to be similar to the Holling type II functional response curve, but is more flexible and when both handling time and digestion time are high, the curve is quite different. 
-In addition, if values of $a$ or $h$ change with prey density, then the Holling II model may not fit well  (as $a$ and $h$ are constant in this model). In these examples, the type III Holling model can be a good model \cite{Hassel1976TheDeath-Rate}. 
-%+eg? 
+It is important to note that both the search rate and handling times are functions of different aspects of attacking and eating prey \cite{Hassel1976TheDeath-Rate} The handling time is made up of the time predators spend pursuing, subduing, eating and digesting their prey. The search rate (or attack rate) combines the distance at which a predator will attack prey, the speed of both the prey and the predator and the success rate of attacks \cite{Holling1966}. In general, the Holling type II model is very successful, especially considering its simplicity however there are examples where data is better described by a more complex model, such as a type III Holling model \cite{Hassel1976TheDeath-Rate} . 
+Many other models exist to describe the functional response, often based on variations of the Holling equation accounting for different behavioural aspects  \cite{Jeschke2002PredatorPrey}. \cite{Jeschke2002PredatorPrey} attempted to separate handling and digestion time from  $h$. The model curve is mostly similar to the Holling type II functional response curve, but is more flexible and when both handling time and digestion time are high, the curve is quite different. In addition, if values of $a$ or $h$ change with prey density, then the Holling II model may not fit well  (as $a$ and $h$ are constant in this model). In these examples, the type III Holling model can be a good model \cite{Hassel1976TheDeath-Rate}. 
 \subsection{Temperature and Functional Responses}
-
+Many biological traits are dependent on temperature. \cite{Dell2014TemperatureStrategy,Dell2011SystematicTraits}. The way in which traits vary with temperature can depend on many factors including life stage\cite{Cator2019MoreResearch}, habitat \cite{Dell2011SystematicTraits} and thermy \cite{Dell2014TemperatureStrategy}. In addition often there is asymmetry between predator and prey response to temperature\cite{Dell2014TemperatureStrategy}. This means that understanding how the functional response of predators changes with temperature can be very complicated. Information about both predator and prey responses to temperature is necessary to fully predict how functional responses might change with temperature. The functional response of predators has important applications in nature and agriculture (for example in biological control of agricultural pests \cite{Gilioli2005TemperatureIndividuals} ). The response of the functional response to changes in temperature is important in predicting the effect of climate change \cite{Ohlund2014TemperaturePrey}.  Temperature is important in determining body velocity so it is likely to be the main way in which temperature affects predator-prey interactions \cite{Dell2014TemperatureStrategy}.\\
+Search rate is predicted to increase with temperature according to the metabolic theory of ecology \cite{Brown2004TowardEcology}. The Arrhenius equation predicts a linear increase in log-linear space \cite{Englund2011TemperatureResponse}). Increases in search rate when temperature is changed have been found in multiple predator-prey systems both linearly \cite{Gilioli2005TemperatureIndividuals,Zamani2006Temperature-dependentAphid} and exponentially \cite{Lefebure2014TemperatureResource-limited}. Many studies have found that this increases reaches a plateau \cite{McCoull1998EffectNaucoridae,Thompson1978TowardsElegans} or  reaches a maximum and decreases\cite{Englund2011TemperatureResponse,Zamani2006Temperature-dependentAphid,Sentis2012UsingEfficiency}.
+\\
+The metabolic theory of ecology \cite{Brown2004TowardEcology} also predicts that handling time reduces exponentially when temperature is increased. Experimentally changing the temperature in predator prey systems does reduce the handling time\cite{Thompson1978TowardsElegans,McCoull1998EffectNaucoridae,Jalali2010EffectPersicae,Zamani2006Temperature-dependentAphid}, sometimes exponentially \cite{Sentis2012UsingEfficiency,}. \\
+The response between type of functional response and temperature is less clear. Some studies have found no effect of temperature on type of functional response  \cite{Sentis2012UsingEfficiency} but there are examples of the functional response changing with temperature \cite{Taylor2003EffectAmericanus}.
 \subsection{Models}
-Models can be phenomenological or mechanistic. In mechanistic models, all parameters have biological meaning and in phenomenological models they do not, instead a function is used that fits the data or processes \cite{Otto2007AEvolution,Geritz2012MathematicalModels}.Phenomenological models may fit better to data and can be very useful in the absence of mechanistic models. They can be easier to understand, however do not have as much biological meaning as mechanistic models \cite{Otto2007AEvolution}. \cite{Geritz2012MathematicalModels} claim that this could stop them being valid for use in biological systems.  %%
+Models can be phenomenological or mechanistic. In mechanistic models, all parameters have biological meaning and in phenomenological models they do not; instead a function is used that fits the data or processes \cite{Otto2007AEvolution,Geritz2012MathematicalModels}.Phenomenological models may fit better to data and can be very useful in the absence of mechanistic models. They can be easier to understand, however do not have as much biological meaning as mechanistic models \cite{Otto2007AEvolution}. \cite{Geritz2012MathematicalModels} claim that this could stop them being valid for use in biological systems.  
 Mechanistic models can improve our understanding of biology and are useful for making predictions more accurately because when the meanings of parameters of known, biological constraints can be included. They can include as much information about the system as is available \cite{Otto2007AEvolution,Kendall1999WhyApproaches}. Mechanistic models are simplifications of systems and may have strong assumptions but they can still be very useful tools in understanding a biological system. How well a simplified model fits to data can give important insight into what aspects of a system are important in determining the dynamics \cite{Geritz2012MathematicalModels}.
-The Holling models described above are mechanistic to some extent however the type III model is more phenomenological due to the non-biological parameter $q$. Even the Holling type II model may be partially phenomenological because the values of $a$ and $h$ are a function of , multiple biological components \cite{Hassel1976TheDeath-Rate}.%maybe better in discussion. 
-
-
+The Holling models described above are mostly mechanistic. The type III model is more phenomenological than they type I and type II models due to the non-biological parameter $q$. Even the Holling type II model may be partially phenomenological because the values of $a$ and $h$ are a functions of  multiple biological components \cite{Hassel1976TheDeath-Rate}.
 \subsection{This work}
-In this paper, 5 models were fitted to experimental functional response data: Holling's type I, Holling's type II, Holling's type III, a polynomial model of degree two (to capture increasing and levelling out of the functional response) and a polynomial model of degree three (to capture a change in the rate of increase of the functional response.Then the best model for each experiment was determined. This was analysed and compared to temperatures. In addition the parameters of the Holling's models were compared to the consumer temperature.\\
-It was expected that the Holling type III model would be able to fit better to the data but may have a higher AIC value due the the extra parameter. 
-%TEMPERATURE EXPECTATIONS
-%
+In this paper, five models were fitted to experimental functional response data: Holling's type I, Holling's type II, Holling's type III, a polynomial model of degree two (to capture increasing and levelling out of the functional response) and a polynomial model of degree three (to capture a change in the rate of increase of the functional response. Then the best model for each experiment was determined. The Holling II model was predicted to be the best model. It was expected that the Holling type III model would be able to fit better to the data but may have a higher AIC value due the the extra parameter.  The best model was found at different temperature ranges to explore whether studies in particular consumer temperature ranges led to different models fitting better. In addition the search rate and handling times from the Holling's models were compared to the consumer temperature to explore whether functional response parameters for systems with different consumer temperatures would show similar responses to the studies looking at different temperatures within the same system. It was expected that search rate would increase with temperature, then reach a maximum and decrease. It was expected that handling time would decrease with temperature.
+
 \section{Methods}
 \subsection{Computing Tools}
-Bash was used to compile the pdf of the tex file, to calculate and format the word count of the project, using teXcount and to run the project files. This was used due to the ease off accessing files and files contents compared to other languages as well as its ability to run python and R scripts.
+Bash was used to compile the pdf of the tex file, to calculate and format the word count of the project (using teXcount) and to run the project files. This was used due to the ease of accessing files and files contents in bash. In addition, bash can run python, R  and other bash scripts.
 Python was used to initially sort the data, add new columns to the dataset and remove datasets with an insufficient number of points and export this updated dataframe as a csv. These tasks are well suited to Python's abilities.
-R was used to model to data, plot graphs and analyse the data. This is due to R's dataframe structures which make it very easy to store and manipulate variables. In addition ggplot2's plotting is very flexible.
+R was used to model to data, plot graphs and analyse the data. This is due to R's dataframe structures which make it very easy to store and manipulate variables. In addition plotting in ggplot2 is very flexible. "xtable" in R was used to store results for some parts of data analysis because  it allows tabular results from R to be integrated in tex files. "minpack.lm" in R was used to fit Holling models using Levenberg-Marquardt nonlinear least squares \cite{Elzhov2016}.
 %what packages were used and why
 \subsection{Initial Data Sorting}
-The data used was from the Biotraits database \cite{Dell2013}, which contains information collated from different studies about how biological traits respond to environmental drivers. The parameters of interest here were the number of prey the predator consumed per unit time and the resource density. Data sorting was carried out in python version 2.7. New columns were added and experiments with less than six experiments were removed. This new dataset was exported to a csv for model fitting. The
+The data used was from the Biotraits database \cite{Dell2013}, which contains information collated from different studies about how biological traits respond to environmental drivers. The parameters of interest here were the number of prey the predator consumed per unit time and the resource density. Data sorting was carried out in python version 2.7. New columns were added and experiments with less than six experiments were removed. This new dataset was exported to a csv for model fitting.
 \subsection{Model Fitting}
-The data were fitted to five different models, a quadratic model, a cubic model and the three Holling models \cite{Holling1959} using R 3.6.2 \cite{RCoreTeam2017}. The Holling models were the type I model (equation \ref{type1}, a linear model where the intercept was the origin), type II model (equation \ref{type2}) and generalised type III model (equation \ref{type3}).
-Models were fitted sequentially for each experiment and plotted. This allowed the fit to be visually inspected as the model fitting process was improved.
+The data were fitted to five different models: a quadratic model, a cubic model and the three Holling models \cite{Holling1959} using R 3.6.2 \cite{RCoreTeam2017}. The Holling models were the type I model (equation \ref{type1}, a linear model where the intercept was the origin), type II model (equation \ref{type2}) and generalised type III model (equation \ref{type3}). Models were fitted sequentially for each experiment and plotted. This allowed the fit to be visually inspected as the model fitting process was improved.
 \subsubsection{Linear models}
  The Holling type I, quadratic and cubic models models were fitted using lm (base R). For the quadratic and cubic models, poly was used to compute orthogonal polynomials to avoid correlation of variables.
 \subsubsection{Non-linear Models}
-The Holling type II and type III models were fitted using NLSlm (from the package minpack.lm \cite{Elzhov2016}). The coefficients $a$, $h$, and $q$ were given a lower bound of zero and the maximum number of iterations was set to $1000$. For both type II and type III models, starting values were calculated using starting value functions where $a$, $h$ and $q$ were estimated, followed by sampling positive values around these initial values and repeatedly running the models and storing the coefficients and AIC values of these models. The coefficients of the model with the lowest AIC were used as the initial values for the main model fitting step. The initial value for $h$ was the maximum value of $c$. The initial value for $a$ was the initial steep part of the curve which was calculated by repeatedly fitting linear models the dataset then deleting the maximum value of $x_R$ and storing the largest gradient of these models.For the type III model, this initial value of $q$ was set at %pick and also justify
-Once the starting values had been determined, the models were rerun with these initial values and plotted (with the other models). %try?
+The Holling type II and type III models were fitted using NLSlm (from the package minpack.lm \cite{Elzhov2016}). The coefficients $a$, $h$, and $q$ were given a lower bound of zero and the maximum number of iterations was set to $1000$. For both type II and type III models, starting values were calculated using starting value functions where $a$ and $h$ were estimated. The initial value for $h$ was the maximum value of $c$. The initial value for $a$ was the initial steep part of the curve which was calculated by repeatedly fitting linear models the dataset then deleting the maximum value of $x_R$ and storing the largest gradient of these models. For the type III model, this initial value of $q$ was picked from a random uniform distribution between -2 and 2. Finding the starting values was followed by sampling positive values around these initial values and repeatedly running the models and storing the coefficients and AIC values of these models. The coefficients of the model with the lowest AIC were used as the initial values for the main model fitting step. 
+Once the starting values had been determined, the models were rerun with these initial values and plotted (with the other models). 
 \subsection{Data Analysis}
-%how many 
-Data analysis was carried out in R 3.6.2\cite{RCoreTeam2017}.The models were compared using AIC and the most appropriate model was determined for each dataset. AIC was used because other techniques to compare models are not appropriate for non linear models.\\  %why AIC not bic
-The confidence intervals for values of $q$ were calculated and (using two times the standard error). When the confidence interval for $q$ overlapped zero, the best AIC was recalculated for the remaining Holling models (because when the confidence interval for $q$ is zero, the type III model is the same as the type III model.  %%remove this?
+Data analysis was carried out in R 3.6.2\cite{RCoreTeam2017}.The models were compared using AIC and the most appropriate model was determined for each dataset. AIC was used because other techniques to compare models are not appropriate for non linear models. Between AIC and BIC, AIC was used because it penalises extra parameters more at lower sample sizes than BIC \cite{Johnson2004ModelEvolution}. As this data set contains  a number of models with small sample sizes, this could prevent an overfitted model being selected as the best model.\\ 
+The confidence intervals for values of $q$ were calculated (from the mean $\pm$ two times the standard error). When the confidence interval for $q$ overlapped zero, the best AIC was recalculated for the remaining Holling models (because when the confidence interval for $q$ is zero, the type III model is the same as the type III model).
 A chi-square ($\chi^2$) goodness of fit test was carried out on the best model and the best model type (phenomenological or mechanistic) to determine if the number of models in each category was significantly different.\\
 The p-value of each parameter was stored and if the model was not significant, the parameter was removed from analysis of that parameter. Shapiro-Wilk tests were used to test the log consumer temperatures and log parameter values and found that they were not normally distributed. In addition, there were ties in the data so Spearman's rank correlation could not be calculated.  Kendall rank order correlation tests were carried out on consumer temperatures and log search rate and consumer temperatures and log handling time for each of the Holling models. Log of the parameters was used because both search rate and the handling time values were mostly very low with  a few very large values. The search rate for type III models could not be tested due to a low number of models were search rate was significant. \\ 
-Chi-square ($\chi^2$) tests were carried out on consumer temperature and best model type and consumer temperature and best Holling model (recalculated). The temperature values were discretised by creating an expectation table with intervals of five degrees and combining these intervals until the expected values were all greater than five.
-%talk about stats stuff- tests 
+Chi-square ($\chi^2$) tests were carried out to determine the association between consumer temperature and best model type and consumer temperature and best Holling model (recalculated). The temperature values were discretised by creating an expectation table with intervals of five degrees and combining these intervals until the expected values were all greater than five.
 \section{Results}
-%figs will need to be saved into code directory probs
 \subsection{Number of Fits}
-Many of the models fit well to the data, for example (Figure\ref{fig:2}). Most models successfully fit the data. Of the 241 datasets, only $\input{../Results/Tables/failII}$ Holling type II models and $\input{../Results/Tables/failIII}$ Holling type II models did not converge.  % don't love format for this , where should this go!
-\begin{figure}[h!] %h forces it to be at this location
+Many of the models fit well to the data, for example (Figure\ref{fig:2}). Most models successfully fit the data. Of the 241 datasets, only $\input{../Results/Tables/failII}$ Holling type II models and $\input{../Results/Tables/failIII}$ Holling type II models did not converge. 
+\begin{figure}[h!] 
     \centering
     \includegraphics[width=4in]{../Results/Plots/39841.png}
     \caption{This is a graph for the experiment with ID 39841}
     \label{fig:2}
 \end{figure}
-%best model, significance
 \subsection{Best Model}
 The Holling's type II model was most frequently the best model ($\input{../Results/Tables/holIIbest}\%$) and the polynomial of degree 2 was most frequently the second best model ($\input{../Results/Tables/poly32best}\%$) (Figure \ref{fig:bestmodel}).
 The mechanistic models were marginally more often the best model ($\%$)than the mechanistic models (Figure \ref{fig:modelbesttype} )
-\begin{figure}[h!]
+\begin{figure}[ht!]
 \centering
 \subfloat[Number of times that each model was the best model]{\includegraphics[width = 3in]{../Results/Plots/modelbest.png}}
 \subfloat[Number of times that each model was the second best model]{\includegraphics[width = 3in]{../Results/Plots/modelsecondbest.png}}
 \caption{Best and second best model from the lowest and second lowest AIC values. Models are Holling type I, Holling type II, Holling type II, polynomial of degree 2, polynomial of degree 3. $n=241$}
 \label{fig:bestmodel}
 \end{figure}
-\begin{figure}[h!] %h forces it to be at this location
+\begin{figure}[h!] 
     \centering
     \includegraphics[width=3in]{../Results/Plots/modelbesttype.png}
     \caption{Number of models where the best type was phenomenological or mechanistic. Colour is the model. $n=241$}
     \label{fig:modelbesttype}
 \end{figure}
-The distribution of the best model was not best described by a uniform distribution ($p<0.01$) but the distribution of the best model type was (p<0.05) (Table\ref{chitable}),
+The distribution of the best model was not best described by a uniform distribution ($p<0.05$,Table\ref{chitable}).  The distribution of the best model type was best described by a uniform distribution (p>0.05,Table\ref{chitable}).
 \input{../Results/Tables/output_chitable_latex.txt}
 \subsection{Best Holling Model}
-Of the three Holling models, the type II model was the best (Figure\ref{fig:bestholandrecalmodel}).The best Holling model was recalculated, removing the type III Holling model when the confidence interval for $q$ spanned $0$. This affected $\input{../Results/Tables/recaldiff}$ models. The majority of these were best described by the Holling type II model of the other Holling models, but some were better described by the type I model (Figure \ref{fig:bestholandrecalmodel}) %discussion- it was expected that would make just holling 2 larger,
+Of the three Holling models, the type II model was the best (Figure\ref{fig:bestholandrecalmodel}). The best Holling model was recalculated, removing the type III Holling model when the confidence interval for $q$ spanned $0$. This occured for $\input{../Results/Tables/recaldiff}$ models. The majority of these were best described by the Holling type II model of the other Holling models, but some were better described by the type I model (Figure \ref{fig:bestholandrecalmodel})
 \begin{figure}[h!]
 \centering
 \subfloat[Number of times that each model was the best  Holling model]{\includegraphics[width = 3in]{../Results/Plots/modelbestholl.png}}
@@ -143,8 +137,8 @@ Of the three Holling models, the type II model was the best (Figure\ref{fig:best
 \label{fig:bestholandrecalmodel}
 \end{figure}
 \subsection{Temperature and Best Model}
-The best Holling model did not vary much with the temperature (Figure \ref{fig:tempholandmodel} and the temperature interval was not associated with the best Holling model.($\chi^2=\input{../Results/Tables/chiholrtemp}$,$p=\input{../Results/Tables/pholrtemp}$,$df=\input{../Results/Tables/dfholrtemp}$). At most temperatures ($<20$ degrees), more mechanistic models fit the best better . Below $10$ degrees this difference was extreme. However at the interval $20-25$ degrees, more phenomenological models fit the best (Figure \ref{fig:tempholandmodel}).  The temperature interval was associated with the best model type($\chi^2=\input{../Results/Tables/chitypetemp}$,$p=\input{../Results/Tables/ptypetemp}$,$df=\input{../Results/Tables/dftypetemp}$). This difference seemed to be due to the polynomial of degree three being particularly successful in the interval $20-25$ degrees.
-\begin{figure}[h!]
+The type of the best Holling model did not vary much with the temperature (Figure \ref{fig:tempholandmodel} and the temperature interval was not associated with the best Holling model.($\chi^2=\input{../Results/Tables/chiholrtemp}$,$p=\input{../Results/Tables/pholrtemp}$,$df=\input{../Results/Tables/dfholrtemp}$). At most temperatures ($<20$ degrees), more mechanistic models fit the best better . Below $10$ degrees this difference was extreme. However at the interval $20-25$ degrees, more phenomenological models fit the best (Figure \ref{fig:tempholandmodel}).  The temperature interval was associated with the best model type ($\chi^2=\input{../Results/Tables/chitypetemp}$,$p=\input{../Results/Tables/ptypetemp}$,$df=\input{../Results/Tables/dftypetemp}$). This difference seemed to be due to the polynomial of degree three being particularly successful in the interval $20-25$ degrees.
+\begin{figure}[ht!]
 \centering
 \subfloat[Number of times a mechanistic or a phenomenological model was the best model at each consumer temperature interval.]{\includegraphics[width = 3in]{../Results/Plots/temppmodeltype.png}}
 \subfloat[Number of times the recalculated Holling model was the best model at each consumer temperature interval. ]{\includegraphics[width =3in]{../Results/Plots/tempmodelrhol.png}}\\
@@ -155,10 +149,8 @@ The best Holling model did not vary much with the temperature (Figure \ref{fig:t
 
 \subsection{Temperature and Parameter Values}
 The handling time was and the search rate was
-The consumer temperatures are associated with the search rate for type I and type II Holling models and handling time for type II and type III Holling models.(Figure \ref{fig:tempparam},Table \ref{Paramtemp}). % stats
+The consumer temperatures are  weakly negatively correlated with the search rate for type I and type II Holling models (Figure \ref{fig:tempparam},Table \ref{Paramtemp}).The search rate is smaller and less varied at intermediate temperatures, however at very low and very high temperatures, the temperature is very varied and can be very high. The consumer temperatures are weakly positively correlated with handling time for type II and type III Holling models(Figure \ref{fig:tempparam},Table \ref{Paramtemp}).
 \input{../Results/Tables/output_temp_con_latex.txt}
-The search rate is smaller and less varied at intermediate temperatures, however at very low and very high temperatures, the temperature is very varied and can be very high. There is a weak negative correlation. The handling time shows a weak positive correlation with consumer temperature.
-%stats
 \begin{figure}[h!t]
 \centering
 \subfloat[Consumer temperature and log search rate for type I Holling model]{\includegraphics[width = 2.5in]{../Results/Plots/plot1conA.png}}\\
@@ -170,10 +162,36 @@ The search rate is smaller and less varied at intermediate temperatures, however
 \label{fig:tempparam}
 \end{figure}
 \section{Discussion}
-%go through each model and talk about how well it fit 
+Three Holling models were successfully fit to 
+\subsection{Type}
+%holling and mechanistic versions. maybe mechaistic tyoe III is just really rubbish. how well do each fit . compared to literature . at least one paper that evaluates which type differnt temp .
+%best model results-sig. chat about which did good 
+\subsection{Mechanistic and Phenomological }
+%about same but mech  bit better. was this expected
+%stats say same chat
 %significance? 
+\subsection{Recalculating Holling Model}
+ %discussion- it was expected that would make just holling 2 larger,
+\subsection{Temperature}
+%what does temp mean discuss (metadata)
+%effect of changing temperure -- not manipulating just comparing species. species adapt to temp so not very meaninggul!!!!! papers are mostly about manipulating. can you find papers comparing? samraat model paper
+%what does temp mean- eactotherm body temp likely to be same as ambient temperature. not comparing temp acoss 1 organism here
+%%endotherms more effected
+\subsubsection{Functional Response}
+%discuss results (phen!)
+\subsubsection{Handling Time and Search Rate}
+%discuss results
+%chat about whats seen in literature
+%unexpected handling time and search rate; could factor for only endotherms (but very few anyway)
+%significance problems with the kendall test esp thoughts handling time 
+
 %list of components of holling model in Hassell the components of arthorpod predation- go thorough particularly search rate and look for evidence tht they are effected by temperature
-%problems with the kendall test esp thoughts handling time 
+
+
+%temp and models. couldnt pick up a relationship really bc akk very system dependent
+\subsection{Importance}
+%chat about climate change  . modelling effects of temp useful 
+
 \section{Conclusion}
 %answer question
 

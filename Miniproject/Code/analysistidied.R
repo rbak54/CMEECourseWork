@@ -5,36 +5,19 @@
 #Input: none 
 #Output: none
 #Date: Feb 2020
-
-
 library(xtable)
 options(xtable.floating = FALSE)
-#options(xtable.timestamp = "")  
 library(ggplot2)
 data<-read.csv("../Results/CRatmodelfitting.csv")
 
 if (dir.exists("../Results/Tables")==FALSE){
   dir.create("../Results/Tables")
 }
-#add to python some of these 
-data$BestAIC<-NA
-data$BestAICHolRECAL<-NA
-data$BestAICHol<-NA
-data$qcil<-NA
-data$qciu<-NA
-data$qIIIci<-NA
-data$best.model.type<-NA
-data$CUTCONTEMPHOLLING<-NA
-data$CUTCONTEMPTYPE<-NA
-data$qcil<-NA
-data$qciu<-NA
 
 data$qcil<-data$qIII-2*data$qse
 data$qciu<-data$qIII+2*data$qse
-#data<-subset(data,Con_Thermy=="ectotherm")
- #data<- data(data,Res_Thermy=="ectotherm")
-#data$Con_ForagingMovement<-tolower(data$Con_ForagingMovement)
-#best AIC
+
+#find column names for AIC
 ltHol<-as.vector(match("HollingI_AIC",names(data)):match("HollingIII_AIC",names(data)))
 ltHolR<-as.vector(match("HollingI_AIC",names(data)):match("HollingII_AIC",names(data)))
 lt2<-as.vector(match("HollingI_AIC",names(data)):match("Poly3_AIC",names(data)))
@@ -58,23 +41,6 @@ data$best.model.type <- ifelse(data$BestAIC == "HollingI_AIC" | data$BestAIC== "
 data$best.model.type.recal <- ifelse(data$BestAICRECAL == "HollingI_AIC" | data$BestAICRECAL== "HollingII_AIC" | data$BestAICRECAL=="HollingIII_AIC", 'Mechanistic',
                                      ifelse(data$BestAICRECAL == "Poly2_AIC" | data$BestAICRECAL == "Poly3_AIC", 'Phenomenological', 'No_successful_model'))
 
-#plots
-
-#this graph shows that mechanistic is slightly better
-#ggplot(data=data,aes(x=best.model.type,fill=BestAIC))+geom_bar(stat="count")
-#but this changes if recal
-#ggplot(data=data,aes(x=best.model.type.recal,fill=BestAICRECAL))+geom_bar(stat="count")
-# for formatting http://www.sthda.com/english/wiki/ggplot2-barplots-quick-start-guide-r-software-and-data-visualization 
-#hist(data$qIIIci,breaks = 30)
-#diff between holling and holling recal
-#ggplot(data=data, aes(BestAICHol))+geom_bar()+ylim(0,200)
-#ggplot(data=data, aes(BestAICHolRECAL))+geom_bar()+ylim(c(0,200))
-#type 2 most common then 1 then 3
-#ggplot(data=data, aes(BestAIC))+geom_bar()+ylim(0,200)
-
-#ggplot(data=data,aes(x=BestAIC,fill=as.factor(Res_ForagingMovement)))+geom_bar(stat="count")
-#ggplot(data=data,aes(x=BestAIC,fill=as.factor(Con_ForagingMovement)))+geom_bar(stat="count")
-
 #section 2
 chitable<-matrix(nrow=2,ncol=2)
 #chi squared goodness of fit
@@ -96,40 +62,6 @@ rownames(chitable)<-c("Best Model","Best Model Type")
 
 output_chitable<-xtable(chitable,label='chitable',caption = 'Results of chi-squared tests for whether the best model and the best model type (i.e phenomenological or mechanistic) are uniformally distributed')
 print(output_chitable,floating=FALSE,tabular.environment = 'longtable',file ="../Results/Tables/output_chitable_latex.txt",caption.placement ="top")
-
-
-#TPYE NOT SIGNIFICANT DIFFERENCE not significantly better
-#Expected<-rep((1/3)*sum(!is.na(data$BestAICHolRECAL)),3)
-#Observed<-unname(table(data$BestAICHolRECAL))
-#chisquared<-sum(((Observed-Expected)^2)/Expected)
-#1-pchisq(chisquared,2)
-#There is not a flat distribution- for hol recal (i.e type 1 to III)
-
-#https://stattrek.com/chi-square-test/goodness-of-fit.aspx
-
-#section 4
-#data$CUTRESTEMP<-NA
-#data$CUTRESTEMP<-cut(data$ResTemp,c(0,15,25,40))
-
-#variable<-"CUTRESTEMP" 
-#hol
-#table_observed<-table(data$BestAIC,data[,variable])+table(data$BestAIC_sec,data[,variable]) 
-#table_observed<-rbind(table_observed,colSums(table_observed))
-#table_observed<-cbind(table_observed,rowSums(table_observed))
-#Observed<-table(data$BestAIC,data[,variable])+table(data$BestAIC_sec,data[,variable]) 
-#Expected<-matrix(nrow=nrow(Observed),ncol=ncol(Observed))
-
-#for(i in 1:(nrow(table_observed)-1)){
- # for (j in 1:(ncol(table_observed)-1)){
-  #  Expected[i,j]<-(table_observed[nrow(table_observed),j]*table_observed[i,ncol(table_observed)])/table_observed[nrow(table_observed),ncol(table_observed)]
-  #}
-#}
-#Expected
-#df<-(nrow(Expected)-1)*(ncol(Expected)-1)
-#chisquared<-sum(((Observed-Expected)^2)/Expected)
-#write(format(round(chisquared, 2), nsmall = 2),"../Results/Tables/chitemp")
-#write(format(round(1-pchisq(chisquared,df), 2), nsmall = 2),"../Results/Tables/ptemp")
-#df
 
 #holrecal
 variable<-"CUTCONTEMPHOLLING" 
@@ -179,9 +111,7 @@ write(format(round(chisquared, 2), nsmall = 2),"../Results/Tables/chitypetemp")
 write(format(round(1-pchisq(chisquared,df), 2), nsmall = 2),"../Results/Tables/ptypetemp")
 write(df,"../Results/Tables/dftypetemp")
 
-
-#section 4
-#a and h stuff
+#section 4 a and h stuff
 
 data2<-subset(data,hIIp<0.05 & aIIp<0.05)
 data1<-subset(data,aIp<0.05)
@@ -190,58 +120,22 @@ data1<-subset(data,aIp<0.05)
 data3<-subset(data,hIIIp<0.05 & aIIIp<0.05)
 data3h<-subset(data,hIIIp<0.05)
 
-#RESOURCE
-#summary(lm(data$ConTemp~log(data$aI)))     
-#aI has 3 negative values which is why log is upset
-#aII and aIII has NAs because model doesnt fit for all
-#sum(is.na(log(data$aIII)))
-#sum(is.na(data$aIII))
-#shapiro.test(na.omit(data$ResTemp))
-#dataset_aii<-subset(data2, !is.na(ResTemp) & !is.na(aII))
-#a<-lm(dataset_aii$ConTemp~log(dataset_aii$aII))
-#shapiro.test(a$residuals)
-#dataset_aiii<-subset(data3, !is.na(ResTemp) & !is.na(aIII))
-#a<-lm(dataset_aiii$ConTemp~log(dataset_aiii$aIII))
-#shapiro.test(a$residuals)
-#dataset_ai<-subset(data1, !is.na(ResTemp) & aI>0)
-#a<-lm(dataset_ai$ConTemp~log(dataset_ai$aI))
-#shapiro.test(a$residuals)
-
-#dataset_hiii<-subset(data3h, !is.na(hIII))
-#dataset_hii<-subset(data2, !is.na(hII))
-
-#so not normally distributed . so lets do non parametric testing 
-#so best to use spearman
-#cor.test(dataset_aii$ConTemp,dataset_aii$aII,method = "s")
-#spearman not working because of ties in temperature
-#cor.test(dataset_aii$ConTemp,dataset_aii$aII,method = "k")
-#cor.test(dataset_aiii$ConTemp,dataset_aiii$aIII,method = "k")
-#type III too small to work
-#cor.test(dataset_ai$ConTemp,dataset_ai$aI,method = "k")
-
-#cor.test(dataset_hii$ConTemp,dataset_hii$hII,method = "k")
-#cor.test(dataset_hiii$ConTemp,dataset_hiii$hIII,method = "k")
-
-
 #now con
-#shapiro.test(na.omit(data$ConTemp))
 dataset_aii<-subset(data2, !is.na(ConTemp)& !is.na(aII))
-a<-lm(dataset_aii$ConTemp~log(dataset_aii$aII))
+#a<-lm(dataset_aii$ConTemp~log(dataset_aii$aII))
 shapiro.test(a$residuals)
 dataset_aiii<-subset(data3, !is.na(ConTemp) & !is.na(aIII))
-a<-lm(dataset_aiii$ConTemp~log(dataset_aiii$aIII))
+#a<-lm(dataset_aiii$ConTemp~log(dataset_aiii$aIII))
 shapiro.test(a$residuals)
 dataset_ai<-subset(data1,!is.na(ConTemp) &  aI>0)
-a<-lm(dataset_ai$ConTemp~log(dataset_ai$aI))
+#a<-lm(dataset_ai$ConTemp~log(dataset_ai$aI))
 shapiro.test(a$residuals)
 
 dataset_hiii<-subset(data3h, !is.na(ConTemp) & !is.na(hIII))
 dataset_hii<-subset(data2, !is.na(ConTemp) &!is.na(hII))
 
-#so not normally distributed . so lets do non parametric testing 
+#so not normally distributed . so non parametric testing 
 #so best to use spearman
-
-#cor.test(dataset_aii$ConTemp,dataset_aii$aII,method = "s")
 #spearman not working because of ties in temperature
 
 n<-vector(length=4)
@@ -281,7 +175,7 @@ sum(data$BestAIC_sec=="Poly2_AIC")/length(data$BestAIC_sec)
 write(format(round(sum(data$best.model.type=="Mechanistic")/length(data$best.model.type), 2), nsmall = 2),"../Results/Tables/mechbest")
 
 
-##section3?
+##section3
 write(sum(data$BestAICHol=="HollingIII_AIC")-sum(data$BestAICHolRECAL=="HollingIII_AIC"),"../Results/Tables/recaldiff")
 
 #senction 1 of results
@@ -291,6 +185,6 @@ write(sum(data$FailHolIII>0,na.rm = T),"../Results/Tables/failIII")
 sum(data$FailPol2>0,na.rm = T)
 sum(data$FailPol3>0,na.rm = T)
 sum(data$hIIIp<0.05,na.rm=T)
-#caption
+#save output
 write.csv(data,"../Results/dataanalysiscrat.csv")
 
