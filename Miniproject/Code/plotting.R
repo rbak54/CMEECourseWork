@@ -42,7 +42,7 @@ plot1conA<-ggplot()+geom_point(aes(ConTemp,log(aI)),color=cbbPalette[4],data=dat
    
 plot3conH<-ggplot()+geom_point(aes(ConTemp,log(hIII)),color=cbbPalette[2],data=data3h,size=4)+
      theme_bw()+xlab("Consumer Temperature (degrees C)")+ylab("Handling Time")+theme(text = element_text(size=20))
-
+  
 plot3conA<-ggplot()+geom_point(aes(ConTemp,log(aIII)),color=cbbPalette[4],data=data3a,size=4)+
      theme_bw()+xlab("Consumer Temperature (degrees C)")+ylab("log Search Rate")+theme(text = element_text(size=20))
 

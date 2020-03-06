@@ -1,0 +1,34 @@
+File: main.tex
+Encoding: ascii
+Words in text: 3443
+Words in headers: 68
+Words outside text (captions, etc.): 111
+Number of headers: 27
+Number of floats/tables/figures: 6
+Number of math inlines: 68
+Number of math displayed: 3
+Subcounts:
+  text+headers+captions (#headers/#floats/#inlines/#displayed)
+  200+7+0 (2/0/2/0) _top_
+  0+1+0 (1/0/0/0) Section: Introduction
+  463+5+0 (1/0/16/3) Subsection: Functional Responses and existing models
+  260+4+0 (1/0/0/0) Subsection: Temperature and Functional Responses
+  219+1+0 (1/0/3/0) Subsection: Models
+  202+2+0 (1/0/0/0) Subsection: This work
+  0+1+0 (1/0/0/0) Section: Methods
+  173+2+0 (1/0/0/0) Subsection: Computing Tools
+  76+3+0 (1/0/0/0) Subsection: Initial Data Sorting
+  298+6+0 (3/0/11/0) Subsection: Model Fitting
+  360+2+0 (1/0/6/0) Subsection: Data Analysis
+  0+1+0 (1/0/0/0) Section: Results
+  35+3+10 (1/1/2/0) Subsection: Number of Fits
+  72+2+47 (1/2/6/0) Subsection: Best Model
+  64+3+23 (1/1/4/0) Subsection: Best Holling Model
+  85+4+15 (1/1/11/0) Subsection: Temperature and Best Model
+  79+4+16 (1/1/0/0) Subsection: Temperature and Parameter Values
+  0+1+0 (1/0/0/0) Section: Discussion
+  461+3+0 (1/0/6/0) Subsection: Holling Model Recalculated
+  162+3+0 (1/0/0/0) Subsection: Mechanistic and Phenomological 
+  207+9+0 (3/0/1/0) Subsection: Temperature
+  27+1+0 (1/0/0/0) Section: Conclusion
+
