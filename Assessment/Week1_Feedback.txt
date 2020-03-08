@@ -9,11 +9,11 @@ Note that:
 
 ======================================================================
 ======================================================================
-Your Git repo size this week is about 2.54 MiB on disk 
+Your Git repo size this week is about 120.13 MiB on disk 
 
 PART 1: Checking project workflow...
 
-Found the following directories in parent directory: Week6, Week1, Week7, Assessment, Week8, Week5, Week2, Week9, Week4, .git, Week3
+Found the following directories in parent directory: Week6, Week1, Week7, Assessment, Week8, Week5, Week2, Week9, Week4, .git, Miniproject, Week3
 
 Found the following files in parent directory: .gitignore, README.md
 
@@ -26,6 +26,12 @@ Printing contents of .gitignore:
 *~ 
 *.tmp
 *.log
+*-c*ance.tex
+*.gz
+*.odt
+*.ods
+*Sandbox*
+output*.rda
 **********************************************************************
 
 Found README in parent directory, named: README.md
@@ -60,88 +66,165 @@ Found README in parent directory, named: readme.md
 
 Printing contents of readme.md:
 **********************************************************************
-# Directory content for this week
+# Directory Content for This Week
 
-## MyExampleScript.sh
-
-variables practice
-
-Arguments: $USER
-
-## tabtocsv.sh
-
-substitutes the tabs in the files with commas and saves the output into a .csv file
-
-Arguments: $1 -a file
-Outputs: tab deliminated file, same location as input file
-
-## UnixPrac1.txt
-
-explores line and word counting for amino acid sequences. calculates AT/GC ratio for E.coli
-
-## ConcatenateTwoFiles.sh
-
-combines two files
-
-Arguments: $1 and $1 the two files to be combined, empty file $3
-
-Output: file containing the two files will be in the same location as empty file was initially.
-
-## csvtospace.sh
-
-make a a new file with spaces instead of commas
-
-Arguments: $1 -file to be converted 
-
-Output-a text file in the results folder (name.txt)
 
 ## boilerplate.sh
 
-a boilerplate for shell scripts
 
-## variables.sh
-assigning variables in shell scripts
 
-Arguments: MyVar , a , b
+Desc: simple boilerplate for shell scripts
 
-## tiff2png.sh
+ 
 
-converting a tiff file to a png file
+Input: none
 
-Arguments: $1- tiff file in Data folder
-
-Output: png file-outputs to Results folder
-
-## CountLines.sh
-
-Counting lines in a file
-
-Arguments: $1-file to 
-count lines in
+ 
 
 ## CompileLaTeX.sh
 
-Making a latex file with references 
 
-Arguments: FirstExample.tex (latex file to be compiled)
 
-Output: FirstBiblio.pdf in Results
+Desc: script compiling LaTex and bibtex
+
+ 
+
+Input: $1-file to be compiled
+
+ 
+
+## ConcatenateTwoFiles.sh
+
+
+
+Desc: concatenating two files
+
+ 
+
+Input: $1 and $2 -two files to be compiled, ($3- empty file for output)
+
+ 
+
+Output: File containing contents of $1 and $2 called Concatenated.txt in Results (unless specified as argument)
+## CountLines.sh
+
+
+
+Desc: counting lines in a file
+
+ 
+
+Input: $1-file to count lines in
+
+ 
+
+## csvtospace.sh
+
+
+
+Desc: make a new file with spaces instead of commas
+
+ 
+
+Input: $1 -file to be converted 
+
+ 
+
+Output: text file in Results
+## FirstBiblio.bib
+
+
+Desc: bibliography
+
+
+
+
+ 
+
+
+ 
 
 ## FirstExample.tex
 
-for writing LaTeX file 
 
-## FirstBiblio.bib
+Desc: file to be compiled
 
-reference information for CompileLaTeX.sh
+ 
 
+
+ 
+
+## MyExampleScript.sh
+
+
+
+Desc: variables practice
+
+ 
+
+Input: $USER-name
+
+ 
+
+## tabtocsv.sh
+
+
+
+Desc: substitutes the tabs in the files with commas and saves the output into a .csv file
+
+ 
+
+Input: A tab deliminated file
+
+ 
+
+Output: A CSV file in Results
+## tiff2png.sh
+
+
+
+Desc: converting tiff files to png files
+
+ 
+
+Input: none (takes any in data folder)
+
+ 
+
+Output: png file in Results
+## UnixPrac1.txt
+
+
+
+Desc: explores line and word counting for amino acid sequences. calculates AT/GC ratio for E.coli
+
+ 
+
+
+ 
+
+## variables.sh
+
+
+
+Desc: assigning variables in shell scripts
+
+ 
+
+Input: three numbers-MyVar , a , b
+
+ 
 
 **********************************************************************
 
-Found following files in results directory: .txt, TaylorSwift2.txt, FirstExample.pdf, tifffile.png, readme.txt...
-ideally, Results directory should be empty other than, perhaps, a readme. 
+Found following files in results directory: readme.txt...
 
 Found 12 code files: ConcatenateTwoFiles.sh, CountLines.sh, variables.sh, CompileLaTeX.sh, tiff2png.sh, csvtospace.sh, FirstExample.tex, MyExampleScript.sh, FirstBiblio.bib, UnixPrac1.txt, tabtocsv.sh, boilerplate.sh
+
+Found the following extra files: .Rhistory
+0.5 pt deducted per extra file
+
+Current Points = 99.5
 
 ======================================================================
 Testing script/code files...
@@ -155,27 +238,56 @@ File contents are:
 #Author: Ruth Keane ruth.keane19@imperial.ac.uk
 #Script: ConcatenateTwoFiles.sh
 #Desc: concatenating two files
-#Arguments: $1 and $2 -two files to be compiled
+#Arguments: 3 
+#Input: $1 and $2 -two files to be compiled, ($3- empty file for output)
+#Output: File containing contents of $1 and $2 called Concatenated.txt in Results (unless specified as argument)
 #Date: Oct 2019
-cat $1 > $3
-cat $2 >> $3
-echo "Merged File is"
-cat $3
-exit
-**********************************************************************
+# if there is a third argument, then can immediately concatenate
+if [ -e "$3" ]
+then
+    cat $1 > $3
+    cat $2 >> $3
+    echo "Merged File is"
+    cat $3
+#if only two arguments, make a text file for new file- "Concatenated.txt in Results in directory"
+else
+    if [ -e "$2" ]
+    then
+        touch ../Results/Concatenated.txt
+        FILE="../Results/Concatenated.txt"
+        cat $1 > $FILE
+        cat $2 >> $FILE
+    echo "Merged File is"
+    cat $FILE
+    else
+        if [ -e "$1" ]
+        then
+        #if one file, can't concatinate so print message
+            echo "Only one file inputted."
+        #if no files, can't concatinate so print message
+        else 
+            echo "No files inputted"
+        fi
+    fi
+    #if [ -e "$1" ]
+    #then
+    #    echo "please input more arguments"
+    #fi
+fi
+exit**********************************************************************
 
 Testing ConcatenateTwoFiles.sh...
 
 Output (only first 500 characters): 
 
 **********************************************************************
-Merged File is
+No files inputted
 
 **********************************************************************
 
-Encountered error (or warning):
-ConcatenateTwoFiles.sh: line 7: $3: ambiguous redirect
-ConcatenateTwoFiles.sh: line 8: $3: ambiguous redirect
+Code ran without errors
+
+Time consumed = 0.00515s
 
 ======================================================================
 Inspecting script file CountLines.sh...
@@ -186,11 +298,20 @@ File contents are:
 #Author: Ruth Keane ruth.keane19@imperial.ac.uk
 #Script: CountLines
 #Desc: counting lines in a file
-#Arguments: $1-file to count lines in
+#Input: $1-file to count lines in
+#Arguments: 1
 #Date: Oct 2019
-NumLines=`wc -l < $1`
-echo "The file $1 has $NumLines lines"
-echo
+if [ -e "$1" ]
+then
+    NumLines=`wc -l < $1`
+#basename so doesn't print directory
+    g=`basename $1`
+    echo "The file $g has $NumLines lines"
+    echo
+#if no input, no error messages
+else
+    echo "No file inputted. Please input file."
+fi
 exit
 **********************************************************************
 
@@ -199,13 +320,13 @@ Testing CountLines.sh...
 Output (only first 500 characters): 
 
 **********************************************************************
-The file  has  lines
-
+No file inputted. Please input file.
 
 **********************************************************************
 
-Encountered error (or warning):
-CountLines.sh: line 7: $1: ambiguous redirect
+Code ran without errors
+
+Time consumed = 0.00349s
 
 ======================================================================
 Inspecting script file variables.sh...
@@ -216,7 +337,8 @@ File contents are:
 #Author: Ruth Keane ruth.keane19@imperial.ac.uk
 #Script: variables.sh
 #Desc: assigning variables in shell scripts
-#Arguments: MyVar , a , b
+#Input: three numbers-MyVar , a , b
+#Arguments: none
 #Date: Oct 2019
 #use of variables
 MyVar='some string'
@@ -226,11 +348,24 @@ read MyVar
 echo 'the current value of the variable is' $MyVar
 ##using multiple variables
 echo 'Enter two numbers separated by space(s)'
-read a b 
-echo "you entered $a and $b. Their sum is:"
+read a b
+##if no values entered- defaults 0
+a=${a:-0}
+b=${b:-0}
+
+
+echo "you entered" $a 'and' $b ". Their sum is:"
 mysum=`expr $a + $b`
 echo $mysum
 
+##trying to remove error if no input- but always shows no variabels entered
+#if [ -z "$2" ];
+#then
+#   echo "no variables were entered"
+#else
+#   mysum=`expr $a + $b`
+#   echo $mysum
+#fi
 exit
 **********************************************************************
 
@@ -243,13 +378,14 @@ the current value of the variable is some string
 please enter a new string
 the current value of the variable is
 Enter two numbers separated by space(s)
-you entered  and . Their sum is:
-
+you entered 0 and 0 . Their sum is:
+0
 
 **********************************************************************
 
-Encountered error (or warning):
-expr: syntax error
+Code ran without errors
+
+Time consumed = 0.00383s
 
 ======================================================================
 Inspecting script file CompileLaTeX.sh...
@@ -260,16 +396,22 @@ File contents are:
 #Author: Ruth Keane ruth.keane19@imperial.ac.uk
 #Script: CompileLaTex.sh
 #Desc: script compiling LaTex and bibtex
-#Arguments: $1-file to be compiled
+#Input: $1-file to be compiled
+#Arguments: 1
 #Date: Oct 2019
+#change name so filename.tex works
+if [ $# -eq 0 ]
+then
+echo "No file inputted.Please input file."
+else
 f=`basename $1 |cut -f 1 -d "."`
 pdflatex $f
 pdflatex $f
 bibtex $f
 pdflatex $f
 pdflatex $f
-
-mv ./FirstExample.pdf ../Results/
+#move pdf to results folder
+mv ./$f.pdf ../Results/ ##generalise
 evince ../Results/$f.pdf &
 
 ##Cleanup
@@ -283,67 +425,20 @@ rm *.snm
 rm *.toc
 rm *.bbl
 rm *.blg
-**********************************************************************
+fi**********************************************************************
 
 Testing CompileLaTeX.sh...
 
 Output (only first 500 characters): 
 
 **********************************************************************
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=pdflatex)
- restricted \write18 enabled.
-**
-! End of file on the terminal... why?
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=pdflatex)
- restricted \write18 enabled.
-**
-! End of file on the terminal... why?
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=pdflatex)
- restricted \write18 enabled.
-**
-! End of file on the terminal...
+No file inputted.Please input file.
+
 **********************************************************************
 
-Encountered error (or warning):
-basename: missing operand
-Try 'basename --help' for more information.
-bibtex: Need exactly one file argument.
-Try `bibtex --help' for more information.
-mv: cannot stat './FirstExample.pdf': No such file or directory
-rm: cannot remove '*~': No such file or directory
-rm: cannot remove '*.aux': No such file or directory
-rm: cannot remove '*.dvi': No such file or directory
-rm: cannot remove '*.log': No such file or directory
-rm: cannot remove '*.nav': No such file or directory
-rm: cannot remove '*.out': No such file or directory
-rm: cannot remove '*.snm': No such file or directory
-rm: cannot remove '*.toc': No such file or directory
-rm: cannot remove '*.bbl': No such file or directory
-rm: cannot remove '*.blg': No such file or directory
+Code ran without errors
 
-** (evince:10085): WARNING **: Error when getting information for file '/home/mhasoba/Documents/Teaching/IC_CMEE/2019-20/Coursework/StudentRepos/RuthKeane_RBK119/Week1/Results/.pdf': No such file or directory
-
-** (evince:10085): WARNING **: Error setting file metadata: No such file or directory
-
-** (evince:10085): WARNING **: Error setting file metadata: No such file or directory
-
-** (evince:10085): WARNING **: Error setting file metadata: No such file or directory
-
-** (evince:10085): WARNING **: Error setting file metadata: No such file or directory
-
-** (evince:10085): WARNING **: Error setting file metadata: No such file or directory
-
-** (evince:10085): WARNING **: Error setting file metadata: No such file or directory
-
-** (evince:10085): WARNING **: Error setting file metadata: No such file or directory
-
-** (evince:10085): WARNING **: Error setting file metadata: No such file or directory
-
-** (evince:10085): WARNING **: Error setting file metadata: No such file or directory
-
-** (evince:10085): WARNING **: Error setting file metadata: No such file or directory
-
-** (evince:10085): WARNING **: Error setting file metadata: No such file or directory
+Time consumed = 0.00375s
 
 ======================================================================
 Inspecting script file tiff2png.sh...
@@ -353,8 +448,10 @@ File contents are:
 #!/bin/bash
 #Author: Ruth Keane ruth.keane19@imperial.ac.uk
 #Script: tiff2png.sh
-#Desc: converting tiff to png
-#Arguments: tiff file
+#Desc: converting tiff files to png files
+#Arguments: 1
+#Input: none (takes any in data folder)
+#Output: png file in Results
 #Date: Oct 2019
 for f in ../Data/*.tif;
     do
@@ -376,7 +473,7 @@ Converting ../Data/tifffile.tif
 
 Code ran without errors
 
-Time consumed = 0.25529s
+Time consumed = 0.23807s
 
 ======================================================================
 Inspecting script file csvtospace.sh...
@@ -386,25 +483,33 @@ File contents are:
 #!/bin/bash
 #Author: Ruth Keane ruth.keane19@imperial.ac.uk
 #Script: csvtospace.sh
-#Description: make a new file with spaces instead of commas
-#Arguments: $1 -file to be converted --> text file
+#Desc: make a new file with spaces instead of commas
+#Arguments: 1
+#Input: $1 -file to be converted 
+#Output: text file in Results
 #Date: October 2019
-
-new=`basename $1 | cut -f 1 -d "."` #cut with deliminator as ., 1st column
-cat $1 | tr -s "," " " >> ../Results/${new}.txt  # {} to contain variable
-**********************************************************************
+if [ -e "$1" ]
+then
+    new=`basename $1 | cut -f 1 -d "."` #cut with deliminator as ., 1st column
+    cat $1 | tr -s "," " " >> ../Results/${new}.txt  # {} to contain variable 
+    
+else
+    echo "No file to convert. Please input file."
+fi
+exit**********************************************************************
 
 Testing csvtospace.sh...
 
 Output (only first 500 characters): 
 
 **********************************************************************
+No file to convert. Please input file.
 
 **********************************************************************
 
-Encountered error (or warning):
-basename: missing operand
-Try 'basename --help' for more information.
+Code ran without errors
+
+Time consumed = 0.00267s
 
 ======================================================================
 Inspecting script file FirstExample.tex...
@@ -446,7 +551,8 @@ File contents are:
 #Author: Ruth Keane ruth.keane19@imperial.ac.uk
 #Script: MyExampleScript.sh
 #Desc: variables practice
-#Arguments: $USER
+#Arguments: 1
+#Input: $USER-name
 #Date: Oct 2019
 msg1="Hello"
 msg2=$USER
@@ -469,7 +575,7 @@ Hello mhasoba
 
 Code ran without errors
 
-Time consumed = 0.00322s
+Time consumed = 0.00503s
 
 ======================================================================
 Inspecting script file FirstBiblio.bib...
@@ -495,7 +601,7 @@ Inspecting script file UnixPrac1.txt...
 File contents are:
 **********************************************************************
 #Author: Ruth Keane ruth.keane19@imperial.ac.uk
-#Desc: text file, linux code for exploring sequences
+#Desc: explores line and word counting for amino acid sequences. calculates AT/GC ratio for E.coli
 #Arguments: none
 #Date: Oct 2019
 
@@ -517,7 +623,7 @@ tail -n +2 ../Data/fasta/E.coli.fasta |tr -d '[:space:] '  | wc -m
 #Count the matches of a particular sequence, "ATGC" in the genome of E. coli (hint: Start by removing the first line and removing newline characters)
 tail -n +2 ../Data/fasta/E.coli.fasta |tr -d '[:space:]' | grep "ATGC" -o | wc -l
 
-5 #AT/GC ratio
+#AT/GC ratio
 AT=$(tail -n +2 ../Data/fasta/E.coli.fasta |tr -d '[:space:]'| grep -o "A\|T" | wc -l) && CG=$(tail -n +2 ../Data/fasta/E.coli.fasta |tr -d '[:space:]'| grep -o "G\|C" | wc -l) && echo "scale=5; $AT/ $CG" | bc
 
 
@@ -533,13 +639,21 @@ File contents are:
 #!/bin/bash
 #Author: Ruth Keane ruth.keane19@imperial.ac.uk
 #Script: tabtocsv.sh
-#Desc: substitutte the tabs in the files with commas
-#saves the output into a .csv file
-#Arguments: 1 -> tab deliminated file
+#Desc: substitutes the tabs in the files with commas and saves the output into a .csv file
+#Arguments: 1 
+#Input: A tab deliminated file
+#Output: A CSV file in Results
 #Date:Oct 2019
-echo "Creating a comma delimited verion of $1 ..."
-cat $1 | tr -s "\t","," >> $1.csv
-echo "Done!"
+
+if [ -e "$1" ]
+then
+    echo "Creating a comma delimited verion of $1 ..."
+    new=`basename $1 | cut -f 1 -d "."` #cut with deliminator as ., 1st column
+    cat $1 | tr -s "\t",",">> ../Results/${new}.txt  # {} to contain variable 
+    echo "Done!"
+else
+    echo "No file to convert. Please input file."
+fi
 exit**********************************************************************
 
 Testing tabtocsv.sh...
@@ -547,14 +661,13 @@ Testing tabtocsv.sh...
 Output (only first 500 characters): 
 
 **********************************************************************
-Creating a comma delimited verion of  ...
-Done!
+No file to convert. Please input file.
 
 **********************************************************************
 
 Code ran without errors
 
-Time consumed = 0.00644s
+Time consumed = 0.00489s
 
 ======================================================================
 Inspecting script file boilerplate.sh...
@@ -566,7 +679,7 @@ File contents are:
 #Script: boilerplate.sh
 #Desc: simple boilerplate for shell scripts
 #Arguments: none
-#Output: 
+#Input: none
 #Date: Oct 2019
 echo -e "\nThis is a shell script! \n" 
 exit 
@@ -585,19 +698,19 @@ This is a shell script!
 
 Code ran without errors
 
-Time consumed = 0.00336s
+Time consumed = 0.00389s
 
 ======================================================================
 ======================================================================
 Finished running scripts
 
-Ran into 5 errors
+Ran into 0 errors
 
 ======================================================================
 ======================================================================
 
 FINISHED WEEKLY ASSESSMENT
 
-Current Points for the Week = 100
+Current Points for the Week = 99.5
 
 NOTE THAT THESE ARE POINTS, NOT MARKS FOR THE WEEK!

@@ -1,0 +1,966 @@
+Starting weekly assessment for Ruth, Week4
+
+Current Points = 100
+
+Note that: 
+(1) Major sections begin with a double "====" line 
+(2) Subsections begin with a single "====" line 
+(3) Code output or text file content are printed within single "*****" lines 
+
+======================================================================
+======================================================================
+Your Git repo size this week is about 120.13 MiB on disk 
+
+PART 1: Checking project workflow...
+
+Found the following directories in parent directory: Week6, Week1, Week7, Assessment, Week8, Week5, Week2, Week9, Week4, .git, Miniproject, Week3
+
+Found the following files in parent directory: .gitignore, README.md
+
+Checking for key files in parent directory...
+
+Found .gitignore in parent directory, great! 
+
+Printing contents of .gitignore:
+**********************************************************************
+*~ 
+*.tmp
+*.log
+*-c*ance.tex
+*.gz
+*.odt
+*.ods
+*Sandbox*
+output*.rda
+**********************************************************************
+
+Found README in parent directory, named: README.md
+
+Printing contents of README.md:
+**********************************************************************
+## My CMEE CourseWork Repository
+
+**********************************************************************
+
+======================================================================
+Looking for the weekly directories...
+
+Found 9 weekly directories: Week1, Week2, Week3, Week4, Week5, Week6, Week7, Week8, Week9
+
+The Week4 directory will be assessed 
+
+======================================================================
+======================================================================
+PART 2: Checking weekly code and workflow...
+
+======================================================================
+Assessing WEEK4...
+
+Found the following directories: Code, Data, Sandbox, Results
+
+Found the following files: readme.md
+
+Checking for readme file in weekly directory...
+
+Found README in parent directory, named: readme.md
+
+Printing contents of readme.md:
+**********************************************************************
+# Directory Content for This Week
+
+
+## ho10.R
+
+
+
+Desc: linear models
+
+ 
+
+Input: none
+
+ 
+
+Output: none
+## ho13.R
+
+
+
+Desc: anova
+
+ 
+
+Input: none
+
+ 
+
+Output: none
+## ho15.R
+
+
+
+Desc: Multiple regressions
+
+ 
+
+Input: none
+
+ 
+
+Output: none
+## ho18.R
+
+
+
+Desc: mixed effects models and repeatability
+
+ 
+
+Input: none
+
+ 
+
+Output: none
+## ho2.R
+
+
+
+Desc: distributions
+
+ 
+
+Input: none
+
+ 
+
+Output: none
+## ho4.R
+
+
+
+Desc: standard errors
+
+ 
+
+Input: none
+
+ 
+
+Output: none
+**********************************************************************
+
+Found following files in results directory: readme.txt...
+
+Found 6 code files: ho2.R, ho13.R, ho18.R, ho15.R, ho10.R, ho4.R
+
+Found the following extra files: .Rhistory, .RData
+0.5 pt deducted per extra file
+
+Current Points = 99.0
+
+======================================================================
+Testing script/code files...
+
+======================================================================
+Inspecting script file ho2.R...
+
+File contents are:
+**********************************************************************
+
+#Author: Ruth Keane (ruth.keane19@imperial.ac.uk)
+#Script: ho2.R
+#Desc: distributions
+#Arguments: none
+#Input: none
+#Output: none
+#Date: Oct 2019
+#install.packages("lme4") 	
+#library(lme4) 	
+#require(lme4) 	
+rm(list=ls())
+graphics.off()
+
+d<-read.table("../Data/SparrowSize.txt", header=TRUE)
+str(d)
+### lundi dataset. very isolated popuation. can record fitness which is rare.
+#statistics - sample some to infer things about population. measure of uncertainty- how sure are we!
+#complete population -- not possible. 
+#variance is important- min/max or spread necessary
+#cohort. when new. 
+#sex-both integer or word
+#year of cohort- year 2001-info about age but only relative to capture year
+  #so may need treating as fators
+#sex - treating as factors useful 
+names(d)
+
+head(d)
+length(d$Tarsus)
+hist(d$Tarsus)
+#measures on centrality
+mean(d$Tarsus,na.rm=TRUE)
+median(d$Tarsus,na.rm=TRUE)
+mode(d$Tarsus)
+
+##mode difficult to clculate in continous dataset- as repeated unlikely
+#measures of variation
+#IQR, the value to which a given percent of data are <=  
+#range
+#variance-for all values, calc difference from mean (squared), / n+1
+par(mfrow=c(2,2))
+hist(d$Tarsus, breaks=3, col="grey")
+hist(d$Tarsus, breaks=10, col="grey")
+hist(d$Tarsus, breaks=30, col="grey")
+hist(d$Tarsus, breaks=100, col="grey")
+
+#source("http://bioconductor.org/biocLite.R")
+#biocLite("genefilter")
+#if (!requireNamespace("BiocManager", quietly = TRUE))
+#  install.packages("BiocManager")
+
+#summary stats at start of results section needed- central and measurement
+#bil, mass, wilng length= mean var and sd. plot all 4 in a multi planel figure
+mean(d$Bill,na.rm=TRUE)
+mean(d$Mass,na.rm=TRUE)
+mean(d$Wing,na.rm=TRUE)
+var(d$Bill,na.rm=TRUE)
+var(d$Mass,na.rm=TRUE)
+var(d$Wing,na.rm=TRUE)
+sd(d$Bill,na.rm=TRUE)
+sd(d$Mass,na.rm=TRUE)
+sd(d$Wing,na.rm=TRUE)
+graphics.off()
+par(mfrow=c(2,2))
+hist(d$Tarsus)
+hist(d$Bill)
+hist(d$Wing)
+hist(d$Mass)
+#sum of squares
+d2<-subset(d, d$Tarsus!="NA")
+#na.rm is another way 
+zTarsus <- (d2$Tarsus - mean(d2$Tarsus))/sd(d2$Tarsus)
+zTarsus
+var(zTarsus)
+sd(zTarsus)
+hist(zTarsus)
+set.seed(123)
+dev.off()
+znormal<-rnorm(1e+06)
+hist(znormal,breaks=100)
+q<-qnorm(c(0.025,0.975))
+#
+pnorm(q)
+#gets probability of getting above 
+graphics.off()
+par(mfrow=c(1,2))
+hist(znormal, breaks=100)
+abline(v=qnorm(c(0.25,0.5,0.75)),lwd=2)
+abline(v=qnorm(c(0.025,0.975)),lwd=2,lty="dashed")
+
+
+plot(density(znormal))
+abline(v=qnorm(c(0.25,0.5,0.75)),lwd=2,col="gray")
+abline(v=qnorm(c(0.025,0.975)),lty="dotted",col="black")
+abline(h=0, lwd=3, col="blue")
+text(2, 0.3, "1.96", col="red", adj=0)
+text(-2,0.3,"-1.96", col="red", adj=1)
+graphics.off()
+boxplot(d$Tarsus~d$Sex.1, col = c("red", "blue"), ylab="Tarsus length (mm)")
+###standardising vectors???? missed this bit 
+
+##types of data- continuges vs discrete. continous can do better statistics. 
+##z distribtution subset (of normAL???) where mean is 0, sd -=1
+##0s can mean different things! not seen or actually not there
+#dusrete or numerical - can be binomial. working out how to measure numerically is important. eg sex= 0 /1 absent or present
+
+##giving things numbers doesn#y work if there are more than 2 - eg green blue red. if 1,2,3 then saying that red more different to geen than blue
+##categoical can be ranked or norminal (but don't use as response varibale in project!)
+#year
+#non-parametric tests exist but really difficult!!!**********************************************************************
+
+Testing ho2.R...
+
+Output (only first 500 characters): 
+
+**********************************************************************
+'data.frame':	1770 obs. of  8 variables:
+ $ BirdID: int  1 2 2 2 2 2 2 2 2 2 ...
+ $ Year  : int  2002 2001 2002 2003 2004 2004 2004 2004 2004 2005 ...
+ $ Tarsus: num  16.9 16.8 17.2 17.5 17.8 ...
+ $ Bill  : num  NA NA NA 13.5 13.4 ...
+ $ Wing  : num  76 76 76 76 77 78 77 77 77 77 ...
+ $ Mass  : num  23.6 27.5 28.1 27.8 26.5 ...
+ $ Sex   : int  0 1 1 1 1 1 1 1 1 1 ...
+ $ Sex.1 : Factor w/ 2 levels "female","male": 1 2 2 2 2 2 2 2 2 2 ...
+[1] "BirdID" "Year"   "Tarsus" "Bill"   "Wing"   "Mass"   "S
+**********************************************************************
+
+Code ran without errors
+
+Time consumed = 0.48876s
+
+======================================================================
+Inspecting script file ho13.R...
+
+File contents are:
+**********************************************************************
+#Author: Ruth Keane (ruth.keane19@imperial.ac.uk)
+#Script: ho13.R
+#Desc: anova
+#Arguments: none
+#Input: none
+#Output: none
+#Date: Oct 2019
+graphics.off()
+rm(list=ls())
+
+d<-read.table("../Data/SparrowSize.txt",header=TRUE)
+d1<-subset(d, d$Wing!="NA")
+hist(d1$Wing)
+model1<-lm(Wing ~ Sex.1, data=d1)
+summary(model1)
+boxplot(d1$Wing~d1$Sex.1, ylab="Wing length (mm)")
+anova(model1)
+##residual mean squares-->within group mean squares
+t.test(d1$Wing~d1$Sex.1, var.equal=TRUE)
+
+
+##boxplod for a bunch of years. group is wing length of bird at different times.
+boxplot(d1$Wing~d1$BirdID, ylab="WIng length (mm)")
+require(dplyr)
+tbl_df(d1)
+glimpse(d1)
+d$Mass  %>%  cor.test(d$Tarsus,  na.rm=TRUE) 	
+d1  %>%   	
+  group_by(BirdID)  %>% 	
+  summarise  (count=length(BirdID))  
+##below same as above.
+count(d1,BirdID)
+d1  %>%   	
+  group_by(BirdID)  %>% 	
+  summarise  (count=length(BirdID))    %>% 	
+  count(count) 	
+
+model3<-lm(Wing~as.factor(BirdID),  data=d1) 	
+anova(model3)
+
+boxplot(d$Mass~d$Year) 	
+m2<-lm(d$Mass~as.factor(d$Year)) 	
+anova(m2) 	
+summary(m2)
+t(model.matrix(m2)) 	
+#subst excluding 2000
+#make model
+d2<-subset(d1,d1$Year!="2000")
+md2<-lm(d2$Mass~as.factor(d2$Year)) 	
+anova(md2) 	
+summary(md2)
+##without 2000, less significance. maybe 2000 was weird
+**********************************************************************
+
+Testing ho13.R...
+
+Output (only first 500 characters): 
+
+**********************************************************************
+
+Call:
+lm(formula = Wing ~ Sex.1, data = d1)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-16.0961  -1.0961  -0.0961   1.3683   5.3683 
+
+Coefficients:
+            Estimate Std. Error t value Pr(>|t|)    
+(Intercept) 76.09611    0.07175 1060.50   <2e-16 ***
+Sex.1male    2.53562    0.09998   25.36   <2e-16 ***
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 2.057 on 1693 degrees of freedom
+Multiple R-squared:  0.2753,	Adjusted R-squared:  0.
+**********************************************************************
+
+Encountered error (or warning):
+Loading required package: dplyr
+
+Attaching package: ‘dplyr’
+
+The following objects are masked from ‘package:stats’:
+
+    filter, lag
+
+The following objects are masked from ‘package:base’:
+
+    intersect, setdiff, setequal, union
+
+
+======================================================================
+Inspecting script file ho18.R...
+
+File contents are:
+**********************************************************************
+#Author: Ruth Keane (ruth.keane19@imperial.ac.uk)
+#Script: ho18.R
+#Desc: mixed effects models and repeatability
+#Arguments: none
+#Input: none
+#Output: none
+#Date: Oct 2019
+rm(list=ls())
+graphics.off()
+
+library(dplyr)
+require(lme4)
+a<-read.table("../Data/ObserverRepeatability.txt", header = TRUE)
+a  %>%   	
+  group_by(StudentID)  %>% 	
+  summarise  (count=length(StudentID)) 	
+a  %>%   	
+  group_by(StudentID)  %>% 	
+  summarise  (count=length(StudentID))    %>% 	
+  summarise  (length(StudentID))#
+
+a  %>%   	
+  group_by(StudentID)  %>% 	
+  summarise  (count=length(StudentID))  %>% 	
+  summarise  (sum(count)) 	
+length(a$StudentID)
+
+a  %>%   	
+  group_by(StudentID)  %>% 	
+  summarise  (count=length(StudentID))  %>% 	
+  summarise  (sum(count^2)) 	
+
+mod<-lm(Tarsus~StudentID,data=a)
+anova(mod)
+mod<-lm(Tarsus~Leg+Handedness+StudentID,data=a) 	
+anova(mod)
+lmm<-lmer(Tarsus~Leg+Handedness+(1|StudentID),data=a)
+#modelling studnet id as random effect
+summary(lmm)
+var(a$Tarsus)
+##repeatability is amoung/amoung +within**********************************************************************
+
+Testing ho18.R...
+
+Output (only first 500 characters): 
+
+**********************************************************************
+# A tibble: 80 x 2
+   StudentID count
+   <fct>     <int>
+ 1 AF151093      3
+ 2 AH2912        2
+ 3 Ak70593       1
+ 4 AK70593       1
+ 5 AL0109        1
+ 6 AR0408        2
+ 7 AR1310        1
+ 8 ASR0312       2
+ 9 BC1603        1
+10 cd1302        2
+# … with 70 more rows
+# A tibble: 1 x 1
+  `length(StudentID)`
+                <int>
+1                  80
+# A tibble: 1 x 1
+  `sum(count)`
+         <int>
+1          151
+[1] 151
+# A tibble: 1 x 1
+  `sum(count^2)`
+           <dbl>
+1            333
+Analysis
+**********************************************************************
+
+Encountered error (or warning):
+
+Attaching package: ‘dplyr’
+
+The following objects are masked from ‘package:stats’:
+
+    filter, lag
+
+The following objects are masked from ‘package:base’:
+
+    intersect, setdiff, setequal, union
+
+Loading required package: lme4
+Loading required package: Matrix
+Loading required package: methods
+
+Attaching package: ‘lme4’
+
+The following object is masked from ‘package:stats’:
+
+    sigma
+
+Warning message:
+'rBind' is deprecated.
+ Since R version 3.2.0, base's rbind() should work fine with S4 objects 
+
+======================================================================
+Inspecting script file ho15.R...
+
+File contents are:
+**********************************************************************
+#Author: Ruth Keane (ruth.keane19@imperial.ac.uk)
+#Script: ho15.R
+#Desc: Multiple regressions
+#Arguments: none 
+#Input: none
+#Output: none
+#Date: Oct 2019
+graphics.off()
+rm(list=ls())
+daphnia<-read.delim("../Data/daphnia.txt")
+
+summary(daphnia)
+par(mfrow=c(1,2))
+plot(Growth.rate ~ Detergent, data = daphnia)
+plot(Growth.rate ~ Daphnia,data = daphnia)
+require(dplyr)
+daphnia %>%
+  group_by(Detergent) %>%
+  summarise (variance=var(Growth.rate))
+daphnia %>%
+  group_by(Daphnia) %>%
+  summarise (variance=var(Growth.rate))
+graphics.off()
+hist(daphnia$Growth.rate)
+
+
+seFun<- function(x) {
+  sqrt(var(x)/length(x))
+}
+detergentMean<-with(daphnia, tapply(Growth.rate, INDEX=Detergent, FUN=mean))
+detergentSEM<-with(daphnia, tapply(Growth.rate, INDEX=Detergent, FUN=seFun))
+cloneMean<-with(daphnia,tapply(Growth.rate, INDEX=Daphnia, FUN=mean))
+cloneSEM<-with(daphnia, tapply(Growth.rate, INDEX=Daphnia, FUN=seFun))
+graphics.off()
+par(mfrow=c(2,1),mar=c(4,4,1,1))
+barMids<-barplot(detergentMean, xlab="Detergent type", ylab= "Population growth rate",
+                 ylim=c(0,5))
+#adding errors
+arrows(barMids, detergentMean-detergentSEM, barMids, detergentMean + detergentSEM, code = 3, angle = 90)
+
+barMids<-barplot(cloneMean, xlab="Daphnia clone", ylab= "Population growth rate",
+                 ylim=c(0,5))
+#adding errors
+arrows(barMids, cloneMean- cloneSEM, barMids, cloneMean +cloneSEM, code = 3, angle = 90)
+
+daphniaMod  <-  lm(Growth.rate  ~  Detergent  +  Daphnia,  data  =  daphnia) 	
+
+anova(daphniaMod) 	
+summary(daphniaMod)
+#difference of each mean to first mean
+detergentMean - detergentMean[1]
+
+cloneMean - cloneMean[1]
+
+
+daphniaANOVAMod <- aov(Growth.rate ~ Detergent + Daphnia, data= daphnia)
+summary(daphniaANOVAMod)
+daphniaModHSD  <-TukeyHSD(daphniaANOVAMod) 	
+
+daphniaModHSD 	
+graphics.off()
+par(mfrow=c(2,1),mar=c(4,4,1,1)) 	
+
+plot(daphniaModHSD) 	
+par(mfrow=c(2,2))
+plot(daphniaMod)
+timber  <-  read.delim("../Data/timber.txt") 	
+
+summary(timber) 	
+##looking for outliers
+graphics.off()
+par(mfrow=c(2,2))
+boxplot(timber$volume)
+boxplot(timber$girth)
+boxplot(timber$height)
+#can see one outlier. seem biologically true.better to keep stuff in
+##looking for homogeneity of variaces
+var(timber$volume)
+var(timber$girth)
+var(timber$height)
+#not equal really
+#so standardise x for analysis?
+t2<-as.data.frame(subset(timber,timber$volume!="NA"))
+t2$z.girth<-scale(timber$girth)
+t2$z.height<-scale(timber$height)
+var(t2$z.girth)
+var(t2$z.height)
+plot(t2)
+#are data normally distributed
+graphics.off()
+par(mfrow=c(2,2))
+hist(t2$volume)
+hist(t2$girth)
+hist(t2$height)
+#this is as good as it gets
+#excessively many 0s?
+#no
+#collinearity between covariates
+pairs(timber)
+cor(timber)
+#yeah , issue is inflates variation.
+#so less likely t get signiicant result
+summary(lm(girth~height, data = timber))
+VIF<- 1/(1-0.27)
+VIF
+sqrt(VIF)
+#so standard errors will be inflated by 1.17 which is ok . 
+#what is acceptable varies but testing for it and keep in mind and disclose
+pairs(timber)
+cor(timber)
+pairs(t2)
+cor(t2)
+#correlations are same which we want
+#6. visually inspect relatinoshups
+#7. consider interactinos
+#model!
+timberMod<-lm(volume~girth+height, data=timber)
+anova(timberMod)
+#both height and girth dignificant
+summary(timberMod)
+plot(timberMod)
+#excercise 1 
+#timberMod$residuals
+timber$Resid<-resid(timberMod)
+timber
+timberless<-timber[1:30,]
+timberlessMod<-lm(volume~girth+height, data=timberless)
+anova(timberlessMod)
+summary(timberlessMod)
+plot(timberlessMod)
+#results unchanged by removing outlier so would include outlier
+plantGrowth  <-  read.delim("../Data/ipomopsis.txt") 	
+
+summary(plantGrowth) 	
+**********************************************************************
+
+Testing ho15.R...
+
+Output (only first 500 characters): 
+
+**********************************************************************
+  Growth.rate     Water     Detergent    Daphnia  
+ Min.   :1.762   Tyne:36   BrandA:18   Clone1:24  
+ 1st Qu.:2.797   Wear:36   BrandB:18   Clone2:24  
+ Median :3.788             BrandC:18   Clone3:24  
+ Mean   :3.852             BrandD:18              
+ 3rd Qu.:4.807                                    
+ Max.   :6.918                                    
+# A tibble: 4 x 2
+  Detergent variance
+  <fct>        <dbl>
+1 BrandA        1.51
+2 BrandB        1.09
+3 BrandC        1.78
+4 BrandD        2.38
+
+**********************************************************************
+
+Encountered error (or warning):
+Loading required package: dplyr
+
+Attaching package: ‘dplyr’
+
+The following objects are masked from ‘package:stats’:
+
+    filter, lag
+
+The following objects are masked from ‘package:base’:
+
+    intersect, setdiff, setequal, union
+
+
+======================================================================
+Inspecting script file ho10.R...
+
+File contents are:
+**********************************************************************
+#Author: Ruth Keane (ruth.keane19@imperial.ac.uk)
+#Script: ho10.R
+#Desc: linear models
+#Arguments: none
+#Input: none
+#Output: none
+#Date: Oct 2019
+#setwd("~/Documents/CMEECourseWork/Week4/Code")
+rm(list=ls())
+graphics.off()
+
+d<-read.table("../Data/SparrowSize.txt", header=TRUE)
+plot(d$Mass~d$Tarsus, ylab="Mass (g)",xlab="Tarsus (mm)", pch=19, cex=0.4)
+x<-c(1:100)
+b<-0.5
+m<-1.5
+y<-m*x+b
+plot(x,y, xlim=c(0,100),ylim=c(0,100),pch=19)
+d$Mass[1]
+length(d$Mass)
+d$Mass[1770]
+plot(d$Mass~d$Tarsus, ylab="Mass (g)"
+     ,xlab="Tarsus (mm)", pch=19, cex=0.4,
+     ylim=c(-5,38), xlim=c(0,22))
+plot(d$Mass~d$Tarsus, ylab="Mass (g)"
+     ,xlab="Tarsus (mm)", pch=19, cex=0.4)
+
+d1<-subset(d,  d$Mass!="NA") 	
+d2<-subset(d1,  d1$Tarsus!="NA") 	
+length(d2$Tarsus) 	
+model1<-lm(Mass~Tarsus, data=d2)
+#dfs- number of observations -3 estimated parameters
+#r^2 23% of variance in mass exaplined by variation in tarsus
+summary(model1)
+hist(model1$residuals)
+
+model2<-lm(y~x)
+summary(model2)
+
+#run model with z scores instead of tarsus
+d2$z.Tarsus<-scale(d2$Tarsus)
+model3<-lm(Mass~z.Tarsus,data=d2)
+summary(model3)
+plot(d2$Mass~d2$z.Tarsus, pch=19, cex=0.4)
+abline(v=0, lty="dotted")
+head(d)
+str(d)
+graphics.off()
+d$Sex<-as.numeric(d$Sex)
+par(mfrow=c(1,2))
+plot(d$Wing~d$Sex.1, ylab="Wing(mm)")
+plot(d$Wing~d$Sex, xlab="Sex",xlim=c(-0.1,1.1),ylab="")
+abline(lm(d$Wing~d$Sex), lwd=2)
+text(0.15,76,"intercept")
+text(0.9,77.5,"slope", col="red")
+
+d4<-subset(d,d$Wing!="NA")
+m4<-lm(Wing~Sex, data=d4)
+t4<-t.test(d4$Wing~d4$Sex, var.equal=TRUE)       
+summary(m4)
+t4
+par(mfrow=c(2,2))
+plot(model3)
+
+par(mfrow=c(2,2))
+plot(m4)
+##top left  -residuals-- random distribution is what we want
+#qq plot should be straight line
+d5<-subset(d1,d1$Bill!="NA")
+model5<-lm(Mass~Bill, data=d5)
+summary(model5)
+plot(d5$Mass,d5$Bill)
+**********************************************************************
+
+Testing ho10.R...
+
+Output (only first 500 characters): 
+
+**********************************************************************
+[1] 23.6
+[1] 1770
+[1] 33
+[1] 1644
+
+Call:
+lm(formula = Mass ~ Tarsus, data = d2)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-7.7271 -1.2202 -0.1302  1.1592  7.5036 
+
+Coefficients:
+            Estimate Std. Error t value Pr(>|t|)    
+(Intercept)  5.83246    0.98195    5.94 3.48e-09 ***
+Tarsus       1.18466    0.05295   22.37  < 2e-16 ***
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 1.841 on 1642 degrees of freedom
+Multiple R-squared:  0.2336
+**********************************************************************
+
+Encountered error (or warning):
+Warning message:
+In summary.lm(model2) : essentially perfect fit: summary may be unreliable
+
+======================================================================
+Inspecting script file ho4.R...
+
+File contents are:
+**********************************************************************
+#Author: Ruth Keane (ruth.keane19@imperial.ac.uk)
+#Script: ho4.R
+#Desc: standard errors
+#Arguments: none
+
+#Input: none
+#Output: none
+#Date: Oct 2019
+###standard errors
+#se=sprt(s^2 / n)
+library(pwr)
+require(pander)
+require(broom)
+rm(list=ls())
+graphics.off()
+
+d<-read.table("../Data/SparrowSize.txt", header=TRUE)
+##se tarsus
+d1<-subset(d,d$Tarsus!="NA")
+seTarsus<-sqrt(var(d1$Tarsus)/length(d1$Tarsus))
+seTarsus
+##se 2001 tarsus
+d12001<-subset(d1,d1$Year==2001)
+seTarsus2001<-sqrt(var(d12001$Tarsus)/length(d12001$Tarsus))
+seTarsus2001
+#function to print se and n for different
+SEnona<-function(s,t){
+  a1<-subset(t,t!="NA")
+  N<-length(a1)
+  print("N=") 
+  print(N)
+  se<<-sqrt(var(a1)/length(a1))
+  print("se=")
+  return(se)
+ #print(se="se")
+  
+}
+
+SEnona(d,d$Tarsus)
+SEnona(d,d$Mass)
+SEnona(d,d$Wing)
+SEnona(d,d$Bill)
+d2001<-subset(d,d$Year==2001)
+SEnona(d2001,d2001$Tarsus)
+SEnona(d2001,d2001$Mass)
+SEnona(d2001,d2001$Wing)
+SEnona(d2001,d2001$Bill)
+
+#confidence intervals
+CI<-function(s,t) {
+  a1<-subset(t,t!="NA")
+  N<-length(a1)
+  #print("N=") 
+  #print(N)
+  se<<-sqrt(var(a1)/length(a1))
+  CI<<-1.96*se
+  print("CI95= plus or minus")
+  return(CI) 
+  }
+CI(d,d$Tarsus)
+
+##hypothesis testing
+#t-tests- can we fail to reject the null hypothesis
+#t- takes mean of sample from true mean ad calculates t statistic
+#df=sample=1
+#p<0.05-- it's a convention! 
+t.test(d2001$Tarsus,mu=18.5,na.rm=TRUE)
+#alt- different, h0-not different 
+#one sample t-test. compare sample to pop mean
+t.test(d2001$Tarsus~d2001$Sex,na.rm=TRUE)
+#t-statistic calculated by hings dependent on n
+#probability distibutions
+#theres different probability distributions
+#z-scores. stidents t, chi square, ...
+#EXAM COMMON Q- how would you write the methods / results of this is common in exam
+#male and female tarsi did not differ in size between m and f (mean:twi sample t-test:t-,df=,p<)
+#or can put in table
+t.test1<-t.test(d$Mass~d$Sex.1)
+t.test1
+#alternative hypothesis true difference is not - and p very small
+#looking at 95% cis, 9% of differences ebtween 0.77g and .37g
+#could be type I error. large datasets more liely t pick up on small effect sizes
+ds<-as.data.frame(head(d,50))
+length(ds$Mass)
+t.test2<-t.test(ds$Mass~ds$Sex)
+t.test2
+
+u<-mean(d$Wing)
+dnonaW<-subset(d,d$Wing!="NA")
+
+t.test3<-t.test(d2001$Wing,mu=mean(dnonaW$Wing),na.rm=TRUE)
+t.test3
+t.test4<-t.test(d2001$Wing~d2001$Sex)
+t.test4
+t.test5<-t.test(dnonaW$Wing~dnonaW$Sex)
+t.test5
+#class(t.test3)
+#out <- capture.output(t.test3)
+#cat("T-test3", out, file="t-tests.csv", sep="n", append=TRUE)
+#out <- capture.output(t.test4)
+#cat("T-test4", out, file="t-tests.csv", sep="n", append=TRUE)
+#out <- capture.output(t.test5)
+#cat("T-test5" out, file="t-tests.csv", sep="n", append=TRUE)
+#sink("t-tests.txt")
+#summary(t.test3)
+#sink()
+#https://stackoverflow.com/questions/32034815/format-ttest-output-by-r-for-tex
+
+pander(t.test3)
+#exploring ideas for nice output t test . eg stargazer, eg pander
+
+#https://cran.r-project.org/web/packages/broom/vignettes/broom.html
+glance(t.test3)
+tidy(t.test3)
+
+##above exploring how to output nicely . not mentioned in class. I like pander but still trying to get off R 
+
+#errors##type 1 error- doctor telling pregnant person not preganant bc test wrong
+##type 2 error- doctor telling person without uterus pregnant bc test said so
+#always 5% type I error
+#type 2 error -sample size  bigger, type 2 smallr
+
+
+#> capture.output(pander(t.test3),file = "../Sandbox/pander.txt")THIS WAY WORKED
+#> str(t.test3)
+
+
+##don't want to focus so much on p-values. effect size is more helpful! so differences between values
+#in the bird tarsus, 0.5mm was the effect size 
+#think bout measurement error
+#statistical power - mean, N(what we want to find out) ,sd, powe level(usually 80% is ok)
+#pwr.t.test
+#install.packages("pwr")
+
+pwr.t.test(d=(0-0.16)/0.96,power=.8, sig.level=0.05,type="two.sample",alternative = "two.sided")
+#not sure what d is foing
+#n minus number of parameters to be estimated=df=n-2
+
+#welth t-test - automatic ally replace students t test with welchs t test is assumptions not met (= variances, normal distribution)
+#df looks weird, correcting for those things
+**********************************************************************
+
+Testing ho4.R...
+
+Output (only first 500 characters): 
+
+**********************************************************************
+
+**********************************************************************
+
+Encountered error (or warning):
+Error in library(pwr) : there is no package called ‘pwr’
+Execution halted
+
+======================================================================
+======================================================================
+Finished running scripts
+
+Ran into 5 errors
+
+======================================================================
+======================================================================
+
+FINISHED WEEKLY ASSESSMENT
+
+Current Points for the Week = 99.0
+
+NOTE THAT THESE ARE POINTS, NOT MARKS FOR THE WEEK!

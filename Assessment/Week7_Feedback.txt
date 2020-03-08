@@ -9,7 +9,7 @@ Note that:
 
 ======================================================================
 ======================================================================
-Your Git repo size this week is about 119.30 MiB on disk 
+Your Git repo size this week is about 177.67 MiB on disk 
 
 PART 1: Checking project workflow...
 
@@ -31,6 +31,7 @@ Printing contents of .gitignore:
 *.odt
 *.ods
 *Sandbox*
+output*.rda
 **********************************************************************
 
 Found README in parent directory, named: README.md
@@ -336,7 +337,8 @@ File contents are:
 import subprocess
 #run  R script and store output and success
 subprocess.Popen("Rscript --verbose TestR.R > ../Results/TestR.Rout 2>../Results/TestR_errFile.Rout", shell=True).wait()
-#subprocess.Popen("Rscript --verbose NonExistScript.R > ../Results/outputFile.Rout 2> ../Results/errorFile.Rout", shell=True).wait()**********************************************************************
+#subprocess.Popen("Rscript --verbose NonExistScript.R > ../Results/outputFile.Rout 2> ../Results/errorFile.Rout", shell=True).wait()
+print("Output stored in TestR.Rout and error stored in Test_errFile.Rout in Results ")**********************************************************************
 
 Testing TestR.py...
 
@@ -351,12 +353,13 @@ Current Points = 100
 Output (only first 500 characters): 
 
 **********************************************************************
+Output stored in TestR.Rout and error stored in Test_errFile.Rout in Results 
 
 **********************************************************************
 
 Code ran without errors
 
-Time consumed = 0.12863s
+Time consumed = 0.12510s
 
 ======================================================================
 Inspecting script file regexs.py...
@@ -438,15 +441,17 @@ webpage_html=r.data
 type(webpage_html)
 My_Data= webpage_html.decode()
 #print(My_Data)
-pattern= r"((Dr*)|(Prof\w*))\s+\w+\s+\w+"
-#not quite
+pattern= r"((Dr*)|(Professor*))(\s[A-Z]{1}[\w\']*)+"
+#dr or professor then words after this beginning with capital letter
 regex=re.compile(pattern)
+matches=[]
 for match in regex.finditer(My_Data):
-    print(match.group())
+    matches.append(match.group())
+matches=list(set(matches))
+
 New_Data=re.sub(r'\t'," ", My_Data)
 print(New_Data)
-
-
+#capturing realistic dates
 re.search(r'(([1][9])|([2][0]))[0-9]{2}[0-1][0-9][0-3][1-9]',"19001212").group()**********************************************************************
 
 Testing regexs.py...
@@ -475,13 +480,14 @@ y.a_academic@imperial.ac.uk
 ('Samraat Pawar', 's.pawar@imperial.ac.uk')
 (' Another academic', 'a-academic@imperial.ac.uk')
 (' Yet another academic', 'y.a_academic@imperial.ac.uk')
-Professor Tim Barraclough
-Professor Tim Barraclo
+<!DOCTYPE html>
+<!-- T4 JS layout -->
+<!--[if IE
 **********************************************************************
 
 Code ran without errors
 
-Time consumed = 0.87398s
+Time consumed = 0.53319s
 
 ======================================================================
 Inspecting script file LV3.py...
@@ -507,7 +513,7 @@ def main():
     import scipy.integrate as integrate
     import matplotlib.pylab as p
     import matplotlib.patches as mpatches
-    
+
     #define variables
     R0=10.
     #10 resources per unit are initially
@@ -566,6 +572,8 @@ def main():
     p.title('Consumer resource population dynamics')
     p.legend(handles=[rl,al,zl,el,kl],loc='best')
     f2.savefig('../Results/LV_model_2_discrete.pdf')
+    p.close('all')
+    print("figures saved in Results")
 
 if __name__ == "__main__":
     """runs main"""
@@ -588,12 +596,13 @@ Final resource density is:
 25.5803593404
 Final consumer density is:
 3.09980017848
+figures saved in Results
 
 **********************************************************************
 
 Code ran without errors
 
-Time consumed = 0.95317s
+Time consumed = 0.93187s
 
 ======================================================================
 Inspecting script file profileme2.py...
@@ -652,7 +661,7 @@ Output (only first 500 characters):
 
 Code ran without errors
 
-Time consumed = 3.75880s
+Time consumed = 3.78456s
 
 ======================================================================
 Inspecting script file timeitme.py...
@@ -711,7 +720,7 @@ Output (only first 500 characters):
 
 Code ran without errors
 
-Time consumed = 10.00897s
+Time consumed = 10.00739s
 
 ======================================================================
 Inspecting script file blackbirds.py...
@@ -787,7 +796,7 @@ Species Agelaius assimilis
 
 Code ran without errors
 
-Time consumed = 0.03253s
+Time consumed = 0.02843s
 
 ======================================================================
 Inspecting script file TestR.R...
@@ -814,7 +823,7 @@ Output (only first 500 characters):
 
 Code ran without errors
 
-Time consumed = 0.10055s
+Time consumed = 0.09696s
 
 ======================================================================
 Inspecting script file profileme.py...
@@ -875,7 +884,7 @@ Output (only first 500 characters):
 
 Code ran without errors
 
-Time consumed = 6.50642s
+Time consumed = 6.54911s
 
 ======================================================================
 Inspecting script file LV4.py...
@@ -902,7 +911,7 @@ def main():
     import scipy.integrate as integrate
     import matplotlib.pylab as p
     import matplotlib.patches as mpatches
-
+    
     #value of variables
     R0=10.
     #10 resources per unit are initially
@@ -923,7 +932,7 @@ def main():
     #randomness added in Rt
     for i in (range(15)):
         if Rt[i]>0:
-            epsilon=norm.rvs()
+            epsilon=norm.rvs(scale=0.3)
             Rt[i+1] = Rt[i]*(1+(r+epsilon)*(1-(Rt[i]/K))-a*Ct[i])
         else:
             Rt[i+1]=0
@@ -970,6 +979,9 @@ def main():
     p.title('Consumer-resource population dynamics')
     p.legend(handles=[rl,al,zl,el,kl],loc='best')
     f2.savefig('../Results/LV_model_2_discrete_fluctuatingresource.pdf')
+    #close figures
+    p.close('all')
+    print("figures saved in Results")
 
 if __name__ == "__main__":
     """runs main"""
@@ -989,15 +1001,16 @@ Output (only first 500 characters):
 
 **********************************************************************
 Final resource density is:
-28.2019339541
+23.6171960347
 Final consumer density is:
-0.0
+3.25293619464
+figures saved in Results
 
 **********************************************************************
 
 Code ran without errors
 
-Time consumed = 0.97196s
+Time consumed = 0.92244s
 
 ======================================================================
 Inspecting script file fmr.R...
@@ -1041,7 +1054,7 @@ Finished in R!
 
 Code ran without errors
 
-Time consumed = 0.17363s
+Time consumed = 0.17294s
 
 ======================================================================
 Inspecting script file using_os.py...
@@ -1112,7 +1125,7 @@ Output (only first 500 characters):
 
 Code ran without errors
 
-Time consumed = 3.37540s
+Time consumed = 3.39901s
 
 ======================================================================
 Inspecting script file LV1.py...
@@ -1177,13 +1190,13 @@ def main():
     p.ylabel('Consumer density')
     p.title('Consumer-resource population dynamics')
     f2.savefig('../Results/LV_model_2.pdf')
-
+    p.close('all')
     #prints final densities
     print("final resource density is:")
     print(pops[-1][0])
     print("final consumer density is:")
     print(pops[-1][1])
-
+    print("figures saved in Results")
 if (__name__ == "__main__"):
     """runs main"""
     main()
@@ -1206,12 +1219,13 @@ final resource density is:
 9.78000353962
 final consumer density is:
 17.1665894639
+figures saved in Results
 
 **********************************************************************
 
 Code ran without errors
 
-Time consumed = 0.95142s
+Time consumed = 0.96238s
 
 ======================================================================
 Inspecting script file LV5.py...
@@ -1259,12 +1273,12 @@ def main():
     #randomness added in R and C
     for i in (range(15)):
         if Rt[i]>0:
-            epsilon=norm.rvs()
+            epsilon=norm.rvs(scale=0.2)
             Rt[i+1] = Rt[i]*(1+(r+epsilon)*(1-(Rt[i]/K))-a*Ct[i])
         else:
             Rt[i+1]=0
         if Ct[i]>0:
-            epsilon=norm.rvs()
+            epsilon=norm.rvs(scale=0.2)
             Ct[i+1]= Ct[i]*(1-z+epsilon+e*a*Rt[i])
         else:
             Ct[i+1]=0
@@ -1297,7 +1311,7 @@ def main():
     p.ylabel('Population density')
     p.title('Consumer-resource population dynamics')
     f1.savefig('../Results/LV_model_1_discrete_fluctuatingboth.pdf')
-
+    
     #figure 2 
     f2 = p.figure()
     p.plot(Rt,Ct,'r-')
@@ -1307,6 +1321,8 @@ def main():
     p.title('Consumer-resource population dynamics_fluctuatingboth.pdf')
     p.legend(handles=[rl,al,zl,el,kl],loc='best')
     f2.savefig('../Results/LV_model_2_discrete.pdf')
+    p.close('all')
+    print("figures saved in Results")
 
 if __name__ == "__main__":
     """runs main"""
@@ -1326,15 +1342,16 @@ Output (only first 500 characters):
 
 **********************************************************************
 Final resource density is:
-29.9999539245
+29.8444580853
 Final consumer density is:
 0.0
+figures saved in Results
 
 **********************************************************************
 
 Code ran without errors
 
-Time consumed = 0.92713s
+Time consumed = 0.97242s
 
 ======================================================================
 Inspecting script file DrawFW.py...
@@ -1390,6 +1407,7 @@ G.add_edges_from(tuple(AdjL))
 NodSizs= 1000* (Sizs-min(Sizs))//(max(Sizs)-min(Sizs))
 nx.draw_networkx(G, pos, node_size=NodSizs,node_color="r")
 p.savefig("../Results/Network.pdf")
+print("Network.pdf in Results")
 **********************************************************************
 
 Testing DrawFW.py...
@@ -1405,6 +1423,7 @@ Current Points = 100
 Output (only first 500 characters): 
 
 **********************************************************************
+Network.pdf in Results
 
 **********************************************************************
 
@@ -1513,7 +1532,9 @@ File contents are:
 #Input: none 
 #Output: none
 #Date: Nov 2019
+#import packages
 import subprocess
+#use subprocess to run fmr.R
 h=subprocess.Popen("Rscript --verbose fmr.R", shell=True).wait()
 if h==0:
     print("fmr.R ran successfully")
@@ -1559,113 +1580,90 @@ File contents are:
 #Input: none 
 #Output: none
 #Date: Nov 2019
-#load packages
 """network plot"""
+#importing packages
 import pandas as pd
 import csv
 import scipy as sc
 import numpy as np
 import networkx as nx
 import matplotlib.pyplot as p
+import matplotlib.patches as mpatches
+#reading data
 edges= open('../Data/QMEE_Net_Mat_edges.csv','r')
-links = csv.reader(edges)
+csvlinks = csv.reader(edges)
 node= open('../Data/QMEE_Net_Mat_nodes.csv','r')
-nodes = csv.reader(node)
-# temp=[]
-# h=open("../Data/QMEE_Net_Mat_edges.csv","rb")
-# links=csv.reader(h,delimiter=",")
-# x=list(links)
-linkm=np.loadtxt(open("../Data/QMEE_Net_Mat_edges.csv"),delimiter=",",skiprows=1).astype(int)
-#node=np.loadtxt(open("../Data/QMEE_Net_Mat_nodes.csv"),delimiter=",",skiprows=1).astype(int)
-tempn=[]
-templ=[]
-#matlinks=sc.zeros((6,7))
-for row in nodes:
-    tempn.append(row)
-for row in links:
-    templ.append(row)
-f=[]
-for i in range(len(tempn)):
-   f.append(tempn[i][0])
-groups=f[1:]
-lin=templ[1:]
-ee=[]
-for i in (range(len(lin))):
-    for j in (range(len(lin))):
-        if int(lin[i][j])>0:
-            both=(groups[i],groups[j],lin[i][j])
-            ee.append(both)
+csvnodes = csv.reader(node)
+#converting data from csv
+listnodes=[]
+listlinks=[]
+for row in csvnodes:
+    listnodes.append(row)
+for row in csvlinks:
+    listlinks.append(row)
+###manipulating data for correct format
+##for links
+#just institution names
+names=listlinks[0]
+#just number of links between institutions
+listlinks=listlinks[1:]
+#reformatting links so two names of institutions then number of links
+namesandnlinks=[]
+for i in (range(len(listlinks))):
+    for j in (range(len(listlinks))):
+        if int(listlinks[i][j])>0:
+            both=(names[i],names[j],listlinks[i][j])
+            namesandnlinks.append(both)
+#converting namesandnlinks into a tuple containing just the two institution names for all links
+namestuple=namesandnlinks[:] 
+for f in range(len(namesandnlinks)):
+    r=tuple(namestuple[f][0:2])
+    namestuple[f] = r
+#array containing just the number of links between places
+nlinksarray=sc.empty(shape=len(namesandnlinks))
+for g in range(len(namesandnlinks)):
+    num=namesandnlinks[g][2]
+    nlinksarray[g]=num
 
-ea=ee[:]
-for d in range(len(ea)):
-    #print(ee[d][0:2])
-    r=tuple(sorted(ea[d][0:2]))
-    num=ea[d][2]
-    number=(num,)
-    ea[d] = r + number
-    list(set(ea))
+#making data for labelling using nodes
+#reformat so table of institution then group for each institution
+forlabs=listnodes[1:]
+labels=pd.DataFrame({'INST':[forlabs[0][0], forlabs[1][0],
+    forlabs[2][0],forlabs[3][0],forlabs[4][0],forlabs[5][0]], 
+    'group':[forlabs[0][1], forlabs[1][1],forlabs[2][1],forlabs[3][1],
+    forlabs[4][1],forlabs[5][1]]})
+#convert group to pandas categorical variable
+labels['group']=pd.Categorical(labels['group'])      
 
-en=ea[:]
-et=ea[:] 
-for d in range(len(et)):
-    #print(ee[d][0:2])
-    r=tuple(sorted(et[d][0:2]))
-    #num=ee[d][2]
-   # number=(num,)
-    et[d] = r
-    #r + number
-    #    print(ee)
-emp=sc.empty(shape=len(en))
-for d in range(len(en)):
-    #r=tuple(sorted(en[d][0:2]))
-    #num=en[d][2]
-    num=en[d][2]
-    #number=(num,)
-    emp[d]=num
-    #en[d] = r + number
-    #    print(ee)
-    print(emp)
-
-forlabs=tempn[1:]
-#labels={}
-#for i in range(6):
-#    labels[forlabs[i][0]]=forlabs[i][1] 
-
-    #labs={forlabs[i][0]:forlabs[i][1]}  
-labels=pd.DataFrame({'INST':[forlabs[0][0], forlabs[1][0],forlabs[2][0],forlabs[3][0],forlabs[4][0],forlabs[5][0]], 'group':[forlabs[0][1], forlabs[1][1],forlabs[2][1],forlabs[3][1],forlabs[4][1],forlabs[5][1]]})
-#carac = pd.DataFrame({ 'Inst':['A', 'B', 'C','D','E'], 'myvalue':['group1','group1','group2','group3','group3'] })
-#ee[1]
-# tempn=[]
-#templ=sc.zeros((6,6))
-#matlinks=sc.zeros((6,7))
-# for row in range(6):
-#     templ[row]=links[row]
-## BELOW IS DRAWFW
-##so first npnodes from nodes(think places
-# then edges from other
-#network x gets coordinates from places
-#p.figure()
-#places=sc.array(templ[0])
-#place=np.array(templ[0])
-labels['group']=pd.Categorical(labels['group'])
-groupsa=np.array(groups)
-p.figure()
-#dtype which is not helping ##stuck here
-pos= nx.circular_layout(groupsa)
-G=nx.Graph()
-G.add_nodes_from(labels['INST'])
-G.add_edges_from(tuple(et))
-#NodSizs= 1000* (emp-min(emp))//(max(emp)-min(emp))
-d=emp/100
-nx.draw_networkx(G,pos,node_colour=labels['group'].cat.codes)
-nx.draw_networkx_edges(G, pos, width=emp/10,)
-#nx.draw_networkx_node_c(G,pos,node_colour=labels['group'].cat.codes)
-p.show()
-#nx.draw_networkx(G,node_color=labels['group'])
-
-##done good! need to sort colours and arrows and layout next
-import pandas as pd
-##for loop for labels**********************************************************************
+###making figure
+#initialise a figure
+Nets=p.figure()
+#initialise directed graph
+G=nx.DiGraph()
+#add nodes- i.e different institutions
+G.add_nodes_from(labels['INST']) 
+#add edges-links between institutions 
+G.add_edges_from(tuple(namestuple))
+#changing colour depending on type of institution (reformat so this is possible)
+node_colour=labels['group'].cat.codes
+#layout for graph
+pos= nx.spring_layout(G)
+#draw network, with grey lines and setting node size
+nx.draw_networkx(G,pos,node_size=1500,edge_color="grey")
+#add network nodes to graph- node colour depending on type of inst, colour map is blue red green and setting node size
+nx.draw_networkx_nodes(G,pos,node_color=node_colour, cmap=p.cm.brg,node_size=1500)
+#add network edges to graph- width depending on how many links an institution has , grey lines
+nx.draw_networkx_edges(G, pos, width=nlinksarray/10,edge_color="grey")
+#format labels and colours for figure
+Hosting = mpatches.Patch(color='blue',label="Hosting Partner")
+NonHost = mpatches.Patch(color='red',label="Non-Hosting Partner")
+Uni = mpatches.Patch(color='lime',label="University")
+#add legend to graph
+p.legend(handles=[Hosting,NonHost,Uni],loc='best')
+#close graph
+p.close('all')
+Nets.savefig("../Results/NetworkGraph.svg")
+print("Graph saved as NetworkGraph.svg in Results")**********************************************************************
 
 Testing Nets_R.py...
 
@@ -1680,12 +1678,17 @@ Current Points = 100
 Output (only first 500 characters): 
 
 **********************************************************************
+Graph saved as NetworkGraph.svg in Results
 
 **********************************************************************
 
-Code ran without errors
-
-Time consumed = 10.01311s
+Encountered error (or warning):
+/usr/lib/python3/dist-packages/networkx/drawing/nx_pylab.py:522: MatplotlibDeprecationWarning: The is_string_like function was deprecated in version 2.1.
+  if not cb.is_string_like(edge_color) \
+/usr/lib/python3/dist-packages/networkx/drawing/nx_pylab.py:543: MatplotlibDeprecationWarning: The is_string_like function was deprecated in version 2.1.
+  if cb.is_string_like(edge_color) or len(edge_color) == 1:
+/usr/lib/python3/dist-packages/networkx/drawing/nx_pylab.py:724: MatplotlibDeprecationWarning: The is_string_like function was deprecated in version 2.1.
+  if not cb.is_string_like(label):
 
 ======================================================================
 Inspecting script file run_LV.py...
@@ -1709,18 +1712,7 @@ import LV2
 import LV3
 import LV4
 import LV5
-#run each of LVs
-print("LV1")
-LV1.main()
-print("LV2 with arguments")
-LV2.main(["LV2",1,0.2,1.3,0.7])
-print("LV3")
-LV3.main()
-print("LV4")
-LV4.main()
-print("LV5")
-LV5.main()
-#cprofiling
+#cprofiling and running
 print("Cprofiling of LV1")
 cProfile.run("LV1.main()", filename="../Results/LV1output")
 f=pstats.Stats('../Results/LV1output')
@@ -1768,41 +1760,27 @@ Current Points = 100
 Output (only first 500 characters): 
 
 **********************************************************************
-LV1
-final resource density is:
-9.78000353962
-final consumer density is:
-17.1665894639
-LV2 with arguments
-Final resource density is:
-8.96371856893
-Final consumer density is:
-3.63241522135
-LV3
-Final resource density is:
-25.5803593404
-Final consumer density is:
-3.09980017848
-LV4
-Final resource density is:
-0.0
-Final consumer density is:
-0.0
-LV5
-Final resource density is:
-29.9844460148
-Final consumer density is:
-0.0
 Cprofiling of LV1
 final resource density is:
 9.78000353962
 final consumer density is:
+17.1665894639
+figures saved in Results
+Tue Mar  3 22:08:02 2020    ../Results/LV1output
 
+         275195 function calls (270401 primitive calls) in 0.501 seconds
+
+   Ordered by: cumulative time
+   List reduced from 1426 to 15 due to restriction <15>
+
+   ncalls  tottime  percall  cumtime  percall filename:lineno(function)
+      8/1    0.000    0.000    0.501    0.501 {built-in method builtins.exec}
+        1    0
 **********************************************************************
 
 Code ran without errors
 
-Time consumed = 4.16234s
+Time consumed = 2.73573s
 
 ======================================================================
 Inspecting script file LV2.py...
@@ -1897,7 +1875,9 @@ def main(argv):
     p.title('Consumer-resource population dynamics')
     p.legend(handles=[rl,al,zl,el,kl])
     f2.savefig('../Results/LV_model_density_dependent_2.pdf')
-    
+    p.close('all')
+    print("figures saved in Results")
+
 if __name__ == "__main__":
     """runs main"""
     import sys
@@ -1924,18 +1904,19 @@ Final resource density is:
 20.1148240759
 Final consumer density is:
 3.959935427
+figures saved in Results
 
 **********************************************************************
 
 Code ran without errors
 
-Time consumed = 0.95087s
+Time consumed = 0.95941s
 
 ======================================================================
 ======================================================================
 Finished running scripts
 
-Ran into 3 errors
+Ran into 4 errors
 
 ======================================================================
 ======================================================================

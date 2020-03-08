@@ -1,0 +1,574 @@
+Starting weekly assessment for Ruth, Week6
+
+Current Points = 100
+
+Note that: 
+(1) Major sections begin with a double "====" line 
+(2) Subsections begin with a single "====" line 
+(3) Code output or text file content are printed within single "*****" lines 
+
+======================================================================
+======================================================================
+Your Git repo size this week is about 120.13 MiB on disk 
+
+PART 1: Checking project workflow...
+
+Found the following directories in parent directory: Week6, Week1, Week7, Assessment, Week8, Week5, Week2, Week9, Week4, .git, Miniproject, Week3
+
+Found the following files in parent directory: .gitignore, README.md
+
+Checking for key files in parent directory...
+
+Found .gitignore in parent directory, great! 
+
+Printing contents of .gitignore:
+**********************************************************************
+*~ 
+*.tmp
+*.log
+*-c*ance.tex
+*.gz
+*.odt
+*.ods
+*Sandbox*
+output*.rda
+**********************************************************************
+
+Found README in parent directory, named: README.md
+
+Printing contents of README.md:
+**********************************************************************
+## My CMEE CourseWork Repository
+
+**********************************************************************
+
+======================================================================
+Looking for the weekly directories...
+
+Found 9 weekly directories: Week1, Week2, Week3, Week4, Week5, Week6, Week7, Week8, Week9
+
+The Week6 directory will be assessed 
+
+======================================================================
+======================================================================
+PART 2: Checking weekly code and workflow...
+
+======================================================================
+Assessing WEEK6...
+
+Found the following directories: Code, Data, Sandbox, Results
+
+Found the following files: readme.md
+
+Checking for readme file in weekly directory...
+
+Found README in parent directory, named: readme.md
+
+Printing contents of readme.md:
+**********************************************************************
+# Directory Content for This Week
+
+
+## bears.R
+
+
+
+Desc: variability of bears genome
+
+ 
+
+Input: none
+
+ 
+
+Output: none
+## coalescence.R
+
+
+
+Desc: effective population size and site frequency in killer wales
+
+ 
+
+Input: none 
+
+ 
+
+Output: none
+## demography.R
+
+
+
+Desc: calculate Fst from genotype 
+
+ 
+
+Input: none 
+
+ 
+
+Output: none
+## divergence.R
+
+
+
+Desc: calculate divergence between species
+
+ 
+
+Input: none 
+
+ 
+
+Output: none
+**********************************************************************
+
+Found following files in results directory: readme.txt...
+
+Found 4 code files: divergence.R, demography.R, bears.R, coalescence.R
+
+======================================================================
+Testing script/code files...
+
+======================================================================
+Inspecting script file divergence.R...
+
+File contents are:
+**********************************************************************
+#Author: Ruth Keane (ruth.keane19@imperial.ac.uk)
+#Script: divergence.R
+#Desc: calculate divergence between species
+#Arguments: none
+#Input: none 
+#Output: none
+#Date: Oct 2019
+rm(list=ls())
+graphics.off()
+
+#load data
+west<-read.csv("../Data/western_banded_gecko.csv",stringsAsFactors = FALSE, colClasses=c("character"), header=FALSE)
+bent<-read.csv("../Data/bent-toed_gecko.csv",stringsAsFactors = FALSE, colClasses=c("character"),header=FALSE)
+leap<-read.csv("../Data/leopard_gecko.csv",stringsAsFactors = FALSE, colClasses=c("character"), header=FALSE)
+#combine datasets to compare
+dataWB<-rbind(west,bent)
+dataBL<-rbind(bent, leap)
+dataWL<-rbind(west, leap)
+
+#list of monomorphic sites same species
+pointsW<-c()
+
+pointsB<-c()
+
+pointsL<-c()
+
+for (i in 1:ncol(west)){
+  if(length(unique(west[,i]))==1) pointsW<-c(pointsW,i)
+}
+for (i in 1:ncol(bent)){
+  if(length(unique(bent[,i]))==1) pointsB<-c(pointsB,i)
+}
+for (i in 1:ncol(leap)){
+  if(length(unique(leap[,i]))==1) pointsL<-c(pointsL,i)
+}
+
+
+##compare species 
+pointsWB<-c()
+pointsBL<-c()
+pointsWL<-c()
+#dselect monomorphic sites
+monWB<-intersect(pointsW,pointsB)
+monBL<-intersect(pointsB,pointsL)
+monWL<-intersect(pointsW,pointsL)
+
+dataWB<-dataWB[,monWB]
+dataBL<-dataBL[,monBL]
+dataWL<-dataWL[,monWL]
+
+#find out differences in amino acid sequences between species
+for (i in 1:ncol(dataWB)){
+  if(length(unique(dataWB[,i]))!=1) pointsWB<-c(pointsWB,i)
+}
+for (i in 1:ncol(dataBL)){
+  if(length(unique(dataBL[,i]))!=1) pointsBL<-c(pointsBL,i)
+}
+for (i in 1:ncol(dataWL)){
+  if(length(unique(dataWL[,i]))!=1) pointsWL<-c(pointsWL,i)
+}
+diffWB<-length(pointsWB)
+diffBL<-length(pointsBL)
+diffWL<-length(pointsWL)
+WB<-diffWB/ncol(dataWB)
+BL<-diffBL/ncol(dataBL)
+WL<-diffWL/ncol(dataWL)
+mu<-WL/2*30000000
+tAB<-(2*mu)/WB
+#divergence time
+print("Divergence time is:")
+print(tAB)
+**********************************************************************
+
+Testing divergence.R...
+
+Output (only first 500 characters): 
+
+**********************************************************************
+[1] "Divergence time is:"
+[1] 72274234
+
+**********************************************************************
+
+Code ran without errors
+
+Time consumed = 7.22748s
+
+======================================================================
+Inspecting script file demography.R...
+
+File contents are:
+**********************************************************************
+#Author: Ruth Keane (ruth.keane19@imperial.ac.uk)
+#Script: demography.R 
+#Desc: calculate Fst from genotype 
+#Arguments: none
+#Input: none 
+#Output: none
+#Date: Nov 2019
+rm(list=ls())
+graphics.off()
+
+#load data
+turtlegenotypes<- read.csv("../Data/turtle.genotypes.csv", stringsAsFactors = FALSE,header=FALSE)
+data2<- read.csv("../Data/turtle.csv", stringsAsFactors = FALSE,header=FALSE)
+
+
+colcount<-matrix(nrow=4, ncol=2000)
+#subset the data for each of 4 groups then calculate sums of genotype information
+for (i in 1:4){
+  start<-(i-1)*10+1
+  end<-start+9
+  print(start)
+  sub<-turtlegenotypes[start:end,]
+  colcount[i,]<-colSums(sub)
+
+}
+#convert to column frequency
+colfreq<-colcount/4000
+#pairwise comparison setup
+x<-4
+n<-x^2
+Q=matrix(ncol=2, nrow=n)
+R=matrix(ncol=2,nrow=0)
+Q[,1]<-rep(1:x, each=x)
+Q[,2]<-rep(1:x, x)
+for ( p in 1:nrow(Q)){
+  if (Q[p,1]<Q[p,2])
+    R<-rbind(R,Q[p,])
+}
+#empty table for pairwise comparisons to occur in 
+Hs<-matrix(nrow=6, ncol=2000)
+Ht<-matrix(nrow=6, ncol=2000)
+Fst<-matrix(nrow=6, ncol=2000)
+#define A1 and A2 for each of the comparisons using pairwise comparison table (R)
+for (go in (1:nrow(R))) {
+  A1<-R[go,1]
+  A2<-R[go,2]
+  #across rows, define FA1 and FA2 to calculate Hs,Ht and Fst
+  for (t in 1:2000) {
+    FA1<-colfreq[A1,t]
+    FA2<-colfreq[A2,t]
+    Hs[go,t]<-FA1*(1-FA1)+FA2*(1-FA2)
+    Ht[go,t]<-FA1*(1-FA1)+FA2*(1-FA2)+ ((FA1-FA2)^2)/2
+    Fst[go,t]<-(Ht[go,t]- Hs[go,t])/Ht[go,t]
+    }
+}
+#matrix containing means across all snps
+P<-matrix(ncol=3,nrow=6)
+P[,1:2]<-R
+T<-rowMeans(Fst,na.rm = TRUE)
+P[,3]<-T[]
+#mean across all population comparisons
+FstMean<-mean(P[,3])
+#Fst Mean is very close to 0 so there is unlikely to be subdivision
+#some differences between comparisons but all values very low
+#compare distance and fst-plot
+dist<-c(5,10,12,50)
+T2<-c()
+for (i in 1:nrow(R)) { 
+ a<-R[i,1]
+  b<-R[i,2]
+  da<-dist[a]
+  db<-dist[b]
+  T2[i]<-db-da
+}
+U<-cbind(T,T2)
+
+colnames(U)<-c("fst",
+               "dist")
+x<-U[,2]
+y<-U[,1]
+plot(x,y)
+#genetic distance doesn't seem to correlate with distance**********************************************************************
+
+Testing demography.R...
+
+Output (only first 500 characters): 
+
+**********************************************************************
+[1] 1
+[1] 11
+[1] 21
+[1] 31
+
+**********************************************************************
+
+Code ran without errors
+
+Time consumed = 0.45004s
+
+======================================================================
+Inspecting script file bears.R...
+
+File contents are:
+**********************************************************************
+#Author: Ruth Keane (ruth.keane19@imperial.ac.uk)
+#Script: bears.R 
+#Desc: variability of bears genome
+#Arguments: none
+#Input: none
+#Output: none
+#Date: Oct 2019
+
+rm(list=ls())
+graphics.off()
+
+library(matrixStats)
+data<-read.csv("../Data/bears.csv", stringsAsFactors = FALSE, colClasses=c("character"))
+points<-c()
+####go over 
+#1
+for (i in 1:ncol(data)){
+  if(length(unique(data[,i]))==2) points<-c(points,i)
+}
+#2
+alleles<-c()
+for (thing in points){
+  alleles<-cbind(alleles,data[,thing])
+}
+
+numbers<-matrix(ncol=4, nrow=length(points))
+numbers[,1]<-colCounts(alleles, value="A")
+numbers[,2]<-colCounts(alleles, value="C")
+numbers[,3]<-colCounts(alleles, value="T")
+numbers[,4]<-colCounts(alleles, value="G")
+View(numbers)
+
+for (i in 1:nrow(numbers)){
+  A<-numbers[,1]/rowSums(numbers)
+  C<-numbers[,2]/rowSums(numbers)
+  T<-numbers[,3]/rowSums(numbers)
+  G<-numbers[,4]/rowSums(numbers)
+}
+  frequencies<-matrix(data=c(A,C,T,G),ncol=4, nrow=length(points))
+  a<-t(frequencies)
+#as.data.frame(frequencies)
+rownames(a)<-c("A","C","T","G")
+a[a==0]<-NA
+frequencies[frequencies==0]<-NA
+D=matrix(nrow=95,ncol=2)
+#for (i in 1:nrow(frequencies)){
+ #D[i,1]<- rowMaxs(frequencies[,i])
+#}
+#vector<-as.vector(frequencies)
+#na.omit(vector)#for (col in 1:ncol(alleles)){
+#length(vector)#colu[col]<-unique(alleles)
+ # A<-count(A)
+ # row
+#}
+#for (base in data) {
+#  sequences<-length(base)- 39
+   #for (point in base) 
+  #as.vector(base)
+#  for (each in base)  {
+ #   if (base=base[0]) {
+  #  print("yes")   
+  #}
+  #}
+#}
+  #for (amino in genome) {
+   #   place[]
+ #}
+  **********************************************************************
+
+Testing bears.R...
+
+Output (only first 500 characters): 
+
+**********************************************************************
+
+**********************************************************************
+
+Code ran without errors
+
+Time consumed = 0.82053s
+
+======================================================================
+Inspecting script file coalescence.R...
+
+File contents are:
+**********************************************************************
+#Author: Ruth Keane (ruth.keane19@imperial.ac.uk)
+#Script:coalescence.R 
+#Desc: effective population size and site frequency in killer wales
+#Arguments: none
+#Input: none 
+#Output: none
+#Date: Oct 2019
+rm(list=ls())
+graphics.off()
+
+north<-as.matrix(read.csv("../Data/killer_whale_North.csv",stringsAsFactors = FALSE,colClasses=rep("numeric"), header=FALSE))
+south<-as.matrix(read.csv("../Data/killer_whale_South.csv",stringsAsFactors = FALSE,colClasses=rep("numeric"), header=FALSE))
+##Tajimas estimator 
+#calc tajimas estimator if theta of pi,
+##for each population- 1 north , 1 south
+###first differences, sum them#
+#matrix for camparisons
+points<-0
+x<-nrow(north)
+n<-x^2
+Q=matrix(ncol=2, nrow=n)
+R=matrix(ncol=2,nrow=0)
+Q[,1]<-rep(1:x, each=x)
+Q[,2]<-rep(1:x, x)
+for ( p in 1:nrow(Q)){
+  if (Q[p,1]>Q[p,2])
+    R<-rbind(R,Q[p,])
+}  
+
+##for tajima's estimator , calculate pairwise differences/ put in dijn  and dijs vector for north and south respectively
+dijN<-vector(length=nrow(R))
+points<-0
+for (z in 1:nrow(R)){
+  i<-R[z,1]
+  j<-R[z,2]
+  sam<-rbind(north[i,],north[j,])
+  for (w in 1:ncol(sam)){
+    if (length(unique(sam[,w]))==2){
+     points<-points+1 
+      } 
+    dijN[z]<-points
+
+  }
+    sam<-c()
+    i<-0
+    j<-0
+    points<-0
+    }
+
+dijS<-vector(length=nrow(R))
+for (z in 1:nrow(R)){
+i<-R[z,1]
+j<-R[z,2]
+sam<-rbind(south[i,],south[j,])
+for (w in 1:ncol(sam)){
+  if (length(unique(sam[,w]))==2) points<-points+1
+dijS[z]<-points
+
+}
+sam<-c()
+i<-0
+j<-0
+points<-0
+}
+
+##for waterson-N- count number of snps across all
+points<-0  
+for (w in 1:ncol(north)){
+    if (length(unique(north[,w]))==2) points<-points+1
+}
+SN<-points
+points<-0
+#waterson S-count number of snps across all amino acids
+for (w in 1:ncol(south)){
+  if (length(unique(south[,w]))==2) points<-points+1
+}
+  SS<-points
+points<-0
+
+##calculating thetas
+thetaNT<-sum(dijN)/((x*(x-1))/2)
+thetaST<-sum(dijS)/((x*(x-1))/2)
+denom<-0
+  for (q in 1:(x-1)){
+   denom<-denom+(1/q)
+  }
+thetaNW<-SN/denom
+thetaSW<-SS/denom
+# then theta=4N mu so can calc N
+len<-ncol(north)
+NeNW<-thetaNW/(4*1e-8*len)
+NeSW<-thetaSW/(4*1e-8*len)
+NeNT<-thetaNT/(4*1e-8*len)
+NeST<-thetaST/(4*1e-8*len)
+
+##SFS
+
+##sfs north
+colsum2<-c()
+Northmax<-apply(X=north, MARGIN=2, FUN=max)
+
+for (g in 1:ncol(north)){
+  if (Northmax[g]>0){
+  sumthis<-as.vector(north[,g])
+  colsum2<-cbind(colsum2,sum(sumthis))
+  }
+}
+
+tab<-tabulate(colsum2)
+tab<-tab/sum(tab)
+allele_frequency<-c(1:13)
+barplot(tab,names.arg = allele_frequency)
+##sfs for south
+colsum2<-c()
+Southmax<-apply(X=south, MARGIN=2, FUN=max)
+
+for (g in 1:ncol(south)){
+  if (Southmax[g]>0){
+    sumthis<-as.vector(south[,g])
+    colsum2<-cbind(colsum2,sum(sumthis))
+  }
+}
+
+tab<-tabulate(colsum2)
+tab<-tab/sum(tab)
+allele_frequency<-c(1:20)
+barplot(tab,names.arg = allele_frequency)
+**********************************************************************
+
+Testing coalescence.R...
+
+Output (only first 500 characters): 
+
+**********************************************************************
+
+**********************************************************************
+
+Code ran without errors
+
+Time consumed = 10.01540s
+
+======================================================================
+======================================================================
+Finished running scripts
+
+Ran into 0 errors
+
+======================================================================
+======================================================================
+
+FINISHED WEEKLY ASSESSMENT
+
+Current Points for the Week = 100
+
+NOTE THAT THESE ARE POINTS, NOT MARKS FOR THE WEEK!
